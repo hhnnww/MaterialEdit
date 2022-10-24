@@ -18,7 +18,7 @@ class PICToCircle:
         self.radius = radius
         self.border_color = border_color
         self.circle_pil = Image.open((PIC_EDIT_IMG / '圆角背景.png').as_posix())
-        self.circle_pil.thumbnail((radius, radius), resample=Image.ANTIALIAS)
+        self.circle_pil.thumbnail((radius, radius), 1)
         self.angle = angle
 
         self.use_transparent = 30

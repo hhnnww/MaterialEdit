@@ -12,7 +12,7 @@ class STHeiJingStyle:
         self.title = title
         self.material_format_list = material_format_list
         self.logo_pil = Image.open(
-            (Path(__file__).parent / 'IMAGE' / tb_name / 'logo.png').as_posix()
+            (PIC_EDIT_IMG / tb_name / 'logo.png').as_posix()
         )
 
     circle_color_list = dict(

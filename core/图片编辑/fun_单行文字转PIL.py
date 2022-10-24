@@ -4,6 +4,7 @@ from typing import Literal, Tuple
 
 from PIL import Image, ImageFont, ImageDraw
 
+from core.setting import FONT_PATH
 from core.图片编辑.fun_边框删除 import DelPILBorder
 
 FONT_WEIGHT_TYPE = Literal['l', 'r', 'm', 'b', 'h']
@@ -17,11 +18,9 @@ class TextToPIL:
         self.text_color = text_color
         self.bg_color = bg_color
 
-    fonts_path = Path(__file__).parent / 'FONTS' / 'OPPOSans'
-
     @cached_property
     def fun_根据字重选择字体(self) -> Path:
-        font_path = self.fonts_path / f'OPPOSans-{self.font_weight.upper()}.ttf'
+        font_path = FONT_PATH / f'OPPOSans-{self.font_weight.upper()}.ttf'
         if font_path.exists() is False:
             raise IndexError('字体路径不存在')
 
