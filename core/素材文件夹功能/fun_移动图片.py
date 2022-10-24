@@ -2,7 +2,7 @@ import shutil
 from pathlib import Path
 
 from core.setting import IMAGE_FILE_SUFFIX
-from core.素材文件夹.fun_指定遍历 import fun_指定遍历
+from core.素材文件夹功能.fun_指定遍历 import fun_指定遍历
 
 
 def fun_复制图片到指定目录(ori: Path, dst: Path, rename: bool = False):

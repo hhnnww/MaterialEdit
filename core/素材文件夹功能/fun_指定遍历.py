@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import List, Optional
 
-from core.素材文件夹.fun_获取数字 import fun_获取数字
+from core.素材文件夹功能.fun_获取数字 import fun_获取数字
 
 
 def fun_指定遍历(folder: Path, suffix: List[str]) -> List[Optional[Path]]:

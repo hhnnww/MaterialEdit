@@ -9,6 +9,8 @@ class MaterialFolderRename:
         self.folder = folder
         self.tb_name = tb_name
 
+        self.main()
+
     @staticmethod
     def is_material_file(in_file: Path) -> bool:
         if in_file.is_file() and in_file.suffix.lower() in MATERIAL_FILE_SUFFIX:
@@ -43,10 +45,12 @@ class MaterialFolderRename:
                 new_ma_file = in_file.with_stem(self.tb_name + f'({num})')
 
             # 修改源文件名字
+            print(f'文件重命名：{in_file}')
             in_file.rename(in_file.with_stem(self.tb_name + f'({num})'))
 
             # 修改图片名字
             if img_file is not None:
+                print(f'文件重命名：{img_file}')
                 img_file.rename(img_file.with_stem(self.tb_name + f'({num})'))
 
         return num
