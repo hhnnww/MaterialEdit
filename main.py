@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 import router.router_制作首图
 import router.router_文件夹操作
-import router.router_获取文件夹信息
+import router.router_文件夹信息
 
 app = FastAPI()
 
