@@ -1,6 +1,23 @@
+import re
 import shutil
 from functools import cached_property
 from pathlib import Path
+
+from pydantic import BaseModel
+
+from core.setting import IMAGE_FILE_SUFFIX
+from core.素材文件夹功能.fun_指定遍历 import fun_指定遍历
+
+
+class PathType(BaseModel):
+    exist: bool = True
+    stem: str = ''
+    path: str = ''
+
+
+class ImageType(BaseModel):
+    path: str = ''
+    name: str = ''
 
 
 class MaterialFolderStructure:
@@ -13,10 +30,13 @@ class MaterialFolderStructure:
         root_path = Path(root_path)
 
         if root_path.exists() is False:
-            raise IndexError('文件夹不存在')
+            root_path.mkdir()
 
         if len(root_path.parts) < 3:
             raise IndexError('路径太短')
+
+        if '-' in root_path.stem:
+            raise IndexError('可能是分类文件夹')
 
         if root_path.parent.stem == root_path.stem:
             raise IndexError('父子STEM相同')
@@ -64,7 +84,86 @@ class MaterialFolderStructure:
                     num += 1
                 in_file.rename(dir_new_name)
 
+    @cached_property
+    def fun_获取素材文件夹ID(self):
+        num = re.findall('\d+', self.root_path.stem)
+        if len(num) > 0:
+            num_int = int(num[0])
+            return num_int
+
+        return None
+
+    @cached_property
+    def prev_path(self):
+        obj = PathType(exist=True, path='')
+
+        if self.fun_获取素材文件夹ID is None:
+            obj.exist = False
+
+        if self.fun_获取素材文件夹ID <= 0:
+            obj.exist = False
+
+        prev_num_int = self.fun_获取素材文件夹ID - 1
+        prev_num_text = str(prev_num_int)
+        while len(prev_num_text) < len(self.root_path.stem):
+            prev_num_text = '0' + prev_num_text
+
+        prev_path = self.root_path.parent / prev_num_text
+        obj.path = prev_path.as_posix()
+        obj.stem = prev_path.stem
+
+        return obj.dict()
+
+    @cached_property
+    def next_path(self):
+        obj = PathType()
+
+        if self.fun_获取素材文件夹ID is None:
+            obj.exist = False
+
+        prev_num_int = self.fun_获取素材文件夹ID + 1
+        prev_num_text = str(prev_num_int)
+        while len(prev_num_text) < len(self.root_path.stem):
+            prev_num_text = '0' + prev_num_text
+
+        prev_path = self.root_path.parent / prev_num_text
+        obj.path = prev_path.as_posix()
+        obj.stem = prev_path.stem
+
+        return obj.dict()
+
+    @cached_property
+    def effect_img_list(self):
+        if self.effect_path.exists() is False:
+            return []
+
+        img_list = []
+        for in_file in fun_指定遍历(self.effect_path, IMAGE_FILE_SUFFIX):
+            img_obj = ImageType()
+            img_obj.path = in_file.as_posix()
+            img_obj.name = in_file.name
+
+            img_list.append(img_obj.dict())
+
+        return img_list
+
+    @cached_property
+    def preview_img_list(self):
+        if self.preview_path.exists() is False:
+            return []
+
+        img_list = []
+        for in_file in fun_指定遍历(self.preview_path, IMAGE_FILE_SUFFIX):
+            img_obj = ImageType()
+            img_obj.path = in_file.as_posix()
+            img_obj.name = in_file.name
+
+            img_list.append(img_obj.dict())
+
+        return img_list
+
 
 if __name__ == '__main__':
-    mp = MaterialFolderStructure(r'E:\DOWN\cute-cat-logo-mascot')
-    print(mp.root_path)
+    mp = MaterialFolderStructure(r'G:\饭桶设计\0-999\0055')
+    print(mp.prev_path)
+    print(mp.next_path)

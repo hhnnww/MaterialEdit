@@ -58,5 +58,5 @@ class MaterialFolderRename:
     def main(self):
         num = 1
         for in_file in self.folder.rglob('*'):
-            self.fun_修改单个文件(in_file, num)
-            num += 1
+            num = self.fun_修改单个文件(in_file, num)
+

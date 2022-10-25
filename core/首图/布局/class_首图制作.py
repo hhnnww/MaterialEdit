@@ -24,7 +24,9 @@ class STMake:
     def __init__(self, st_list: List[ComList], st_width: int, st_height: int, gutter: int, bg_color: Tuple[int],
                  small_pic_size_mode: int):
         self.st_list = st_list
+
         self.st_list.sort(key=lambda k: len(k.img_list))
+
         self.st_width = st_width
         self.st_height = st_height
         self.gutter = gutter
@@ -82,7 +84,7 @@ class STMake:
     def fun_全自适应单行(self, com_list: ComList):
         """宽度和高度全部自适应"""
         single_ling_actual_width = int(self.st_width - ((len(com_list.img_list) + 1) * self.gutter))
-        single_ling_actual_height = int((single_ling_actual_width / com_list.ratio) / self.fun_计算整体缩小比例)
+        single_ling_actual_height = int((single_ling_actual_width / com_list.ratio) / self.fun_计算整体缩小比例) + 1
 
         bg = Image.new('RGBA', (self.st_width, single_ling_actual_height), self.bg_color)
         left = self.gutter

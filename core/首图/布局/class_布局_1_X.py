@@ -53,6 +53,9 @@ class STLayoutOneX:
 
     def main(self) -> List[ComList]:
         comb_one = self.fun_构建comb([self.pil_list[0]], 0)
+        if len(self.pil_list) == 1:
+            return [comb_one]
+
         second_row_ratio = self.fun_计算第二行比例()
 
         self.pil_list = self.pil_list[1:]

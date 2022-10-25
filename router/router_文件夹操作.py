@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 from core import MaterialFolderStructure, MaterialFolderFunction
 from core.setting import AD_FILE_SUFFIX, IMAGE_FILE_SUFFIX
+from pathlib import Path
 
 router = APIRouter(prefix='/MaterialFolder')
 
@@ -13,6 +14,15 @@ class ItemIn(BaseModel):
     root_path: str
     tb_name: str
     action_name: str
+
+
+@router.get('/del_img')
+def del_img(img: str):
+    img_path = Path(img)
+    if img_path.exists() is True:
+        img_path.unlink()
+
+    return 'success'
 
 
 @router.post('/Function')
@@ -35,7 +45,7 @@ def material_folder_function(item_in: ItemIn):
                 in_file.unlink()
 
         case "文件重命名":
-            ma_func.fun_文件重命名(ma_path.material_path, '')
+            ma_func.fun_文件重命名(ma_path.material_path, 'test')
             ma_func.fun_文件重命名(ma_path.material_path, item_in.tb_name)
 
         case '复制到预览图':
@@ -57,6 +67,9 @@ def material_folder_function(item_in: ItemIn):
             pass
 
         case 'PSD生成图片':
+            pass
+
+        case 'AI导出图片':
             pass
 
         # ------------------ 删除图片 ------------------

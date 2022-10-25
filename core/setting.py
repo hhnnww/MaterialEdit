@@ -10,3 +10,6 @@ FONT_PATH = Path(__file__).parent / 'FONTS' / 'OPPOSans'
 MATERIAL_FILE_SUFFIX = ['.psd', '.psb', '.ai', '.eps']
 IMAGE_FILE_SUFFIX = ['.png', '.jpg', '.jpeg']
 AD_FILE_SUFFIX = ['.html', '.url', '.txt', '.exe']
+
+# 桌面上传文件夹
+UP_FOLDER = Path().home() / 'desktop' / 'UPLOAD'
