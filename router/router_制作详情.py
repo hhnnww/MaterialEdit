@@ -80,11 +80,22 @@ def make_xq(item_in: ItemIn):
     top = 0
     bottom = 2000
     num = 1
+
+    water_mark = Image.open(
+        (PIC_EDIT_IMG / item_in.tb_name / '蜘蛛网水印.png').as_posix()
+    )
     while True:
         if bottom > bg.height:
             bottom = bg.height
 
         crop_im = bg.crop((0, top, bg.width, bottom))
+
+        if num > 1:
+            water_mark.thumbnail((750, 9999))
+            w_left = int((crop_im.width - water_mark.width) / 2)
+            w_top = int((crop_im.height - water_mark.height) / 2)
+            crop_im.paste(water_mark, (w_left, w_top), water_mark)
+
         crop_im = crop_im.convert('RGB')
         crop_im.save(
             (UP_FOLDER / f'xq_{num}.jpg').as_posix(), quality=90
@@ -102,3 +113,4 @@ def make_xq(item_in: ItemIn):
             break
 
     bg.close()
+    water_mark.close()
