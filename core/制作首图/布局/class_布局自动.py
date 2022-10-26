@@ -3,7 +3,7 @@ from typing import List
 
 from PIL import Image
 
-from core.首图.布局.class_type import MyImg, ComList
+from core.制作首图.布局.class_type import MyImg, ComList
 
 Image.MAX_IMAGE_PIXELS = None
 

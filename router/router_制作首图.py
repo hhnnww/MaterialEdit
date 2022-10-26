@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from core import STAutoLayout, STMake, STHeiJingStyle, SmallSizeModel, STLayoutOneX
 from core.setting import UP_FOLDER
 
-router = APIRouter(prefix='/make_tb_pic')
+router = APIRouter(prefix='/make_st')
 
 
 class ItemIn(BaseModel):
@@ -37,6 +37,7 @@ def make_st(item_in: ItemIn):
         st_width = 1500
         st_height = 1300
 
+    # 构建布局
     if len(item_in.img_list) > 10:
         layout = STAutoLayout(
             img_list=item_in.img_list,
@@ -51,13 +52,16 @@ def make_st(item_in: ItemIn):
             st_width=st_width
         ).main()
 
+    # 制作背景图
     bg = STMake(st_list=layout, st_width=st_width, st_height=st_height, gutter=item_in.gutter, bg_color=(255, 255, 255),
                 small_pic_size_mode=small_pic_mode).main()
 
+    # 制作首图样式图
     if item_in.st_style == '黑鲸':
         bg = STHeiJingStyle(layout_bg=bg, material_format_list=item_in.material_format_list.split(' '),
                             tb_name=item_in.tb_name, title=item_in.title, material_id=item_in.material_id).main()
 
+    # 保存首图
     if UP_FOLDER.exists() is False:
         UP_FOLDER.mkdir(parents=True)
 

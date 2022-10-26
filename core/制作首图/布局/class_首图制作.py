@@ -4,7 +4,7 @@ from functools import cached_property
 from PIL import Image
 
 from core.图片编辑 import PICEdit
-from core.首图.布局.class_type import ComList
+from core.制作首图.布局.class_type import ComList
 
 Image.MAX_IMAGE_PIXELS = None
 
