@@ -4,10 +4,10 @@ from typing import List
 
 from PIL import Image
 
-from module_素材处理.core.图片编辑.class_picedit import PICEdit
 from module_素材处理.core.setting import MATERIAL_FILE_SUFFIX
-from module_素材处理.core.素材文件夹功能.fun_指定遍历 import fun_指定遍历
 from module_素材处理.core.setting import PIC_EDIT_IMG
+from module_素材处理.core.图片编辑.class_picedit import PICEdit
+from module_素材处理.core.素材文件夹功能.fun_指定遍历 import fun_指定遍历
 
 
 class XQPreviewPic:
@@ -45,10 +45,10 @@ class XQPreviewPic:
 
     @staticmethod
     def fun_制作信息(stem: str, size_info: str):
-        stem_pil = PICEdit.fun_单行文字(text=stem.upper(), font_weight='r', font_size=46, text_color=(120, 120, 120),
+        stem_pil = PICEdit.fun_单行文字(text=stem.upper(), font_weight='r', font_size=46, text_color=(160, 160, 160),
                                         bg_color=(255, 255, 255)).main()
         size_info = PICEdit.fun_单行文字(text=size_info.upper(), font_weight='r', font_size=38,
-                                         text_color=(120, 120, 120),
+                                         text_color=(160, 160, 160),
                                          bg_color=(255, 255, 255)).main()
         bg_width = max([stem_pil.width, size_info.width])
         bg_height = sum([stem_pil.height, size_info.height]) + 260
@@ -112,19 +112,10 @@ class XQPreviewPic:
 
         left = self.gutter
         top = 0
-        bg = Image.new('RGBA', (self.width, sum([pil.height+self.gutter for pil in all_pil])), (255, 255, 255))
+        bg = Image.new('RGBA', (self.width, sum([pil.height + self.gutter for pil in all_pil])), (255, 255, 255))
         for pil in all_pil:
             bg.paste(pil, (left, top), pil)
             top += pil.height + self.gutter
             pil.close()
 
         return bg
-
-
-if __name__ == '__main__':
-    from core.素材文件夹功能.fun_指定遍历 import fun_指定遍历
-
-    XQPreviewPic(
-        img_list=fun_指定遍历(Path(r'G:\饭桶设计\1000-1999\1023\预览图'), ['.png']),
-        material_path=Path(r'G:\饭桶设计\1000-1999\1023\1023')
-    ).main().show()

@@ -16,15 +16,15 @@ class XQInfoPic:
             bg_color = (250, 250, 250)
 
         all_pil = [
-            PICEdit.fun_多行本文(text=text, line_height=1.35, font_weight='r', font_size=46, text_colr=(120, 120, 120),
-                                 bg_color=bg_color, line_width=20) for text in text_item]
+            PICEdit.fun_多行本文(text=text, line_height=1.35, font_weight='r', font_size=40, text_colr=(160, 160, 160),
+                                 bg_color=bg_color, line_width=22) for text in text_item]
 
         width = 720 * 2
         gutter = 30 * 2
         height = int(max([pil.height for pil in all_pil]) + (gutter * 2))
         top = gutter
 
-        left = 50 * 2
+        left = 40 * 2
         left_2 = 230 * 2
 
         bg = Image.new('RGBA', (width, height), bg_color)
@@ -55,8 +55,6 @@ class XQInfoPic:
 
 
 if __name__ == '__main__':
-    from core.setting import UP_FOLDER
-
     XQInfoPic(
         [
             ('素材标题', '2023年兔年海报'),
