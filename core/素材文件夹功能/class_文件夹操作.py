@@ -1,5 +1,6 @@
 from core.素材文件夹功能.PPTFile import PPTEdit
 from core.素材文件夹功能.PSFile2.class_PSFile import PSFile
+from core.素材文件夹功能.PSFile2.fun_2_导出所有图层 import fun_清空OUT_PATH
 from core.素材文件夹功能.PSFile2.fun_3_对比所有图片 import fun_所有广告图片
 from core.素材文件夹功能.fun_AI_文件处理2 import AIFile
 from core.素材文件夹功能.fun_指定遍历 import fun_指定遍历
@@ -19,3 +20,4 @@ class MaterialFolderFunction:
     fun_PS广告图片 = fun_所有广告图片
     fun_PPT操作 = PPTEdit
     fun_AI操作 = AIFile
+    fun_清空OUT_PATH = fun_清空OUT_PATH

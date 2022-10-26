@@ -60,6 +60,8 @@ def material_folder_function(item_in: ItemIn):
         # ------------------ 图片生成 ------------------
 
         case 'PSD删除广告-生成图片-添加广告':
+            ma_func.fun_清空OUT_PATH()
+
             for in_file in ma_func.fun_指定遍历(ma_path.material_path, ['.psd', '.psb']):
                 ps_obj = ma_func.fun_PS操作.open(in_file.as_posix(), tb_name=item_in.tb_name,
                                                  ad_pic_list=ma_func.fun_PS广告图片())
@@ -81,6 +83,10 @@ def material_folder_function(item_in: ItemIn):
             for in_file in ma_func.fun_指定遍历(ma_path.material_path, ['.ai', '.eps']):
                 ai_file = ma_func.fun_AI操作(file=in_file, tb_name=item_in.tb_name)
                 ai_file.main()
+
+        case 'PPT导出图片':
+            for in_file in ma_func.fun_指定遍历(ma_path.material_path, ['.ppt', '.pptx']):
+                ma_func.fun_PPT操作(ppt_path=in_file).main()
 
         # ------------------ 删除图片 ------------------
 

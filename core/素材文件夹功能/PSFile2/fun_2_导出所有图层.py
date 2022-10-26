@@ -146,4 +146,4 @@ def run_导出所有图层(in_doc, file: Path):
     return art_layer_item_list, text_item_list
 
 
-__all__ = ['run_导出所有图层']
+__all__ = ['run_导出所有图层', 'fun_清空OUT_PATH']
