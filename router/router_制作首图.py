@@ -59,7 +59,7 @@ def make_st(item_in: ItemIn):
     # 制作首图样式图
     if item_in.st_style == '黑鲸':
         bg = STHeiJingStyle(layout_bg=bg, material_format_list=item_in.material_format_list.split(' '),
-                            tb_name=item_in.tb_name, title=item_in.title, material_id=item_in.material_id).main()
+                            tb_name=item_in.tb_name, title=item_in.title.upper(), material_id=item_in.material_id).main()
 
     # 保存首图
     if UP_FOLDER.exists() is False:

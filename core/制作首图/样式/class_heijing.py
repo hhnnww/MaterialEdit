@@ -79,7 +79,7 @@ class STHeiJingStyle:
         bg_circle = PICEdit.fun_颜色覆盖(bg_circle, self.circle_color_list.get(material_format).get('border_color'))
 
         prospect_circle = prospect_circle.resize((
-            int(bg_circle.width * 0.9), int(bg_circle.width * 0.9)
+            int(bg_circle.width * 0.89), int(bg_circle.width * 0.89)
         ), resample=1)
         prospect_circle = PICEdit.fun_颜色覆盖(prospect_circle,
                                                self.circle_color_list.get(material_format).get('bg_color'))

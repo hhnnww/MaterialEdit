@@ -84,7 +84,7 @@ class STMake:
     def fun_全自适应单行(self, com_list: ComList):
         """宽度和高度全部自适应"""
         single_ling_actual_width = int(self.st_width - ((len(com_list.img_list) + 1) * self.gutter))
-        single_ling_actual_height = int((single_ling_actual_width / com_list.ratio) / self.fun_计算整体缩小比例) + 1
+        single_ling_actual_height = int((single_ling_actual_width / com_list.ratio) / self.fun_计算整体缩小比例)
 
         bg = Image.new('RGBA', (self.st_width, single_ling_actual_height), self.bg_color)
         left = self.gutter

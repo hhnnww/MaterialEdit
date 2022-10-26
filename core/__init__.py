@@ -1,3 +1,6 @@
+from core.制作详情.class_效果图 import XQEffectPIC
+from core.制作详情.class_数据图 import XQInfoPic
+from core.制作详情.class_预览图 import XQPreviewPic
 from core.制作首图.布局.class_布局_1_X import STLayoutOneX
 from core.制作首图.布局.class_布局自动 import STAutoLayout
 from core.制作首图.布局.class_首图制作 import STMake, SmallSizeModel
