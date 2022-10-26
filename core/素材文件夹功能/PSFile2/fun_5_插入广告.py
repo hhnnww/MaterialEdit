@@ -1,5 +1,5 @@
 from pathlib import Path
-
+from core.setting import PIC_EDIT_IMG
 from win32com.client import Dispatch
 
 
@@ -10,7 +10,8 @@ def fun_插入广告(app, doc, tb_name: str, ad_layer_name: str):
 
     doc.ArtLayers.Add()
 
-    tb_ad_png = Path(__file__).parent.parent.parent / 'IMG' / f'{tb_name}' / '二维码.png'
+    tb_ad_png = PIC_EDIT_IMG / f'{tb_name}' / '二维码.png'
+    
     desc = Dispatch('Photoshop.ActionDescriptor')
     desc.PutPath(app.CharIDToTypeID('null'), tb_ad_png)
     app.ExecuteAction(app.CharIDToTypeID('Plc '), desc)

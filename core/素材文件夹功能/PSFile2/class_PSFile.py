@@ -9,9 +9,9 @@ from core.素材文件夹功能.PSFile2.fun_3_对比所有图片 import fun_打�
 from core.素材文件夹功能.PSFile2.fun_4_导出PNG import export_png
 from core.素材文件夹功能.PSFile2.fun_5_插入广告 import fun_插入广告
 from core.素材文件夹功能.PSFile2.fun_6_文字图层替换 import fun_文字图层替换内容
+from core.素材文件夹功能.PSFile2.fun_PS基础操作 import fun_选择图层
 from core.素材文件夹功能.PSFile2.fun_清除和添加注释 import fun_清理注释
 from core.素材文件夹功能.PSFile2.fun_高斯模糊 import gaussianBlur_0
-from core.素材文件夹功能.PSFile2.fun_PS基础操作 import fun_选择图层
 
 
 class PSFile:

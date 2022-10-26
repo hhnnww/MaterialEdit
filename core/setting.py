@@ -13,3 +13,9 @@ AD_FILE_SUFFIX = ['.html', '.url', '.txt', '.exe']
 
 # 桌面上传文件夹
 UP_FOLDER = Path().home() / 'desktop' / 'UPLOAD'
+if UP_FOLDER.exists() is False:
+    UP_FOLDER.mkdir()
+
+OUT_PATH = Path().home() / 'desktop' / 'OUT_PATH'
+if OUT_PATH.exists() is False:
+    OUT_PATH.mkdir()

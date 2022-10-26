@@ -1,8 +1,8 @@
+import shutil
 from pathlib import Path
 
-from core.素材文件夹.PPTFile.fun_图片组合 import PPTPICMerge
-from core.素材文件夹.PPTFile.fun_ppt处理 import PPTFile
-import shutil
+from core.素材文件夹功能.PPTFile.fun_ppt处理 import PPTFile
+from core.素材文件夹功能.PPTFile.fun_图片组合 import PPTPICMerge
 
 
 class PPTEdit:

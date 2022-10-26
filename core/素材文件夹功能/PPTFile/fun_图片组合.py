@@ -1,7 +1,9 @@
-from pathlib import Path
 import re
+from pathlib import Path
+
 from PIL import Image
-from core.图片编辑 import PICEdit
+
+from core import PICEdit
 
 
 class PPTPICMerge:

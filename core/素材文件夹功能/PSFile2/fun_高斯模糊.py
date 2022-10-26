@@ -1,4 +1,4 @@
-from core.素材文件夹.PSFile2.fun_PS基础操作 import *
+from core.素材文件夹功能.PSFile2.fun_PS基础操作 import *
 
 
 def gaussianBlur_0(app):

@@ -3,13 +3,13 @@ from pathlib import Path
 
 from win32com.client import Dispatch
 
-from core.setting import out_path
-from core.素材文件夹.PSFile2.fun_1_遍历所有图层 import run_所有图层
-from core.素材文件夹.PSFile2.fun_PS基础操作 import s, dialog
+from core.setting import OUT_PATH
+from core.素材文件夹功能.PSFile2.fun_1_遍历所有图层 import run_所有图层
+from core.素材文件夹功能.PSFile2.fun_PS基础操作 import s, dialog
 
 
 def fun_清空OUT_PATH():
-    for in_file in out_path.iterdir():
+    for in_file in OUT_PATH.iterdir():
         if in_file.is_file():
             in_file.unlink()
 
@@ -18,7 +18,7 @@ def fun_清空OUT_PATH():
 
 
 def fun_导出单个图层(in_layer, file: Path):
-    in_out_path = out_path / file.stem.lower()
+    in_out_path = OUT_PATH / file.stem.lower()
     if in_out_path.exists() is False:
         in_out_path.mkdir(parents=True)
 

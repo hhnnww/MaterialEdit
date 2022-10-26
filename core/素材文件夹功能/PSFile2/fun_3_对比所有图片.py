@@ -1,10 +1,10 @@
-from pathlib import Path
-
 import cv2
 import numpy as np
-from pyzbar import pyzbar
 from PIL import Image
-from core.图片编辑 import PICEdit
+from pyzbar import pyzbar
+
+from core import PICEdit
+from core.setting import PIC_EDIT_IMG
 
 
 def fun_cv2_to_pil(img):
@@ -28,7 +28,7 @@ def fun_打开图片(img_path: str):
 
 def fun_所有广告图片():
     ad_list = []
-    ad_pic_path = Path(__file__).parent.parent.parent / 'IMG' / '广告图片'
+    ad_pic_path = PIC_EDIT_IMG / '广告图片'
     for in_file in ad_pic_path.iterdir():
         if in_file.is_file() and in_file.suffix.lower() in ['.png']:
             ad_list.append(fun_打开图片(in_file))
@@ -64,7 +64,7 @@ def fun_判断比例(img_1, img_2):
 def fun_叠加差异(img_1, img_2):
     # 先给第一个图片删除个边框
     img_1 = fun_cv2_to_pil(img_1)
-    img_1 = PICEdit.fun_图片删除边框(img_1)
+    img_1 = PICEdit.fun_边框删除(img_1).main()
     img_1 = fun_pil_to_cv2(img_1)
 
     im_1 = fun_图片边缘(img_1.copy())
