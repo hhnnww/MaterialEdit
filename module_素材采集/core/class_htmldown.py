@@ -6,14 +6,13 @@ from requests_html import HTMLSession, HTML, user_agent
 
 
 class HTMLDown:
-    def __init__(self, url: str, cookie: str = '', referer: str = '', use_proxy: bool = True):
+    def __init__(self, url: str, cookie: str = '', use_proxy: bool = True):
         self.url = url
-        self.cookie = cookie
-        self.referer = referer
 
         self.headers = {
             'user-agent': user_agent(),
-            'referer': self.fun_获取链接的HOST
+            'referer': self.fun_获取链接的HOST,
+            'cookie': cookie.encode('utf-8')
         }
         self.use_proxy = use_proxy
 
@@ -48,7 +47,7 @@ class HTMLDown:
         if self.port is None or self.use_proxy is False:
             print('直接连接')
             self.session.trust_env = False
-            return self.session.get(self.url, cookies=self.cookie, headers=self.headers)
+            return self.session.get(self.url, headers=self.headers)
 
         else:
             print(f'代理端口：{self.port}')

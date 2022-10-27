@@ -1,11 +1,13 @@
 import shutil
 from pathlib import Path
 
+import pythoncom
+from PIL import Image
 from fastapi import APIRouter
 from pydantic import BaseModel
 
 from module_素材处理.core import MaterialFolderStructure, MaterialFolderFunction
-from module_素材处理.core.setting import AD_FILE_SUFFIX, IMAGE_FILE_SUFFIX
+from module_素材处理.core.setting import AD_FILE_SUFFIX, IMAGE_FILE_SUFFIX, PIC_EDIT_IMG
 
 router = APIRouter(prefix='/MaterialFolder')
 
@@ -62,31 +64,57 @@ def material_folder_function(item_in: ItemIn):
         case 'PSD删除广告-生成图片-添加广告':
             ma_func.fun_清空OUT_PATH()
 
+            pythoncom.CoInitialize()
             for in_file in ma_func.fun_指定遍历(ma_path.material_path, ['.psd', '.psb']):
                 ps_obj = ma_func.fun_PS操作.open(in_file.as_posix(), tb_name=item_in.tb_name,
                                                  ad_pic_list=ma_func.fun_PS广告图片())
                 ps_obj.run_删广告_导出_加广告()
+            pythoncom.CoUninitialize()
 
         case 'PSD生成图片-添加广告':
+            pythoncom.CoInitialize()
             for in_file in ma_func.fun_指定遍历(ma_path.material_path, ['.psd', '.psb']):
                 ps_obj = ma_func.fun_PS操作.open(in_file.as_posix(), tb_name=item_in.tb_name,
                                                  ad_pic_list=ma_func.fun_PS广告图片())
                 ps_obj.run_导出_加广告()
+            pythoncom.CoUninitialize()
 
         case 'PSD生成图片':
+            pythoncom.CoInitialize()
             for in_file in ma_func.fun_指定遍历(ma_path.material_path, ['.psd', '.psb']):
                 ps_obj = ma_func.fun_PS操作.open(in_file.as_posix(), tb_name=item_in.tb_name,
                                                  ad_pic_list=ma_func.fun_PS广告图片())
                 ps_obj.run_导出()
+            pythoncom.CoUninitialize()
 
         case 'AI导出图片':
+            pythoncom.CoInitialize()
             for in_file in ma_func.fun_指定遍历(ma_path.material_path, ['.ai', '.eps']):
                 ai_file = ma_func.fun_AI操作(file=in_file, tb_name=item_in.tb_name)
                 ai_file.main()
+            pythoncom.CoUninitialize()
 
         case 'PPT导出图片':
             for in_file in ma_func.fun_指定遍历(ma_path.material_path, ['.ppt', '.pptx']):
                 ma_func.fun_PPT操作(ppt_path=in_file).main()
+
+        # ------------------ 后续操作 ------------------
+
+        case "素材图添加水印":
+            water_pil = Image.open(
+                (PIC_EDIT_IMG / item_in.tb_name / 'site_logo.png').as_posix()
+            )
+            water_pil.thumbnail((150, 150), 1)
+            padding = 30
+            for in_file in ma_func.fun_指定遍历(ma_path.material_path, IMAGE_FILE_SUFFIX):
+                with Image.open(in_file.as_posix()) as im:
+                    if 1500 not in im.size:
+                        im.thumbnail((1500, 1500), 1)
+                        top = im.height - water_pil.height - padding
+                        im.paste(water_pil, (padding, top), water_pil)
+                        im.save(in_file.as_posix())
+                    else:
+                        print('边距 1500 不添加')
 
         # ------------------ 删除图片 ------------------
 

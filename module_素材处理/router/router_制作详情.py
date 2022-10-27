@@ -2,7 +2,7 @@ from PIL import Image
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from module_素材处理.core import XQEffectPIC, XQInfoPic, XQPreviewPic, MaterialFolderStructure, MaterialFolderFunction, \
+from module_素材处理.core import XQInfoPic, XQMakePIC, MaterialFolderStructure, MaterialFolderFunction, \
     XQTitlePic
 from module_素材处理.core.setting import IMAGE_FILE_SUFFIX
 from module_素材处理.core.setting import UP_FOLDER
@@ -13,7 +13,7 @@ router = APIRouter(prefix='/make_xq')
 class ItemIn(BaseModel):
     root_path: str
     tb_name: str
-
+    one_line_ratio: float
     首图标题: str
     素材ID: str
     素材格式: str
@@ -49,9 +49,14 @@ def make_xq(item_in: ItemIn):
         info_pil
     ]
 
-    if mfs.effect_path.exists() is True:
-        effect_pil = XQEffectPIC(
-            img_list=mff.fun_指定遍历(mfs.effect_path, IMAGE_FILE_SUFFIX), tb_name=item_in.tb_name
+    effect_pic_list = mff.fun_指定遍历(mfs.effect_path, IMAGE_FILE_SUFFIX)
+    if mfs.effect_path.exists() is True and len(effect_pic_list) > 0:
+        effect_pil = XQMakePIC(
+            img_list=effect_pic_list,
+            material_path=mfs.material_path,
+            one_line_ratio=item_in.one_line_ratio,
+            has_material_info=False,
+            tb_name=item_in.tb_name
         ).main()
 
         all_pil.append(
@@ -61,10 +66,13 @@ def make_xq(item_in: ItemIn):
             effect_pil
         )
 
-    if mfs.preview_path.exists() is True:
-        preview_pil = XQPreviewPic(
-            img_list=mff.fun_指定遍历(mfs.preview_path, IMAGE_FILE_SUFFIX),
+    preview_pic_list = mff.fun_指定遍历(mfs.preview_path, IMAGE_FILE_SUFFIX)
+    if mfs.preview_path.exists() is True and len(preview_pic_list) > 0:
+        preview_pil = XQMakePIC(
+            img_list=preview_pic_list,
             material_path=mfs.material_path,
+            has_material_info=True,
+            one_line_ratio=item_in.one_line_ratio,
             tb_name=item_in.tb_name
         ).main()
         all_pil.append(

@@ -16,7 +16,7 @@ class XQInfoPic:
             bg_color = (250, 250, 250)
 
         all_pil = [
-            PICEdit.fun_多行本文(text=text, line_height=1.35, font_weight='r', font_size=40, text_colr=(160, 160, 160),
+            PICEdit.fun_多行本文(text=text, line_height=1.35, font_weight='r', font_size=40, text_colr=(90, 90, 90),
                                  bg_color=bg_color, line_width=22) for text in text_item]
 
         width = 720 * 2

@@ -64,7 +64,7 @@ def fun_判断比例(img_1, img_2):
 def fun_叠加差异(img_1, img_2):
     # 先给第一个图片删除个边框
     img_1 = fun_cv2_to_pil(img_1)
-    img_1 = PICEdit.fun_边框删除(img_1).main()
+    img_1 = PICEdit.fun_边框删除(img_1, None).main()
     img_1 = fun_pil_to_cv2(img_1)
 
     im_1 = fun_图片边缘(img_1.copy())

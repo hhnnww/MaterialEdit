@@ -1,8 +1,6 @@
-from module_素材处理.core.制作详情.class_效果图 import XQEffectPIC
-from module_素材处理.core.制作详情.class_效果图 import XQEffectPIC
 from module_素材处理.core.制作详情.class_数据图 import XQInfoPic
+from module_素材处理.core.制作详情.class_详情作图 import XQMakePIC
 from module_素材处理.core.制作详情.class_详情标题 import XQTitlePic
-from module_素材处理.core.制作详情.class_预览图 import XQPreviewPic
 from module_素材处理.core.制作首图.布局.class_布局_1_X import STLayoutOneX
 from module_素材处理.core.制作首图.布局.class_布局自动 import STAutoLayout
 from module_素材处理.core.制作首图.布局.class_首图制作 import STMake, SmallSizeModel
