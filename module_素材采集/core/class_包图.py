@@ -8,6 +8,10 @@ from module_素材采集.core.model import MaterialType
 
 class SCBaoTu:
     def __init__(self, start_url: str, max_page: int, cookie: str = ''):
+        if '?' in start_url:
+            start_url = re.sub(r'\?(.*)?', '', start_url)
+        start_url = start_url.replace('tupian', 'tupians')
+
         self.start_url = start_url
         self.max_page = max_page
         self.cookie = cookie
@@ -23,7 +27,11 @@ class SCBaoTu:
             r'body > div.page-body.skin-wrap.body-background-gradient > div.bt-body.search.clearfix > div.search-list.box-bg-search.box-bottom-gradient.clearfix > dl')
 
         for ma in ma_list:
+            if 'searchAdver' in ma.attrs.get('class'):
+                continue
+
             url = list(ma.find('a.jump-details', first=True).absolute_links)[0]
+            hash256 = sha256(url.encode('utf-8')).hexdigest()
 
             img_element = ma.find('a.jump-details img', first=True)
             if img_element is None:
@@ -35,15 +43,12 @@ class SCBaoTu:
 
             img = 'https:' + img
 
-            yield MaterialType(url=url, img=img, hash=sha256(url.encode('utf-8')).hexdigest())
+            yield MaterialType(url=url, img=img, hash=hash256)
 
     def main(self) -> List[MaterialType]:
-        _ = []
         for url in self.fun_列表页构建():
             for ma in self.fun_获取单页(url):
-                _.append(ma)
-
-        return _
+                yield ma
 
 
 if __name__ == '__main__':
