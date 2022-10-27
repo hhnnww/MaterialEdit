@@ -33,7 +33,7 @@ def fun_获取MODEL(tb_name: str, site_name: str) -> MaterialList:
     return obj
 
 
-__all__ = ['fun_获取MODEL', 'MaterialType']
+__all__ = ['fun_获取MODEL', 'MaterialType', 'database']
 
 if __name__ == '__main__':
     database.connect()
