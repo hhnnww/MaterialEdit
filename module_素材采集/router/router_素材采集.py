@@ -9,6 +9,7 @@ from module_素材采集.core.class_千图 import SCQianTu
 from module_素材采集.core.class_千库 import SCQianKu
 from module_素材采集.core.class_摄图 import SCSheTu
 from module_素材采集.core.class_envato import SCEnvato
+from module_素材采集.core.class_envato_素材图片下载 import SCEnvatoPICDown
 
 from module_素材采集.core.model import fun_获取MODEL, database
 
@@ -63,6 +64,9 @@ def down_path_cate(down_path: str):
         if in_file.is_file():
             file_list.append(in_file)
 
+        elif in_file.is_dir() and '新建文件夹' not in in_file.name:
+            file_list.append(in_file)
+
     if len(file_list) > 0:
         new_path = down_path / '新建文件夹'
 
@@ -79,3 +83,9 @@ def down_path_cate(down_path: str):
                 in_file.rename(new_name)
 
     return '归类完成 OK'
+
+
+@router.get('/envato_down_path_cate')
+def envato_素材归类():
+    SCEnvatoPICDown('').fun_目录合并()
+    return 'ok'

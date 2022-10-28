@@ -5,6 +5,7 @@ from pydantic import BaseModel
 import re
 from module_素材采集.core.class_htmldown import HTMLDown
 from module_素材采集.core.model import fun_获取MODEL, database
+from module_素材采集.core.class_envato_素材图片下载 import SCEnvatoPICDown
 
 router = APIRouter(prefix='/get_material')
 
@@ -55,6 +56,9 @@ def get_material(tb_name: str, site_name: str, material_id: int):
             ma_id = re.findall(r'/(\d+)\.html', url)
             if len(ma_id) > 0:
                 url = f'https://dl.58pic.com/{ma_id[0]}.html'
+
+        elif site_name == 'envato':
+            SCEnvatoPICDown(url).main()
 
         obj.state = 1
         obj.save()
