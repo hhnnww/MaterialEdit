@@ -7,7 +7,7 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 
 from module_素材处理.core import MaterialFolderStructure, MaterialFolderFunction
-from module_素材处理.core.setting import AD_FILE_SUFFIX, IMAGE_FILE_SUFFIX, PIC_EDIT_IMG
+from module_素材处理.core.setting import AD_FILE_SUFFIX, IMAGE_FILE_SUFFIX, IMG_PATH
 
 router = APIRouter(prefix='/MaterialFolder')
 
@@ -102,7 +102,7 @@ def material_folder_function(item_in: ItemIn):
 
         case "素材图添加水印":
             water_pil = Image.open(
-                (PIC_EDIT_IMG / item_in.tb_name / 'site_logo.png').as_posix()
+                (IMG_PATH / item_in.tb_name / 'site_logo.png').as_posix()
             )
             water_pil.thumbnail((150, 150), 1)
             padding = 30

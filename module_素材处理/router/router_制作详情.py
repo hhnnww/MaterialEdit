@@ -14,7 +14,6 @@ class ItemIn(BaseModel):
     root_path: str
     tb_name: str
     one_line_ratio: float
-    首图标题: str
     素材ID: str
     素材格式: str
     源文件列表: str
@@ -33,7 +32,6 @@ def make_xq(item_in: ItemIn):
 
     info_pil = XQInfoPic(
         text_list=[
-            ('素材标题', item_in.首图标题 + f' [{item_in.tb_name}]'),
             ('素材ID', item_in.素材ID),
             ('素材格式', item_in.素材格式),
             ('素材数量', item_in.源文件列表),

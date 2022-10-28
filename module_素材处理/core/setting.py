@@ -1,7 +1,7 @@
 from pathlib import Path
 
 # 素材图片目录
-PIC_EDIT_IMG = Path(__file__).parent / 'IMAGE'
+IMG_PATH = Path(__file__).parent / 'IMAGE'
 
 # 素材字体目录
 FONT_PATH = Path(__file__).parent / 'FONTS' / 'OPPOSans'

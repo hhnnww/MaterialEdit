@@ -6,7 +6,7 @@ from typing import List
 from PIL import Image
 
 from module_素材处理.core.setting import MATERIAL_FILE_SUFFIX
-from module_素材处理.core.setting import PIC_EDIT_IMG
+from module_素材处理.core.setting import IMG_PATH
 from module_素材处理.core.图片编辑.class_picedit import PICEdit
 from module_素材处理.core.素材文件夹功能.fun_指定遍历 import fun_指定遍历
 
@@ -80,11 +80,12 @@ class XQMakePIC:
 
     @staticmethod
     def fun_制作信息(stem: str, size_info: str):
-        stem_pil = PICEdit.fun_单行文字(text=stem.upper(), font_weight='m', font_size=46, text_color=(160, 160, 160),
+        stem_pil = PICEdit.fun_单行文字(text=stem.upper(), font_weight='r', font_size=46, text_color=(150, 150, 180),
                                         bg_color=(255, 255, 255)).main()
-        size_info = PICEdit.fun_单行文字(text=size_info.upper(), font_weight='m', font_size=38,
-                                         text_color=(160, 160, 160),
+        size_info = PICEdit.fun_单行文字(text=size_info.upper(), font_weight='r', font_size=38,
+                                         text_color=(150, 150, 180),
                                          bg_color=(255, 255, 255)).main()
+
         bg_width = max([stem_pil.width, size_info.width])
         bg_height = sum([stem_pil.height, size_info.height]) + 260
         bg = Image.new('RGBA', (bg_width, bg_height), (255, 255, 255))
@@ -155,7 +156,7 @@ class XQMakePIC:
 
     def fun_添加水印(self, small_im: Image.Image, mt: int):
         water_pil = Image.open(
-            (PIC_EDIT_IMG / self.tb_name / '蜘蛛网水印.png').as_posix()
+            (IMG_PATH / self.tb_name / '蜘蛛网水印.png').as_posix()
         )
         water_pil.thumbnail((1500, 9999), 1)
         left = int((small_im.width - water_pil.width) / 2)

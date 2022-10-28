@@ -3,7 +3,7 @@ from typing import List
 
 from PIL import Image
 
-from module_素材处理.core.setting import PIC_EDIT_IMG
+from module_素材处理.core.setting import IMG_PATH
 from module_素材处理.core.图片编辑.class_picedit import PICEdit
 
 
@@ -62,7 +62,7 @@ class STHeiJingStyle:
                                          self.circle_color_list.get(material_format).get('text_color'),
                                          self.circle_color_list.get(material_format).get('bg_color')).main()
 
-        bg_circle = Image.open((PIC_EDIT_IMG / '圆角背景.png').as_posix())
+        bg_circle = Image.open((IMG_PATH / '圆角背景.png').as_posix())
         prospect_circle = bg_circle.copy()
 
         if len(material_format) == 2:

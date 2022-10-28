@@ -4,7 +4,7 @@ from PIL import Image
 from pyzbar import pyzbar
 
 from module_素材处理.core import PICEdit
-from module_素材处理.core.setting import PIC_EDIT_IMG
+from module_素材处理.core.setting import IMG_PATH
 
 
 def fun_cv2_to_pil(img):
@@ -28,7 +28,7 @@ def fun_打开图片(img_path: str):
 
 def fun_所有广告图片():
     ad_list = []
-    ad_pic_path = PIC_EDIT_IMG / '广告图片'
+    ad_pic_path = IMG_PATH / '广告图片'
     for in_file in ad_pic_path.iterdir():
         if in_file.is_file() and in_file.suffix.lower() in ['.png']:
             ad_list.append(fun_打开图片(in_file))

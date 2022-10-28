@@ -16,7 +16,7 @@ class XQInfoPic:
             bg_color = (250, 250, 250)
 
         all_pil = [
-            PICEdit.fun_多行本文(text=text, line_height=1.35, font_weight='r', font_size=40, text_colr=(90, 90, 90),
+            PICEdit.fun_多行本文(text=text, line_height=1.35, font_weight='r', font_size=40, text_colr=(90, 90, 120),
                                  bg_color=bg_color, line_width=22) for text in text_item]
 
         width = 720 * 2
@@ -24,8 +24,8 @@ class XQInfoPic:
         height = int(max([pil.height for pil in all_pil]) + (gutter * 2))
         top = gutter
 
-        left = 40 * 2
-        left_2 = 230 * 2
+        left = 50 * 2
+        left_2 = 220 * 2
 
         bg = Image.new('RGBA', (width, height), bg_color)
         bg.paste(all_pil[0], (left, top), all_pil[0])

@@ -2,7 +2,7 @@ from typing import Optional, Tuple
 
 from PIL import Image, ImageDraw
 
-from module_素材处理.core.setting import *
+from module_素材处理.core.setting import IMG_PATH
 
 
 class PICToCircle:
@@ -17,7 +17,7 @@ class PICToCircle:
         self.img = img
         self.radius = radius
         self.border_color = border_color
-        self.circle_pil = Image.open((PIC_EDIT_IMG / '圆角背景.png').as_posix())
+        self.circle_pil = Image.open((IMG_PATH / '圆角背景.png').as_posix())
         self.circle_pil.thumbnail((radius, radius), 1)
         self.angle = angle
 

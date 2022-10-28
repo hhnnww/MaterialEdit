@@ -6,14 +6,14 @@ from pptx import Presentation
 from pywintypes import com_error
 from win32com.client import DispatchEx
 
-from module_素材处理.core.setting import PIC_EDIT_IMG
+from module_素材处理.core.setting import IMG_PATH
 
 
 class PPTFile:
     def __init__(self, ppt_file: Path):
         self.ppt_file = ppt_file
         self.ppt_dir = ppt_file.parent / ppt_file.stem
-        yaml_path = PIC_EDIT_IMG / 'ppt-keyword.yaml'
+        yaml_path = IMG_PATH / 'ppt-keyword.yaml'
         with open(yaml_path.as_posix(), 'r', encoding='utf-8') as p_f:
             p_f_dict = yaml.load(p_f, Loader=yaml.FullLoader)
             self.key_list = p_f_dict['replace_key']
