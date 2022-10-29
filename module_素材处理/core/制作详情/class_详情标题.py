@@ -25,7 +25,7 @@ class XQTitlePic:
 
     @cached_property
     def circle_bg(self):
-        circle_pil = PICEdit.fun_圆角矩形背景(width=self.title_pil.width + 10, height=20, bg_color=(106, 161, 255))
+        circle_pil = PICEdit.fun_圆角矩形背景(width=self.title_pil.width + 10, height=20, bg_color=(245, 199, 87))
         for x in range(circle_pil.width):
             for y in range(circle_pil.height):
                 c1, c2, c3, transparency = circle_pil.getpixel((x, y))

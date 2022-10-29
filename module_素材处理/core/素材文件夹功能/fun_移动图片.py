@@ -26,6 +26,9 @@ def fun_复制图片到指定目录(ori: Path, dst: Path, rename: bool = False):
             new_file = new_file.with_stem(f'{num}')
             num += 1
 
+        if new_file.parent.exists() is False:
+            new_file.parent.mkdir(parents=True)
+
         shutil.copy(in_file, new_file)
 
 

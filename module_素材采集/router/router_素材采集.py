@@ -4,13 +4,13 @@ from pathlib import Path
 from fastapi import APIRouter
 from pydantic import BaseModel
 
+from module_素材采集.core.class_envato import SCEnvato
+from module_素材采集.core.class_envato_素材图片下载 import SCEnvatoPICDown
+from module_素材采集.core.class_freepik import SCFreePik
 from module_素材采集.core.class_包图 import SCBaoTu
 from module_素材采集.core.class_千图 import SCQianTu
 from module_素材采集.core.class_千库 import SCQianKu
 from module_素材采集.core.class_摄图 import SCSheTu
-from module_素材采集.core.class_envato import SCEnvato
-from module_素材采集.core.class_envato_素材图片下载 import SCEnvatoPICDown
-
 from module_素材采集.core.model import fun_获取MODEL, database
 
 router = APIRouter(prefix='/scrapy')
@@ -31,16 +31,25 @@ def run_scrapy(item_in: ItemIn):
 
         all_material_list = None
 
-        if item_in.site_name == '包图':
-            all_material_list = SCBaoTu(start_url=item_in.url, max_page=item_in.max_page, cookie=item_in.cookie).main()
-        elif item_in.site_name == '千图':
-            all_material_list = SCQianTu(start_url=item_in.url, max_page=item_in.max_page, cookie=item_in.cookie).main()
-        elif item_in.site_name == '摄图':
-            all_material_list = SCSheTu(start_url=item_in.url, max_page=item_in.max_page, cookie=item_in.cookie).main()
-        elif item_in.site_name == '千库':
-            all_material_list = SCQianKu(start_url=item_in.url, max_page=item_in.max_page, cookie=item_in.cookie).main()
-        elif item_in.site_name == 'envato':
-            all_material_list = SCEnvato(start_url=item_in.url, max_page=item_in.max_page, cookie=item_in.cookie).main()
+        match item_in.site_name:
+            case '包图':
+                all_material_list = SCBaoTu(start_url=item_in.url, max_page=item_in.max_page,
+                                            cookie=item_in.cookie).main()
+            case '千图':
+                all_material_list = SCQianTu(start_url=item_in.url, max_page=item_in.max_page,
+                                             cookie=item_in.cookie).main()
+            case '摄图':
+                all_material_list = SCSheTu(start_url=item_in.url, max_page=item_in.max_page,
+                                            cookie=item_in.cookie).main()
+            case '千库':
+                all_material_list = SCQianKu(start_url=item_in.url, max_page=item_in.max_page,
+                                             cookie=item_in.cookie).main()
+            case 'envato':
+                all_material_list = SCEnvato(start_url=item_in.url, max_page=item_in.max_page,
+                                             cookie=item_in.cookie).main()
+            case 'freepik':
+                all_material_list = SCFreePik(start_url=item_in.url, max_page=item_in.max_page,
+                                              cookie=item_in.cookie).main()
 
         for ma_obj in all_material_list:
             count = model.select().where(model.hash == ma_obj.hash).count()
@@ -75,6 +84,7 @@ def down_path_cate(down_path: str):
             new_path = down_path / f'新建文件夹 ({num})'
             num += 1
 
+        print(f'移动到文件夹 {new_path}')
         new_path.mkdir()
 
         for in_file in file_list:

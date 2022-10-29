@@ -6,6 +6,7 @@ import re
 from module_素材采集.core.class_htmldown import HTMLDown
 from module_素材采集.core.model import fun_获取MODEL, database
 from module_素材采集.core.class_envato_素材图片下载 import SCEnvatoPICDown
+import math
 
 router = APIRouter(prefix='/get_material')
 
@@ -30,14 +31,20 @@ def get_img(img: str):
 def get_material_list(item_in: ItemIn):
     with database:
         model = fun_获取MODEL(tb_name=item_in.tb_name, site_name=item_in.site_name)
-        query: ModelSelect = model.select().where(model.state == 0).paginate(item_in.page_num, 80)
-        query = list(query.dicts())
+        query: ModelSelect = model.select().where(model.state == 0)
+        ma_list = query.paginate(item_in.page_num, 80)
+        ma_list = list(ma_list.dicts())
 
         if item_in.site_name == '包图':
-            for obj in query:
+            for obj in ma_list:
                 obj['img'] = 'http://127.0.0.1:22702/get_material/img?img=' + obj['img']
 
-    return query
+        resp_dict = {
+            'material_list': ma_list,
+            'count': query.count(),
+            'all_page': math.ceil(query.count() / 80)
+        }
+    return resp_dict
 
 
 @router.get('/get_material/{tb_name}/{site_name}/{material_id}')

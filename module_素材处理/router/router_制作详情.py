@@ -90,9 +90,9 @@ def make_xq(item_in: ItemIn):
         top += pil.height
         pil.close()
 
-    line_height = 2000
+    line_height = 2500
     top = 0
-    bottom = 2000
+    bottom = line_height
     num = 1
 
     while True:

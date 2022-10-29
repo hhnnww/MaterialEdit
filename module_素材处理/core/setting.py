@@ -9,7 +9,7 @@ FONT_PATH = Path(__file__).parent / 'FONTS' / 'OPPOSans'
 # 源文件列表、图片列表、广告文件列表
 MATERIAL_FILE_SUFFIX = ['.psd', '.psb', '.ai', '.eps']
 IMAGE_FILE_SUFFIX = ['.png', '.jpg', '.jpeg']
-AD_FILE_SUFFIX = ['.html', '.url', '.txt', '.exe']
+AD_FILE_SUFFIX = ['.html', '.url', '.txt', '.exe', '.pdf']
 
 # 桌面上传文件夹
 UP_FOLDER = Path().home() / 'desktop' / 'UPLOAD'

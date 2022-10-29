@@ -46,6 +46,15 @@ def material_folder_function(item_in: ItemIn):
             for in_file in ma_func.fun_指定遍历(ma_path.material_path, AD_FILE_SUFFIX):
                 in_file.unlink()
 
+            for in_file in ma_path.material_path.rglob('*'):
+                if in_file.is_file():
+
+                    if in_file.stat().st_size < 500:
+                        in_file.unlink()
+
+                    if in_file.name.lower() == '.ds_store':
+                        in_file.unlink()
+
         case "文件重命名":
             ma_func.fun_文件重命名(ma_path.material_path, 'test')
             ma_func.fun_文件重命名(ma_path.material_path, item_in.tb_name)
@@ -55,6 +64,9 @@ def material_folder_function(item_in: ItemIn):
 
         case '复制到效果图':
             ma_func.fun_复制图片到指定目录(ma_path.material_path, ma_path.effect_path, rename=True)
+            for in_file in ma_func.fun_指定遍历(ma_path.material_path, IMAGE_FILE_SUFFIX):
+                if in_file.is_file():
+                    in_file.unlink()
 
         case '解压ZIP':
             ma_func.fun_解压ZIP(in_path=ma_path.material_path)
