@@ -6,11 +6,16 @@ from module_素材处理.core.素材文件夹功能.fun_指定遍历 import fun_
 
 
 def fun_复制图片到指定目录(ori: Path, dst: Path, rename: bool = False):
-    if dst.exists() is False:
-        dst.mkdir()
+    all_file = fun_指定遍历(ori, IMAGE_FILE_SUFFIX)
+
+    if len(all_file) > 0:
+        if dst.exists() is False:
+            dst.mkdir(parents=True)
+    else:
+        return
 
     num = 1
-    for in_file in fun_指定遍历(ori, IMAGE_FILE_SUFFIX):
+    for in_file in all_file:
         in_file_parts = list(in_file.parts)
         ori_parts = list(ori.parts)
         dst_parts = list(dst.parts)

@@ -91,6 +91,12 @@ class PSFile:
         self.doc.Close(2)
 
     def run_导出_加广告(self):
+
+        ad_layers_list = ['DELETE THIS LAYER']
+        for item in self.doc.ArtLayers:
+            if str(item.Name).lower() in [layer_name.lower() for layer_name in ad_layers_list]:
+                item.Delete()
+
         self.fun_导出PNG()
         self.fun_插入广告()
         self.doc.Save()
