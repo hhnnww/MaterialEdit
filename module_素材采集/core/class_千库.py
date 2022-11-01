@@ -15,8 +15,8 @@ class SCQianKu:
         self.cookie = cookie
 
     def fun_列表页构建(self):
-        for x in range(1, 5):
-            url = self.start_url.replace('default-0-1/', f'default-0-{x}/')
+        for x in range(1, self.max_page + 1):
+            url = self.start_url.replace('-1/', f'-{x}/')
             yield url
 
     def fun_获取单页(self, url: str) -> Generator:
@@ -30,6 +30,7 @@ class SCQianKu:
 
     def main(self) -> List[MaterialType]:
         for url in self.fun_列表页构建():
+            print(f'开始采集页面：{url}')
             for ma in self.fun_获取单页(url):
                 yield ma
 

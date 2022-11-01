@@ -8,6 +8,7 @@ from tqdm import tqdm
 
 from module_素材处理.core import MaterialFolderStructure, MaterialFolderFunction
 from module_素材处理.core.setting import AD_FILE_SUFFIX, IMAGE_FILE_SUFFIX, IMG_PATH
+from module_素材处理.core import PICEdit
 
 
 class ItemIn(BaseModel):
@@ -42,6 +43,10 @@ class MaterialPathAction:
     def fun_文件重命名(self):
         self.ma_func.fun_文件重命名(self.ma_path.material_path, 'test')
         self.ma_func.fun_文件重命名(self.ma_path.material_path, self.item_in.tb_name)
+
+        if self.ma_path.preview_path.exists() is True:
+            self.ma_func.fun_文件重命名(self.ma_path.preview_path, 'test')
+            self.ma_func.fun_文件重命名(self.ma_path.preview_path, self.item_in.tb_name)
 
     def fun_复制到预览图(self):
         self.ma_func.fun_复制图片到指定目录(self.ma_path.material_path, self.ma_path.preview_path)
@@ -155,6 +160,16 @@ class MaterialPathAction:
     def fun_删除所有EPS(self):
         for in_file in self.ma_func.fun_指定遍历(self.ma_path.material_path, ['.eps']):
             in_file.unlink()
+
+    def fun_删除图片边框(self):
+        for in_file in tqdm(self.ma_func.fun_指定遍历(self.ma_path.material_path, IMAGE_FILE_SUFFIX),
+                            desc='删除图片边框', ncols=100):
+            in_file: Path
+            print(f'处理：{in_file.as_posix()}')
+
+            im = Image.open(in_file.as_posix())
+            im = PICEdit.fun_边框删除(im, None).main()
+            im.save(in_file.as_posix())
 
     def fun_全自动一键操作(self):
         self.fun_移动到根目录()

@@ -23,8 +23,8 @@ class SCBaoTu:
 
     def fun_获取单页(self, url: str) -> Generator:
         html = HTMLDown(url, cookie=self.cookie).html
-        ma_list = html.find(
-            r'body > div.page-body.skin-wrap.body-background-gradient > div.bt-body.search.clearfix > div.search-list.box-bg-search.box-bottom-gradient.clearfix > dl')
+
+        ma_list = html.find(r'.search-list dl')
 
         for ma in ma_list:
             if 'searchAdver' in ma.attrs.get('class'):
@@ -46,8 +46,14 @@ class SCBaoTu:
             yield MaterialType(url=url, img=img, hash=hash256)
 
     def main(self) -> List[MaterialType]:
-        for url in self.fun_列表页构建():
-            for ma in self.fun_获取单页(url):
+        if self.max_page > 1:
+            for url in self.fun_列表页构建():
+                for ma in self.fun_获取单页(url):
+                    yield ma
+
+        else:
+            print(f'单独采集')
+            for ma in self.fun_获取单页(self.start_url):
                 yield ma
 
 

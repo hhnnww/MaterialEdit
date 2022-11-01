@@ -68,6 +68,8 @@ def material_folder_function(item_in: ItemIn):
             ma.fun_PPT导出图片()
 
         # ------------------ 后续操作 ------------------
+        case "删除图片边框":
+            ma.fun_删除图片边框()
 
         case "素材图添加水印":
             ma.fun_素材图片添加水印()
@@ -85,7 +87,7 @@ def material_folder_function(item_in: ItemIn):
 
         case "删除所有EPS":
             ma.fun_删除所有EPS()
-            
+
         case "删除预览图":
             ma.fun_删除预览图()
 
