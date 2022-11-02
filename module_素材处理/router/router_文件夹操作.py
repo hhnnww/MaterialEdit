@@ -50,6 +50,9 @@ def material_folder_function(item_in: ItemIn):
         case '解压ZIP':
             ma.fun_解压ZIP()
 
+        case "删除相同文件":
+            ma.fun_删除相同文件()
+
         # ------------------ 图片生成 ------------------
 
         case 'PSD删除广告-生成图片-添加广告':

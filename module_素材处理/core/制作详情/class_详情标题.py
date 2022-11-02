@@ -2,6 +2,7 @@ from functools import cached_property
 
 from PIL import Image
 
+from module_素材处理.core.setting import TEXT_COLOR
 from module_素材处理.core.图片编辑.class_picedit import PICEdit
 from module_素材处理.core.图片编辑.fun_单行文字转PIL import TextToPIL
 
@@ -11,7 +12,7 @@ class XQTitlePic:
         self.title = title
         self.sec_title = sec_title
 
-        self.text_color = (90, 90, 120)
+        self.text_color = TEXT_COLOR
 
     @cached_property
     def title_pil(self):
@@ -29,7 +30,7 @@ class XQTitlePic:
         for x in range(circle_pil.width):
             for y in range(circle_pil.height):
                 c1, c2, c3, transparency = circle_pil.getpixel((x, y))
-                circle_pil.putpixel((x, y), (c1, c2, c3, int(transparency * .5)))
+                circle_pil.putpixel((x, y), (c1, c2, c3, int(transparency)))
 
         return circle_pil
 

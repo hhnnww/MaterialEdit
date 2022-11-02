@@ -81,10 +81,14 @@ class STMake:
         ori_height = self.st_height - ((len(self.st_list) + 1) * self.gutter)
         return self.fun_计算原始高度 / ori_height
 
-    def fun_全自适应单行(self, com_list: ComList):
+    def fun_全自适应单行(self, com_list: ComList, num: int):
         """宽度和高度全部自适应"""
         single_ling_actual_width = int(self.st_width - ((len(com_list.img_list) + 1) * self.gutter))
-        single_ling_actual_height = int((single_ling_actual_width / com_list.ratio) / self.fun_计算整体缩小比例)
+
+        if num % 2 == 0:
+            single_ling_actual_height = int((single_ling_actual_width / com_list.ratio) / self.fun_计算整体缩小比例) + 1
+        else:
+            single_ling_actual_height = int((single_ling_actual_width / com_list.ratio) / self.fun_计算整体缩小比例)
 
         bg = Image.new('RGBA', (self.st_width, single_ling_actual_height), self.bg_color)
         left = self.gutter
@@ -120,12 +124,12 @@ class STMake:
     def main(self):
         bg = Image.new('RGBA', (self.st_width, self.st_height), self.bg_color)
         left, top = 0, self.gutter
-        for com_list in self.st_list:
+        for num, com_list in enumerate(self.st_list):
             line_pil = None
             if self.small_pic_size_mode == SmallSizeModel.AUTO:
                 line_pil = self.fun_自适应单行(com_list)
             elif self.small_pic_size_mode == SmallSizeModel.ALL_AUTO:
-                line_pil = self.fun_全自适应单行(com_list)
+                line_pil = self.fun_全自适应单行(com_list, num)
             elif self.small_pic_size_mode == SmallSizeModel.AVERAGE:
                 line_pil = self.fun_等分单行(com_list)
 

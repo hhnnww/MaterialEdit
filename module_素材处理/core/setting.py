@@ -19,3 +19,5 @@ if UP_FOLDER.exists() is False:
 OUT_PATH = Path().home() / 'desktop' / 'OUT_PATH'
 if OUT_PATH.exists() is False:
     OUT_PATH.mkdir()
+
+TEXT_COLOR = (90, 90, 120)

@@ -26,7 +26,6 @@ class ItemIn(BaseModel):
 
 @router.post('/make_st')
 def make_st(item_in: ItemIn):
-
     # 删除UP文件夹里面的JPG图片
     for in_file in UP_FOLDER.iterdir():
         if in_file.is_file() and in_file.suffix.lower() in ['.jpg']:
@@ -48,12 +47,12 @@ def make_st(item_in: ItemIn):
         st_height = 1300
 
     # 构建布局
-    if len(item_in.img_list) > 10:
-        layout = STAutoLayout(
-            img_list=item_in.img_list[:30],
-            st_width=st_width,
+    if item_in.small_pic_mode == 'OneAndX':
+        # 构建1-X布局
+        layout = STLayoutOneX(
+            pic_list=item_in.img_list,
             st_height=st_height,
-            st_row=item_in.st_row
+            st_width=st_width
         ).main()
 
         # 直接构建首图
@@ -66,12 +65,13 @@ def make_st(item_in: ItemIn):
         # ).main()
 
     else:
-        # 构建1-X布局
-        layout = STLayoutOneX(
-            pic_list=item_in.img_list,
+        layout = STAutoLayout(
+            img_list=item_in.img_list[:30],
+            st_width=st_width,
             st_height=st_height,
-            st_width=st_width
+            st_row=item_in.st_row
         ).main()
+
 
     bg = STMake(st_list=layout, st_width=st_width, st_height=st_height, gutter=item_in.gutter, bg_color=(255, 255, 255),
                 small_pic_size_mode=small_pic_mode).main()

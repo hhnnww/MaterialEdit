@@ -7,8 +7,8 @@ from pydantic import BaseModel
 from tqdm import tqdm
 
 from module_素材处理.core import MaterialFolderStructure, MaterialFolderFunction
-from module_素材处理.core.setting import AD_FILE_SUFFIX, IMAGE_FILE_SUFFIX, IMG_PATH
 from module_素材处理.core import PICEdit
+from module_素材处理.core.setting import AD_FILE_SUFFIX, IMAGE_FILE_SUFFIX, IMG_PATH
 
 
 class ItemIn(BaseModel):
@@ -170,6 +170,9 @@ class MaterialPathAction:
             im = Image.open(in_file.as_posix())
             im = PICEdit.fun_边框删除(im, None).main()
             im.save(in_file.as_posix())
+
+    def fun_删除相同文件(self):
+        self.ma_func.fun_删除相同文件(in_path=self.ma_path.material_path).main()
 
     def fun_全自动一键操作(self):
         self.fun_移动到根目录()
