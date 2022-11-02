@@ -35,6 +35,7 @@ def make_st(item_in: ItemIn):
     st_width, st_height = 1500, 1500
     small_pic_mode = 1
 
+    # 构建首图的小图缩小模式
     if item_in.small_pic_mode == '全自动适应':
         small_pic_mode = SmallSizeModel.ALL_AUTO
     elif item_in.small_pic_mode == '单行自适应':
@@ -42,6 +43,7 @@ def make_st(item_in: ItemIn):
     elif item_in.small_pic_mode == '固定尺寸':
         small_pic_mode = SmallSizeModel.AVERAGE
 
+    # 构建首图尺寸
     if item_in.st_style == '黑鲸':
         st_width = 1500
         st_height = 1300
@@ -65,13 +67,13 @@ def make_st(item_in: ItemIn):
         # ).main()
 
     else:
+        # 构建根据行数的布局
         layout = STAutoLayout(
             img_list=item_in.img_list[:30],
             st_width=st_width,
             st_height=st_height,
             st_row=item_in.st_row
         ).main()
-
 
     bg = STMake(st_list=layout, st_width=st_width, st_height=st_height, gutter=item_in.gutter, bg_color=(255, 255, 255),
                 small_pic_size_mode=small_pic_mode).main()

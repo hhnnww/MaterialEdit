@@ -19,6 +19,9 @@ class ItemIn(BaseModel):
     源文件列表: str
     源文件大小: str
 
+    制作效果图: bool
+    制作预览图: bool
+
 
 @router.post('/make_xq')
 def make_xq(item_in: ItemIn):
@@ -48,7 +51,7 @@ def make_xq(item_in: ItemIn):
     ]
 
     effect_pic_list = mff.fun_指定遍历(mfs.effect_path, IMAGE_FILE_SUFFIX)
-    if mfs.effect_path.exists() is True and len(effect_pic_list) > 0:
+    if mfs.effect_path.exists() is True and len(effect_pic_list) > 0 and item_in.制作效果图 is True:
         effect_pil = XQMakePIC(
             img_list=effect_pic_list,
             material_path=mfs.material_path,
@@ -65,7 +68,7 @@ def make_xq(item_in: ItemIn):
         )
 
     preview_pic_list = mff.fun_指定遍历(mfs.preview_path, IMAGE_FILE_SUFFIX)
-    if mfs.preview_path.exists() is True and len(preview_pic_list) > 0:
+    if mfs.preview_path.exists() is True and len(preview_pic_list) > 0 and item_in.制作预览图 is True:
         preview_pil = XQMakePIC(
             img_list=preview_pic_list,
             material_path=mfs.material_path,
