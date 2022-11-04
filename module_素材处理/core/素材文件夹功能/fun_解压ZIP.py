@@ -2,10 +2,11 @@ import zipfile
 from pathlib import Path
 
 from module_素材处理.core.素材文件夹功能.fun_指定遍历 import fun_指定遍历
+from tqdm import tqdm
 
 
 def fun_解压ZIP(in_path: Path):
-    for in_file in fun_指定遍历(in_path, ['.zip']):
+    for in_file in tqdm(fun_指定遍历(in_path, ['.zip']), desc='解压ZIP', ncols=100):
         if zipfile.is_zipfile(in_file.as_posix()) is False:
             print(f'损坏的zip文件：{in_file}')
 

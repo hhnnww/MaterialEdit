@@ -24,6 +24,10 @@ class MaterialPathAction:
         self.ma_path = MaterialFolderStructure(root_path=item_in.root_path)
         self.ma_func = MaterialFolderFunction
 
+    def fun_字体重命名(self):
+        self.ma_func.fun_文件重命名(self.ma_path.material_path, 'test')
+        self.ma_func.fun_字体重命名(in_path=self.ma_path.material_path, tb_name=self.item_in.tb_name).main()
+
     def fun_移动到根目录(self):
         self.ma_func.fun_移动到根目录(self.ma_path.material_path)
 

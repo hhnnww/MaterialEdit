@@ -30,9 +30,11 @@ def get_img(img: str):
 @router.post('/get_list')
 def get_material_list(item_in: ItemIn):
     with database:
+        single_pate_material_num = 160
+
         model = fun_获取MODEL(tb_name=item_in.tb_name, site_name=item_in.site_name)
         query: ModelSelect = model.select().where(model.state == 0)
-        ma_list = query.paginate(item_in.page_num, 80)
+        ma_list = query.paginate(item_in.page_num, single_pate_material_num)
         ma_list = list(ma_list.dicts())
 
         if item_in.site_name == '包图':
@@ -42,7 +44,7 @@ def get_material_list(item_in: ItemIn):
         resp_dict = {
             'material_list': ma_list,
             'count': query.count(),
-            'all_page': math.ceil(query.count() / 80)
+            'all_page': math.ceil(query.count() / single_pate_material_num)
         }
     return resp_dict
 

@@ -11,6 +11,7 @@ from module_素材采集.core.class_包图 import SCBaoTu
 from module_素材采集.core.class_千图 import SCQianTu
 from module_素材采集.core.class_千库 import SCQianKu
 from module_素材采集.core.class_摄图 import SCSheTu
+from module_素材采集.core.class_pngtree import SCPngTree
 from module_素材采集.core.model import fun_获取MODEL, database
 
 router = APIRouter(prefix='/scrapy')
@@ -49,6 +50,10 @@ def run_scrapy(item_in: ItemIn):
                                              cookie=item_in.cookie).main()
             case 'freepik':
                 all_material_list = SCFreePik(start_url=item_in.url, max_page=item_in.max_page,
+                                              cookie=item_in.cookie).main()
+
+            case 'pngtree':
+                all_material_list = SCPngTree(start_url=item_in.url, max_page=item_in.max_page,
                                               cookie=item_in.cookie).main()
 
         for ma_obj in all_material_list:

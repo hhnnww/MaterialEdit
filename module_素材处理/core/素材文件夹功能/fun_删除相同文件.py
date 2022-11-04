@@ -2,6 +2,7 @@ import filecmp
 from itertools import combinations
 from pathlib import Path
 from typing import Tuple
+from tqdm import tqdm
 
 
 class DelSameFile:
@@ -32,7 +33,7 @@ class DelSameFile:
         return False
 
     def main(self):
-        for single_comb_list in self.all_file_comb():
+        for single_comb_list in tqdm(self.all_file_comb(), desc='删除重复文件', ncols=100):
             single_comb_list: Tuple[Path, Path]
             if self.is_same_file(single_comb_list):
                 print(f'删除第二个文件: {single_comb_list[1].as_posix()}')

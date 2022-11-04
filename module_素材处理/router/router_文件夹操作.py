@@ -53,6 +53,9 @@ def material_folder_function(item_in: ItemIn):
         case "删除相同文件":
             ma.fun_删除相同文件()
 
+        case "字体文件重命名":
+            ma.fun_字体重命名()
+
         # ------------------ 图片生成 ------------------
 
         case 'PSD删除广告-生成图片-添加广告':

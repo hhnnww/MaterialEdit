@@ -1,11 +1,20 @@
+import shutil
+from functools import cached_property
 from pathlib import Path
 from typing import Tuple
-from functools import cached_property
 
 
 class UnUsedPathDir:
     def __init__(self, in_path: str):
         self.in_path = Path(in_path)
+
+    @staticmethod
+    def fun_包含文件(in_path: Path):
+        for in_file in in_path.rglob('*'):
+            if in_file.is_file():
+                return True
+
+        return False
 
     @cached_property
     def min_max_int(self) -> Tuple[int, int]:
@@ -23,12 +32,17 @@ class UnUsedPathDir:
 
             path_dir = self.in_path / stem
 
+            if path_dir.exists() is True:
+                if self.fun_包含文件(path_dir) is False:
+                    shutil.rmtree(path_dir)
+
             if path_dir.exists() is False:
                 yield path_dir
 
 
 if __name__ == '__main__':
     from pprint import pprint
+
     uupd = UnUsedPathDir(r'G:\饭桶设计\0-999')
     no_path = list(uupd.main())
     pprint(no_path)
