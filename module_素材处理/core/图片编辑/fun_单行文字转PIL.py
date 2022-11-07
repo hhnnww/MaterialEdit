@@ -20,7 +20,21 @@ class TextToPIL:
 
     @cached_property
     def fun_根据字重选择字体(self) -> Path:
-        font_path = FONT_PATH / f'OPPOSans-{self.font_weight.upper()}.ttf'
+        font_name = ''
+
+        match self.font_weight:
+            case 'l':
+                font_name = 'MiSans-Light.ttf'
+            case 'm':
+                font_name = 'MiSans-Medium.ttf'
+            case 'r':
+                font_name = 'MiSans-Regular.ttf'
+            case 'b':
+                font_name = 'MiSans-Bold.ttf'
+            case 'h':
+                font_name = 'MiSans-Heavy.ttf'
+
+        font_path = FONT_PATH / 'MISans' / font_name
         if font_path.exists() is False:
             raise IndexError('字体路径不存在')
 

@@ -25,13 +25,15 @@ class XQMakePIC:
                  one_line_ratio: float,
                  material_path: Path,
                  has_material_info: bool,
-                 tb_name: str
+                 tb_name: str,
+                 pic_water_market: bool
                  ):
         self.img_list = img_list
         self.one_line_ratio = one_line_ratio
         self.material_path = material_path
         self.has_material_info = has_material_info
         self.tb_name = tb_name
+        self.pic_water_market = pic_water_market
 
         self.xq_width = 1500
         self.gutter = 30
@@ -71,8 +73,12 @@ class XQMakePIC:
 
         return comb_list
 
+    @cached_property
+    def fun_所有源文件(self):
+        return fun_指定遍历(self.material_path, MATERIAL_FILE_SUFFIX)
+
     def fun_查找源文件(self, img_path: Path):
-        for in_file in fun_指定遍历(self.material_path, MATERIAL_FILE_SUFFIX):
+        for in_file in self.fun_所有源文件:
             if in_file.stem == img_path.stem:
                 return in_file
 
@@ -80,9 +86,9 @@ class XQMakePIC:
 
     @staticmethod
     def fun_制作信息(stem: str, size_info: str):
-        stem_pil = PICEdit.fun_单行文字(text=stem.upper(), font_weight='r', font_size=40, text_color=TEXT_COLOR,
+        stem_pil = PICEdit.fun_单行文字(text=stem.upper(), font_weight='l', font_size=40, text_color=TEXT_COLOR,
                                         bg_color=(255, 255, 255)).main()
-        size_info = PICEdit.fun_单行文字(text=size_info.upper(), font_weight='r', font_size=32,
+        size_info = PICEdit.fun_单行文字(text=size_info.upper(), font_weight='l', font_size=32,
                                          text_color=TEXT_COLOR,
                                          bg_color=(255, 255, 255)).main()
 
@@ -149,7 +155,7 @@ class XQMakePIC:
             left += self.gutter + pil.width
             pil.close()
 
-        if line_num % 2 != 0:
+        if line_num % 2 != 0 and self.pic_water_market is True:
             bg = self.fun_添加水印(bg, mt=mt)
 
         return bg

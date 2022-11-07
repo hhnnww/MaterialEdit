@@ -10,3 +10,4 @@ from module_素材处理.core.素材文件夹信息.class_素材信息 import Ma
 from module_素材处理.core.素材文件夹功能.class_文件夹操作 import MaterialFolderFunction
 from module_素材处理.core.素材文件夹功能.class_文件夹结构 import MaterialFolderStructure
 from module_素材处理.core.素材文件夹功能.fun_AI_文件处理2 import AIFile
+from module_素材处理.core.素材文件夹功能.FontToPIL.fun_字体生成图片 import FontToPIL

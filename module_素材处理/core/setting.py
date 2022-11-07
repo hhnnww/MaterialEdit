@@ -4,7 +4,7 @@ from pathlib import Path
 IMG_PATH = Path(__file__).parent / 'IMAGE'
 
 # 素材字体目录
-FONT_PATH = Path(__file__).parent / 'FONTS' / 'OPPOSans'
+FONT_PATH = Path(__file__).parent / 'FONTS'
 
 # 源文件列表、图片列表、广告文件列表
 MATERIAL_FILE_SUFFIX = ['.psd', '.psb', '.ai', '.eps', '.otf', '.ttf']

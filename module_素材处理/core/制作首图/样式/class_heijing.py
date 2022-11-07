@@ -41,6 +41,16 @@ class STHeiJingStyle:
             border_color=(255, 143, 106),
             bg_color=(187, 53, 24)
         ),
+        otf=dict(
+            text_color=(255, 255, 255),
+            border_color=(255, 143, 106),
+            bg_color=(187, 53, 24)
+        ),
+        ttf=dict(
+            text_color=(255, 255, 255),
+            border_color=(255, 143, 106),
+            bg_color=(187, 53, 24)
+        )
     )
 
     def fun_制作横条背景(self):

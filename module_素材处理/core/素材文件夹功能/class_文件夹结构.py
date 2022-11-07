@@ -2,6 +2,7 @@ import re
 import shutil
 from functools import cached_property
 from pathlib import Path
+from random import shuffle
 
 from pydantic import BaseModel
 
@@ -160,7 +161,9 @@ class MaterialFolderStructure:
 
             img_list.append(img_obj.dict())
 
-        return img_list
+        shuffle(img_list)
+
+        return img_list[:200]
 
 
 if __name__ == '__main__':

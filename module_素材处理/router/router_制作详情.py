@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from PIL import Image
 from fastapi import APIRouter
 from pydantic import BaseModel
@@ -22,9 +24,14 @@ class ItemIn(BaseModel):
     制作效果图: bool
     制作预览图: bool
 
+    详情使用图片: str
+    img_list: list
+    详情水印: bool
+
 
 @router.post('/make_xq')
 def make_xq(item_in: ItemIn):
+    print(item_in)
     mfs = MaterialFolderStructure(root_path=item_in.root_path)
     mff = MaterialFolderFunction
 
@@ -33,6 +40,7 @@ def make_xq(item_in: ItemIn):
             if 'xq_' in in_file.stem:
                 in_file.unlink()
 
+    # 制作数据图
     info_pil = XQInfoPic(
         text_list=[
             ('素材ID', item_in.素材ID),
@@ -50,6 +58,7 @@ def make_xq(item_in: ItemIn):
         info_pil
     ]
 
+    # 制作效果图
     effect_pic_list = mff.fun_指定遍历(mfs.effect_path, IMAGE_FILE_SUFFIX)
     if mfs.effect_path.exists() is True and len(effect_pic_list) > 0 and item_in.制作效果图 is True:
         effect_pil = XQMakePIC(
@@ -57,7 +66,8 @@ def make_xq(item_in: ItemIn):
             material_path=mfs.material_path,
             one_line_ratio=item_in.one_line_ratio,
             has_material_info=False,
-            tb_name=item_in.tb_name
+            tb_name=item_in.tb_name,
+            pic_water_market=item_in.详情水印
         ).main()
 
         all_pil.append(
@@ -67,14 +77,20 @@ def make_xq(item_in: ItemIn):
             effect_pil
         )
 
-    preview_pic_list = mff.fun_指定遍历(mfs.preview_path, IMAGE_FILE_SUFFIX)
+    # 制作预览图
+    if item_in.详情使用图片 == '所有图片':
+        preview_pic_list = mff.fun_指定遍历(mfs.preview_path, IMAGE_FILE_SUFFIX)
+    else:
+        preview_pic_list = [Path(img) for img in item_in.img_list]
+
     if mfs.preview_path.exists() is True and len(preview_pic_list) > 0 and item_in.制作预览图 is True:
         preview_pil = XQMakePIC(
             img_list=preview_pic_list,
             material_path=mfs.material_path,
             has_material_info=True,
             one_line_ratio=item_in.one_line_ratio,
-            tb_name=item_in.tb_name
+            tb_name=item_in.tb_name,
+            pic_water_market=item_in.详情水印
         ).main()
         all_pil.append(
             XQTitlePic(title='预览图', sec_title='素材源文件和图片对应').main()
