@@ -9,6 +9,7 @@ from module_素材采集.core.model import MaterialType
 
 class SCPngTree:
     def __init__(self, start_url: str, max_page: int, cookie: str = ''):
+        # https://pngtree.com/free-vectors?sort=new
 
         self.url = start_url
         self.max_page = max_page
@@ -24,13 +25,22 @@ class SCPngTree:
 
         return key_word
 
+    @cached_property
     def all_page(self):
-        url = self.url.split('/')
-        url = '/'.join(url[:4]) + '/' + self.__get_keyword
+        all_page = []
+        if 'free-vectors' in self.url:
+            for x in range(1, self.max_page + 1):
+                re_url = f'https://pngtree.com/free-vectors/{x}?sort=new'
+                all_page.append(re_url)
 
-        for x in range(1, self.max_page + 1):
-            re_url = url + '/' + str(x) + '?sort=new'
-            yield re_url
+        else:
+            url = self.url.split('/')
+            url = '/'.join(url[:4]) + '/' + self.__get_keyword
+            for x in range(1, self.max_page + 1):
+                re_url = url + '/' + str(x) + '?sort=new'
+                all_page.append(re_url)
+
+        return all_page
 
     def fun_获取单页(self, url: str):
         html = HTMLDown(url=url, cookie=self.cookie).html
@@ -46,7 +56,7 @@ class SCPngTree:
             )
 
     def main(self):
-        for page in self.all_page():
+        for page in self.all_page:
             print(page)
             for ma_obj in self.fun_获取单页(url=page):
                 yield ma_obj

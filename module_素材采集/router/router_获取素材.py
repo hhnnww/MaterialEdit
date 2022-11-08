@@ -1,12 +1,17 @@
-from fastapi import APIRouter
-from fastapi.responses import Response, RedirectResponse
-from peewee import ModelSelect, ModelDelete
-from pydantic import BaseModel
-import re
-from module_素材采集.core.class_htmldown import HTMLDown
-from module_素材采集.core.model import fun_获取MODEL, database
-from module_素材采集.core.class_envato_素材图片下载 import SCEnvatoPICDown
 import math
+import re
+
+from fastapi import APIRouter
+from fastapi.responses import RedirectResponse
+from fastapi.responses import Response
+from peewee import ModelDelete
+from peewee import ModelSelect
+from pydantic import BaseModel
+
+from module_素材采集.core.class_envato_素材图片下载 import SCEnvatoPICDown
+from module_素材采集.core.class_htmldown import HTMLDown
+from module_素材采集.core.model import database
+from module_素材采集.core.model import fun_获取MODEL
 
 router = APIRouter(prefix='/get_material')
 
@@ -43,8 +48,8 @@ def get_material_list(item_in: ItemIn):
 
         resp_dict = {
             'material_list': ma_list,
-            'count': query.count(),
-            'all_page': math.ceil(query.count() / single_pate_material_num)
+            'count':         query.count(),
+            'all_page':      math.ceil(query.count() / single_pate_material_num)
         }
     return resp_dict
 
@@ -68,6 +73,12 @@ def get_material(tb_name: str, site_name: str, material_id: int):
 
         elif site_name == 'envato':
             SCEnvatoPICDown(url).main()
+
+        elif site_name == 'allfreedown':
+            # https://all-free-download.com/free-vector/download/christmas_seamless_pattern_template_illusive_snowflakes_shapes_decor_elegant_design_6928013.html
+            # https://files.all-free-download.com/free_download_graphic_6928013.html
+            sc_id = re.findall(r'_(\d+)?\.html', url)[0]
+            url = f'https://files.all-free-download.com/free_download_graphic_{sc_id}.html'
 
         obj.state = 1
         obj.save()
