@@ -25,8 +25,20 @@ class MaterialPathAction:
         self.ma_func = MaterialFolderFunction
 
     def fun_字体重命名(self):
-        self.ma_func.fun_文件重命名(self.ma_path.material_path, 'test')
-        self.ma_func.fun_字体重命名(in_path=self.ma_path.material_path, tb_name=self.item_in.tb_name).main()
+        self.ma_func.fun_文件重命名(self.ma_path.material_path, f'text')
+        self.ma_func.fun_文件重命名(self.ma_path.material_path, f'{self.item_in.tb_name}')
+        # self.ma_func.fun_字体重命名(in_path=self.ma_path.material_path, tb_name=self.item_in.tb_name).main()
+
+    def fun_字体生成图片(self):
+        for in_file in tqdm(self.ma_func.fun_指定遍历(self.ma_path.material_path, ['.otf', '.ttf']), ncols=100,
+                            desc='字体生成图片'):
+            try:
+                self.ma_func.fun_字体生成图片(in_file, self.item_in.tb_name).main()
+            except:
+                pass
+
+    def fun_按格式分类(self):
+        self.ma_func.fun_按格式分类(self.ma_path.material_path).main()
 
     def fun_移动到根目录(self):
         self.ma_func.fun_移动到根目录(self.ma_path.material_path)

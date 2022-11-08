@@ -33,7 +33,11 @@ class FontToPIL:
         return False
 
     def is_chinese(self):
-        if len(self.text_map) >= 1000:
+        text_map = self.text_map
+        if text_map is None:
+            return False
+
+        if len(text_map) >= 1000:
             return True
 
         return False
@@ -102,7 +106,7 @@ class FontToPIL:
         # 计算信息尺寸
         info_font_size = 24
         info_true_font = ImageFont.truetype(
-            font=(FONT_PATH.parent / 'MISans' / 'MiSans-Regular.ttf').as_posix(), size=info_font_size
+            font=(FONT_PATH / 'MISans' / 'MiSans-Regular.ttf').as_posix(), size=info_font_size
         )
         info_width_height = info_true_font.getsize(info_text)
 
@@ -160,44 +164,11 @@ class FontToPIL:
     def main(self):
         png_path = self.font_path.with_suffix('.png')
         if png_path.exists() is True:
-            print(f'图片存在不保存')
             return
 
         im = self.fun_图片写字()
 
         im.save(png_path.as_posix())
-        print(f'图片保存成功:{png_path.as_posix()}')
 
         im.close()
         self.font_obj.close()
-
-
-if __name__ == '__main__':
-
-    def del_all_png():
-        for num, in_file in enumerate(Path(r'G:\饭桶设计\1000-1999\1015\1015').rglob('*')):
-
-            in_file: Path
-            print(in_file.as_posix())
-
-            if in_file.is_file() and in_file.suffix.lower() == '.png':
-                in_file.unlink()
-
-
-    def export_font_png():
-        for num, in_file in enumerate(Path(r'G:\饭桶设计\1000-1999\1015\1015').rglob('*')):
-            in_file: Path
-            print(in_file.as_posix())
-
-            if in_file.is_file() and in_file.suffix.lower() in ['.otf', '.ttf']:
-                try:
-                    fi = FontToPIL(font_path=in_file, tb_name='饭桶设计')
-                    fi.main()
-                except:
-                    pass
-                else:
-                    del fi
-
-
-    del_all_png()
-    export_font_png()

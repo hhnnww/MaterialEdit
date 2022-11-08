@@ -1,13 +1,14 @@
 import re
 from pathlib import Path
 
+import fontTools.ttLib
 from fontTools.ttLib import TTFont
 
 from module_素材处理.core.setting import FONT_SUFFIX
 
 
 class FontPathReName:
-    def __init__(self, in_path: Path,tb_name:str):
+    def __init__(self, in_path: Path, tb_name: str):
         self.in_path = in_path
         self.tb_name = tb_name
 
@@ -48,13 +49,13 @@ class FontPathReName:
     @staticmethod
     def fun_文件名转STEM(font_name: str):
         replace_text = (
-            (' ', '_'),
             ('-', '_'),
             ('?', '_'),
             ('.', '_'),
             (':', '_'),
             ('<', ''),
-            ('>', '')
+            ('>', ''),
+            (' ', '_'),
         )
         for rep in replace_text:
             font_name = font_name.replace(rep[0], rep[1])
@@ -79,35 +80,32 @@ class FontPathReName:
         return all_file
 
     def main(self):
+        bad_file = []
         for in_file in self.fun_所有字体文件():
-            font_name = self.fun_获取文件名(in_file)
-            font_stem = self.tb_name + self.fun_文件名转STEM(font_name)
+            try:
+                font_name = self.fun_获取文件名(in_file)
+            except fontTools.ttLib.TTLibError:
+                print(f'错误的字体文件{in_file}')
+                bad_file.append(in_file)
+                pass
+            else:
+                font_stem = self.tb_name + '_' + self.fun_文件名转STEM(font_name)
 
-            if in_file.stem == font_stem:
-                print('文件名符合-不重命名')
-                continue
+                if in_file.stem == font_stem:
+                    continue
 
-            new_name = in_file.with_stem(font_stem)
-            if new_name.exists() is False:
-                print(f'修改名字:{in_file.as_posix()}\t-->\t{new_name.as_posix()}')
-                in_file.rename(new_name)
+                try:
+                    new_name = in_file.with_stem(font_stem)
+                except ValueError:
+                    print('无法修改文件名')
+                else:
+                    if new_name.exists() is False:
+                        print(f'修改名字:{in_file.as_posix()}\t-->\t{new_name.as_posix()}')
 
+                        try:
+                            in_file.rename(new_name)
+                        except:
+                            pass
 
-if __name__ == '__main__':
-    font_path = Path(r'G:\饭桶设计\1000-1999\1015\1015')
-
-
-    def re_name_all_file():
-        prefix = 'ftd'
-        for num, in_file in enumerate(FontPathReName(Path(r'G:\饭桶设计\1000-1999\1015\1015')).fun_所有字体文件()):
-            new_path = in_file.with_stem(prefix + str(num))
-            if new_path.exists() is False:
-                print(f'{in_file}\t-->\t{new_path}')
-                in_file.rename(new_path)
-
-
-    # re_name_all_file()
-
-    FontPathReName(
-        Path(r'G:\饭桶设计\1000-1999\1015\1015')
-    ).main()
+        for bf in bad_file:
+            print(bf)

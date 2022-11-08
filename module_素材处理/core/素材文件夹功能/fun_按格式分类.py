@@ -24,8 +24,12 @@ class CateBySuffix:
 
     def main(self):
         for in_file in self.in_path.rglob('*'):
-            if in_file.is_file() and in_file.suffix.lower() in MATERIAL_FILE_SUFFIX:
+            if in_file.is_file():
                 in_file_path = self.fun_构建文件目录(in_file)
+
+                if in_file.parent == in_file_path:
+                    continue
+
                 new_name = in_file_path / in_file.name
 
                 if new_name.exists() is False:

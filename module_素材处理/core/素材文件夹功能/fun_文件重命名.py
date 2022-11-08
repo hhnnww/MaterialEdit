@@ -1,7 +1,8 @@
 from pathlib import Path
 from typing import Optional
 
-from module_素材处理.core.setting import MATERIAL_FILE_SUFFIX, IMAGE_FILE_SUFFIX
+from module_素材处理.core.setting import IMAGE_FILE_SUFFIX
+from module_素材处理.core.setting import MATERIAL_FILE_SUFFIX
 
 
 class MaterialFolderRename:
@@ -53,10 +54,11 @@ class MaterialFolderRename:
                 print(f'文件重命名：{img_file}')
                 img_file.rename(img_file.with_stem(self.tb_name + f'({num})'))
 
+            num += 1
+
         return num
 
     def main(self):
         num = 1
         for in_file in self.folder.rglob('*'):
             num = self.fun_修改单个文件(in_file, num)
-

@@ -4,8 +4,11 @@ from PIL import Image
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from module_素材处理.core import XQInfoPic, XQMakePIC, MaterialFolderStructure, MaterialFolderFunction, \
-    XQTitlePic
+from module_素材处理.core import MaterialFolderFunction
+from module_素材处理.core import MaterialFolderStructure
+from module_素材处理.core import XQInfoPic
+from module_素材处理.core import XQMakePIC
+from module_素材处理.core import XQTitlePic
 from module_素材处理.core.setting import IMAGE_FILE_SUFFIX
 from module_素材处理.core.setting import UP_FOLDER
 
@@ -15,7 +18,7 @@ router = APIRouter(prefix='/make_xq')
 class ItemIn(BaseModel):
     root_path: str
     tb_name: str
-    one_line_ratio: float
+    单排图片数量: int
     素材ID: str
     素材格式: str
     源文件列表: str
@@ -27,6 +30,8 @@ class ItemIn(BaseModel):
     详情使用图片: str
     img_list: list
     详情水印: bool
+
+    详情素材信息: bool
 
 
 @router.post('/make_xq')
@@ -64,7 +69,7 @@ def make_xq(item_in: ItemIn):
         effect_pil = XQMakePIC(
             img_list=effect_pic_list,
             material_path=mfs.material_path,
-            one_line_ratio=item_in.one_line_ratio,
+            single_pic_num=item_in.单排图片数量,
             has_material_info=False,
             tb_name=item_in.tb_name,
             pic_water_market=item_in.详情水印
@@ -87,8 +92,8 @@ def make_xq(item_in: ItemIn):
         preview_pil = XQMakePIC(
             img_list=preview_pic_list,
             material_path=mfs.material_path,
-            has_material_info=True,
-            one_line_ratio=item_in.one_line_ratio,
+            has_material_info=item_in.详情素材信息,
+            single_pic_num=item_in.单排图片数量,
             tb_name=item_in.tb_name,
             pic_water_market=item_in.详情水印
         ).main()

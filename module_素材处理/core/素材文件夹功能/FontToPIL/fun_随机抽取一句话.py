@@ -9,7 +9,7 @@ class GetShiJu:
 
     @staticmethod
     def fun_随机获取一个文件():
-        json_dir = Path('./json')
+        json_dir = Path(__file__).parent / 'json'
 
         json_list = []
         for in_file in json_dir.iterdir():
@@ -32,7 +32,6 @@ class GetShiJu:
 
     def main(self):
         js_file = self.fun_随机获取一个文件()
-        print(f'抽取文件:{js_file}')
 
         js_text = self.fun_打开JSON(js_file)
         js_list = self.fun_构建诗句列表(js_text)

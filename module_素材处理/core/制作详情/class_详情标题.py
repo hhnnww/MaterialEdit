@@ -21,7 +21,7 @@ class XQTitlePic:
 
     @cached_property
     def sec_title_pil(self):
-        return TextToPIL(text=self.sec_title, text_color=self.text_color, bg_color=(255, 255, 255, 0), font_weight='r',
+        return TextToPIL(text=self.sec_title, text_color=self.text_color, bg_color=(255, 255, 255, 0), font_weight='l',
                          font_size=30).main()
 
     @cached_property

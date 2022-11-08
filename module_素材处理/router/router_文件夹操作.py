@@ -56,6 +56,12 @@ def material_folder_function(item_in: ItemIn):
         case "字体文件重命名":
             ma.fun_字体重命名()
 
+        case "按格式分类":
+            ma.fun_按格式分类()
+
+        case "字体导出PNG":
+            ma.fun_字体生成图片()
+
         # ------------------ 图片生成 ------------------
 
         case 'PSD删除广告-生成图片-添加广告':

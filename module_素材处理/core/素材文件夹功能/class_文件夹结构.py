@@ -161,9 +161,7 @@ class MaterialFolderStructure:
 
             img_list.append(img_obj.dict())
 
-        shuffle(img_list)
-
-        return img_list[:200]
+        return img_list
 
 
 if __name__ == '__main__':

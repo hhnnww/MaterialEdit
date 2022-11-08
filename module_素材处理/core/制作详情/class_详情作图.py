@@ -22,14 +22,14 @@ class IMGType:
 class XQMakePIC:
     def __init__(self,
                  img_list: List[Path],
-                 one_line_ratio: float,
+                 single_pic_num: float,
                  material_path: Path,
                  has_material_info: bool,
                  tb_name: str,
-                 pic_water_market: bool
+                 pic_water_market: bool,
                  ):
         self.img_list = img_list
-        self.one_line_ratio = one_line_ratio
+        self.single_pic_num = single_pic_num
         self.material_path = material_path
         self.has_material_info = has_material_info
         self.tb_name = tb_name
@@ -51,25 +51,21 @@ class XQMakePIC:
     @cached_property
     def fun_组合列表(self):
         comb_list = []
-
-        if len(self.fun_构建列表) < 20:
-            comb_list = [[img_type] for img_type in self.fun_构建列表]
-            return comb_list
-
         line_comb = []
-        for img_type in self.fun_构建列表:
-            if img_type.ratio > self.one_line_ratio:
-                if len(line_comb) > 0:
-                    comb_list.append(line_comb.copy())
-                comb_list.append([img_type])
-                continue
 
+        for img_type in self.fun_构建列表:
             line_comb.append(img_type)
 
-            line_ratio = sum([in_img_type.ratio for in_img_type in line_comb])
-            if line_ratio >= self.one_line_ratio or len(line_comb) == 2:
+            # 选择单排数量
+            line_sum_ratio = sum([in_img.ratio for in_img in line_comb])
+            if len(line_comb) == self.single_pic_num or line_sum_ratio >= 5:
                 comb_list.append(line_comb.copy())
                 line_comb = []
+
+            # 如果到了最后一行还有图片
+            if img_type == self.fun_构建列表[-1]:
+                if len(line_comb) > 0:
+                    comb_list.append(line_comb.copy())
 
         return comb_list
 
@@ -111,6 +107,7 @@ class XQMakePIC:
         bg_height = sum([small_im.height, info_pil.height])
         bg = Image.new('RGBA', (bg_width, bg_height), (255, 255, 255))
 
+        info_pil.thumbnail((small_im.width - 40, 99999), 1)
         top = 0
         for pil in [small_im, info_pil]:
             left = int((bg.width - pil.width) / 2)
