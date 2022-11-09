@@ -53,14 +53,14 @@ def material_folder_function(item_in: ItemIn):
         case "删除相同文件":
             ma.fun_删除相同文件()
 
-        case "字体文件重命名":
-            ma.fun_字体重命名()
-
         case "按格式分类":
             ma.fun_按格式分类()
 
         case "字体导出PNG":
             ma.fun_字体生成图片()
+
+        case "按数字分类":
+            ma.fun_按数字分类()
 
         # ------------------ 图片生成 ------------------
 

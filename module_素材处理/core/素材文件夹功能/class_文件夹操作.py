@@ -8,10 +8,12 @@ from module_素材处理.core.素材文件夹功能.fun_文件重命名 import M
 from module_素材处理.core.素材文件夹功能.fun_移动到根目录 import fun_移动到根目录
 from module_素材处理.core.素材文件夹功能.fun_移动图片 import fun_复制图片到指定目录
 from module_素材处理.core.素材文件夹功能.fun_解压ZIP import fun_解压ZIP
-from .FontToPIL.fun_字体生成图片 import FontToPIL
+# from .FontToPIL.fun_字体生成图片 import FontToPIL
 from .fun_删除相同文件 import DelSameFile
 from .fun_按格式分类 import CateBySuffix
 from .fun_重命名字体文件 import FontPathReName
+from .FontToPng2.class_font_to_png import FontToPng
+from .fun_按数字分类 import CateByNum
 
 
 class MaterialFolderFunction:
@@ -28,4 +30,5 @@ class MaterialFolderFunction:
     fun_删除相同文件 = DelSameFile
     fun_字体重命名 = FontPathReName
     fun_按格式分类 = CateBySuffix
-    fun_字体生成图片 = FontToPIL
+    fun_字体生成图片 = FontToPng
+    fun_按数字分类 = CateByNum

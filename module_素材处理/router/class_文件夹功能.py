@@ -6,9 +6,12 @@ from PIL import Image
 from pydantic import BaseModel
 from tqdm import tqdm
 
-from module_素材处理.core import MaterialFolderStructure, MaterialFolderFunction
+from module_素材处理.core import MaterialFolderFunction
+from module_素材处理.core import MaterialFolderStructure
 from module_素材处理.core import PICEdit
-from module_素材处理.core.setting import AD_FILE_SUFFIX, IMAGE_FILE_SUFFIX, IMG_PATH
+from module_素材处理.core.setting import AD_FILE_SUFFIX
+from module_素材处理.core.setting import IMAGE_FILE_SUFFIX
+from module_素材处理.core.setting import IMG_PATH
 
 
 class ItemIn(BaseModel):
@@ -24,16 +27,15 @@ class MaterialPathAction:
         self.ma_path = MaterialFolderStructure(root_path=item_in.root_path)
         self.ma_func = MaterialFolderFunction
 
-    def fun_字体重命名(self):
-        self.ma_func.fun_文件重命名(self.ma_path.material_path, f'text')
-        self.ma_func.fun_文件重命名(self.ma_path.material_path, f'{self.item_in.tb_name}')
-        # self.ma_func.fun_字体重命名(in_path=self.ma_path.material_path, tb_name=self.item_in.tb_name).main()
+    def fun_按数字分类(self):
+        self.ma_func.fun_按数字分类(in_path=self.ma_path.material_path).main()
+        self.ma_func.fun_按数字分类(in_path=self.ma_path.preview_path).main()
 
     def fun_字体生成图片(self):
         for in_file in tqdm(self.ma_func.fun_指定遍历(self.ma_path.material_path, ['.otf', '.ttf']), ncols=100,
                             desc='字体生成图片'):
             try:
-                self.ma_func.fun_字体生成图片(in_file, self.item_in.tb_name).main()
+                self.ma_func.fun_字体生成图片(font_path=in_file, tb_name=self.item_in.tb_name).main()
             except:
                 pass
 

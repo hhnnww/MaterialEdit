@@ -6,7 +6,8 @@ from typing import List
 from PIL import Image
 
 from module_素材处理.core.setting import IMG_PATH
-from module_素材处理.core.setting import MATERIAL_FILE_SUFFIX, TEXT_COLOR
+from module_素材处理.core.setting import MATERIAL_FILE_SUFFIX
+from module_素材处理.core.setting import TEXT_COLOR
 from module_素材处理.core.图片编辑.class_picedit import PICEdit
 from module_素材处理.core.素材文件夹功能.fun_指定遍历 import fun_指定遍历
 
@@ -42,10 +43,14 @@ class XQMakePIC:
     def fun_构建列表(self):
         pil_list = []
         for img_path in self.img_list:
-            with Image.open(img_path.as_posix()) as im:
-                pil_list.append(
-                    IMGType(path=img_path, width=im.width, height=im.height, ratio=im.width / im.height)
-                )
+            try:
+                with Image.open(img_path.as_posix()) as im:
+                    pil_list.append(
+                        IMGType(path=img_path, width=im.width, height=im.height, ratio=im.width / im.height)
+                    )
+            except:
+                pass
+
         return pil_list
 
     @cached_property

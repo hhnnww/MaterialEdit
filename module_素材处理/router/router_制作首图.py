@@ -42,6 +42,8 @@ def make_st(item_in: ItemIn):
         small_pic_mode = SmallSizeModel.AUTO
     elif item_in.small_pic_mode == '固定尺寸':
         small_pic_mode = SmallSizeModel.AVERAGE
+    elif item_in.small_pic_mode == 'OneAndX':
+        small_pic_mode = SmallSizeModel.ALL_AUTO
 
     # 构建首图尺寸
     if item_in.st_style == '黑鲸':

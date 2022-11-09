@@ -2,11 +2,14 @@ from functools import cached_property
 from pathlib import Path
 
 import zhconv
-from PIL import Image, ImageFont, ImageDraw
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
 from faker import Faker
 from fontTools.ttLib import TTFont
 
-from module_素材处理.core.setting import IMG_PATH, FONT_PATH
+from module_素材处理.core.setting import FONT_PATH
+from module_素材处理.core.setting import IMG_PATH
 from module_素材处理.core.素材文件夹功能.FontToPIL.fun_随机抽取一句话 import GetShiJu
 
 
@@ -19,8 +22,11 @@ class FontToPIL:
 
     def __init__(self, font_path: Path, tb_name: str):
         self.font_path = font_path
-        self.font_obj = TTFont(font_path.as_posix())
         self.tb_name = tb_name
+
+    @cached_property
+    def font_obj(self):
+        return TTFont(self.font_path.as_posix())
 
     @cached_property
     def text_map(self):
@@ -55,15 +61,16 @@ class FontToPIL:
 
             get_num = 0
             while self.has_text(word_text) is False:
-                word_text = GetShiJu().main()
+                if get_num < 50:
+                    word_text = GetShiJu().main()
 
-                if get_num > 50:
+                elif 50 <= get_num < 100:
                     word_text = zhconv.convert(word_text, 'zh-hant')
 
-                    if get_num > 100:
-                        word_text = 'Hello FanTong Design'
+                elif get_num >= 100:
+                    word_text = 'Hello FanTong Design'
 
-                        break
+                    break
 
                 get_num += 1
         else:
@@ -74,7 +81,7 @@ class FontToPIL:
         return word_text
 
     @staticmethod
-    def addTransparency(img, factor=0.7):
+    def fun_图片添加不透明度(img, factor=0.7):
         img = img.convert('RGBA')
         with Image.new('RGBA', img.size, (0, 0, 0, 0)) as img_blender:
             img = Image.blend(img_blender, img, factor)
@@ -90,7 +97,7 @@ class FontToPIL:
     def fun_图片写字(self):
         im = self.fun_制作背景()
         title_text = self.fun_生成单词()
-        info_text = self.fun_字体信息()
+        info_text = self.fun_字体完整信息()
         gutter = 50
 
         # 计算标题尺寸
@@ -126,33 +133,46 @@ class FontToPIL:
         return im
 
     @staticmethod
-    def text_is_chinese(string):
+    def has_chinese(string):
         for ch in string:
             if u'\u4e00' <= ch <= u'\u9fff':
                 return True
+
         return False
 
-    def fun_字体信息(self):
-        name_list = []
+    @property
+    def font_name(self):
         font_name = ''
-
+        name_list = []
         names = self.font_obj['name'].names
         for nt in names:
             if nt.nameID == 4 or nt.nameID == 1:
                 name_list.append(str(nt))
 
-        for string_text in name_list:
-            if self.text_is_chinese(string_text):
-                font_name = string_text
+        for nt_str in name_list:
+            if self.has_chinese(nt_str):
+                font_name = nt_str
 
         if font_name == '':
-            name_list.sort(key=lambda k: len(k), reverse=True)
-            font_name = name_list[0]
+            font_name = max(name_list)
 
-        if self.is_chinese() is True:
-            font_name += ' (中文字体)'
-        else:
-            font_name += ' (英文字体)'
+        font_name = self.fun_处理NAME(font_name)
+
+        return font_name
+
+    @staticmethod
+    def fun_处理NAME(text_str: str):
+        re_str = (
+            (' ', '_'),
+        )
+
+        for re_s in re_str:
+            text_str = text_str.replace(re_s[0], re_s[1])
+
+        return text_str
+
+    def fun_字体完整信息(self):
+        font_name = self.font_name
 
         if self.tb_name == '饭桶设计':
             font_name += ' 饭桶设计 ftdesign.taobao.com'
@@ -161,7 +181,7 @@ class FontToPIL:
 
         return font_name
 
-    def main(self):
+    def fun_生成PNG图片(self):
         png_path = self.font_path.with_suffix('.png')
         if png_path.exists() is True:
             return
@@ -172,3 +192,12 @@ class FontToPIL:
 
         im.close()
         self.font_obj.close()
+
+
+if __name__ == '__main__':
+    ft = FontToPIL(
+        font_path=Path(r'E:\BaiduNetdiskDownload\XF1663 可商用字体\中国大陆\仓耳舒圆体\仓耳舒圆体\仓耳舒圆体W01.ttf'),
+        tb_name='饭桶设计'
+    )
+    print(ft.font_name)
+    print(ft.text_map)
