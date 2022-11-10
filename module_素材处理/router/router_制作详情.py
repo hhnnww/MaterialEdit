@@ -4,13 +4,13 @@ from PIL import Image
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from module_素材处理.core import MaterialFolderFunction
-from module_素材处理.core import MaterialFolderStructure
-from module_素材处理.core import XQInfoPic
-from module_素材处理.core import XQMakePIC
-from module_素材处理.core import XQTitlePic
 from module_素材处理.core.setting import IMAGE_FILE_SUFFIX
 from module_素材处理.core.setting import UP_FOLDER
+from module_素材处理.core.制作详情 import XQInfoPic
+from module_素材处理.core.制作详情 import XQMakePIC
+from module_素材处理.core.制作详情 import XQTitlePic
+from module_素材处理.core.素材文件夹功能 import MaterialFolderFunction
+from module_素材处理.core.素材文件夹功能 import MaterialFolderStructure
 
 router = APIRouter(prefix='/make_xq')
 

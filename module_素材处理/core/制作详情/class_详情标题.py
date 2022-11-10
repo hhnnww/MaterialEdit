@@ -3,8 +3,7 @@ from functools import cached_property
 from PIL import Image
 
 from module_素材处理.core.setting import TEXT_COLOR
-from module_素材处理.core.图片编辑.class_picedit import PICEdit
-from module_素材处理.core.图片编辑.fun_单行文字转PIL import TextToPIL
+from module_素材处理.core.图片编辑 import PICEdit
 
 
 class XQTitlePic:
@@ -16,13 +15,15 @@ class XQTitlePic:
 
     @cached_property
     def title_pil(self):
-        return TextToPIL(text=self.title, text_color=self.text_color, bg_color=(255, 255, 255, 0), font_weight='b',
-                         font_size=60).main()
+        return PICEdit.fun_单行文字(text=self.title, text_color=self.text_color, bg_color=(255, 255, 255, 0),
+                                    font_weight='b',
+                                    font_size=60).main()
 
     @cached_property
     def sec_title_pil(self):
-        return TextToPIL(text=self.sec_title, text_color=self.text_color, bg_color=(255, 255, 255, 0), font_weight='l',
-                         font_size=30).main()
+        return PICEdit.fun_单行文字(text=self.sec_title, text_color=self.text_color, bg_color=(255, 255, 255, 0),
+                                    font_weight='l',
+                                    font_size=30).main()
 
     @cached_property
     def circle_bg(self):

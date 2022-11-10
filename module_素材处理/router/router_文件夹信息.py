@@ -6,7 +6,8 @@ from fastapi import APIRouter
 from fastapi.responses import Response
 from pydantic import BaseModel
 
-from module_素材处理.core import MaterialFolderStructure, MaterialInfo
+from module_素材处理.core.素材文件夹功能 import MaterialFolderStructure
+from module_素材处理.core.素材文件夹信息 import MaterialInfo
 
 router = APIRouter(prefix='/GetMaterialInfo')
 

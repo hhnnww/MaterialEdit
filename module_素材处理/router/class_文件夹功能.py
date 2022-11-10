@@ -6,12 +6,12 @@ from PIL import Image
 from pydantic import BaseModel
 from tqdm import tqdm
 
-from module_素材处理.core import MaterialFolderFunction
-from module_素材处理.core import MaterialFolderStructure
-from module_素材处理.core import PICEdit
 from module_素材处理.core.setting import AD_FILE_SUFFIX
 from module_素材处理.core.setting import IMAGE_FILE_SUFFIX
 from module_素材处理.core.setting import IMG_PATH
+from module_素材处理.core.图片编辑 import PICEdit
+from module_素材处理.core.素材文件夹功能 import MaterialFolderFunction
+from module_素材处理.core.素材文件夹功能 import MaterialFolderStructure
 
 
 class ItemIn(BaseModel):

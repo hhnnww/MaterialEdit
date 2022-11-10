@@ -2,7 +2,7 @@ from typing import List, Tuple
 
 from PIL import Image
 
-from module_素材处理.core.图片编辑.class_picedit import PICEdit
+from module_素材处理.core.图片编辑 import PICEdit
 
 
 class XQInfoPic:

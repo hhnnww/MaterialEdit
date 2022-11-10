@@ -2,8 +2,12 @@ from PIL import Image
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from module_素材处理.core import STAutoLayout, STMake, STHeiJingStyle, SmallSizeModel, STLayoutOneX
 from module_素材处理.core.setting import UP_FOLDER
+from module_素材处理.core.制作首图 import STAutoLayout
+from module_素材处理.core.制作首图 import STHeiJingStyle
+from module_素材处理.core.制作首图 import STLayoutOneX
+from module_素材处理.core.制作首图 import STMake
+from module_素材处理.core.制作首图 import SmallSizeModel
 
 # 错落首图
 # from module_素材处理.core.制作首图.布局.class_错落布局 import STLayoutScat
