@@ -201,11 +201,8 @@ if __name__ == '__main__':
         font_path=Path(r'E:\小夕素材\9000-9999\9261\9261\000_099\小夕素材(3).ttf'),
         tb_name='饭桶设计'
     )
-    ftp.has_watermark = False
-    ftp.bg_color = (255, 255, 255, 0)
-    ftp.font_color = (0, 0, 0)
-
     fbg = ftp.fun_make_pil('小夕设计 xiaoxi design')
+    fbg.show()
 
-    up_path = Path(rf'C:\Users\wuweihua\Desktop\UPLOAD\1.png')
-    fbg.save(up_path.as_posix())
+    # up_path = Path(rf'C:\Users\wuweihua\Desktop\UPLOAD\1.png')
+    # fbg.save(up_path.as_posix())

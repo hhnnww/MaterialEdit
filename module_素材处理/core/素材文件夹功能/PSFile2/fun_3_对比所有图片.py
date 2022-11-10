@@ -3,7 +3,7 @@ import numpy as np
 from PIL import Image
 from pyzbar import pyzbar
 
-from module_素材处理.core import PICEdit
+from module_素材处理.core.图片编辑 import PICEdit
 from module_素材处理.core.setting import IMG_PATH
 
 
