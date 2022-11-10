@@ -28,48 +28,47 @@ class ItemIn(BaseModel):
 
 @router.post('/run')
 def run_scrapy(item_in: ItemIn):
-    with database:
-        model = fun_获取MODEL(tb_name=item_in.tb_name, site_name=item_in.site_name)
+    model = fun_获取MODEL(tb_name=item_in.tb_name, site_name=item_in.site_name)
 
-        all_material_list = None
+    all_material_list = None
 
-        match item_in.site_name:
-            case '包图':
-                all_material_list = SCBaoTu(start_url=item_in.url, max_page=item_in.max_page,
-                                            cookie=item_in.cookie).main()
-            case '千图':
-                all_material_list = SCQianTu(start_url=item_in.url, max_page=item_in.max_page,
-                                             cookie=item_in.cookie).main()
-            case '摄图':
-                all_material_list = SCSheTu(start_url=item_in.url, max_page=item_in.max_page,
-                                            cookie=item_in.cookie).main()
-            case '千库':
-                all_material_list = SCQianKu(start_url=item_in.url, max_page=item_in.max_page,
-                                             cookie=item_in.cookie).main()
-            case 'envato':
-                all_material_list = SCEnvato(start_url=item_in.url, max_page=item_in.max_page,
-                                             cookie=item_in.cookie).main()
-            case 'freepik':
-                all_material_list = SCFreePik(start_url=item_in.url, max_page=item_in.max_page,
+    match item_in.site_name:
+        case '包图':
+            all_material_list = SCBaoTu(start_url=item_in.url, max_page=item_in.max_page,
+                                        cookie=item_in.cookie).main()
+        case '千图':
+            all_material_list = SCQianTu(start_url=item_in.url, max_page=item_in.max_page,
+                                         cookie=item_in.cookie).main()
+        case '摄图':
+            all_material_list = SCSheTu(start_url=item_in.url, max_page=item_in.max_page,
+                                        cookie=item_in.cookie).main()
+        case '千库':
+            all_material_list = SCQianKu(start_url=item_in.url, max_page=item_in.max_page,
+                                         cookie=item_in.cookie).main()
+        case 'envato':
+            all_material_list = SCEnvato(start_url=item_in.url, max_page=item_in.max_page,
+                                         cookie=item_in.cookie).main()
+        case 'freepik':
+            all_material_list = SCFreePik(start_url=item_in.url, max_page=item_in.max_page,
+                                          cookie=item_in.cookie).main()
+
+        case 'pngtree':
+            all_material_list = SCPngTree(start_url=item_in.url, max_page=item_in.max_page,
+                                          cookie=item_in.cookie).main()
+
+        case "allfreedown":
+            all_material_list = SCAllFreeDown(start_url=item_in.url, max_page=item_in.max_page,
                                               cookie=item_in.cookie).main()
 
-            case 'pngtree':
-                all_material_list = SCPngTree(start_url=item_in.url, max_page=item_in.max_page,
-                                              cookie=item_in.cookie).main()
-
-            case "allfreedown":
-                all_material_list = SCAllFreeDown(start_url=item_in.url, max_page=item_in.max_page,
-                                                  cookie=item_in.cookie).main()
-
-        for ma_obj in all_material_list:
-            count = model.select().where(model.hash == ma_obj.hash).count()
-            if count == 0:
-                res = model.create(
-                    **asdict(ma_obj)
-                )
-                print(res)
-            else:
-                print('素材存在，跳过。')
+    for ma_obj in all_material_list:
+        count = model.select().where(model.hash == ma_obj.hash).count()
+        if count == 0:
+            res = model.create(
+                **asdict(ma_obj)
+            )
+            print(res)
+        else:
+            print('素材存在，跳过。')
 
     return 'ok'
 

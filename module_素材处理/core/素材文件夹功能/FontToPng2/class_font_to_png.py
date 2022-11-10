@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from functools import cached_property
 from pathlib import Path
 from typing import Tuple
@@ -8,12 +9,20 @@ from PIL import ImageFont
 from faker import Faker
 from fontTools.ttLib.ttFont import TTFont
 from peewee import fn
+from pypinyin import lazy_pinyin
 
 from module_素材处理.core.setting import IMG_PATH
 from module_素材处理.core.图片编辑.fun_调整图片不透明度 import fun_图片添加不透明度
 from module_素材处理.core.图片编辑.fun_颜色覆盖 import fun_颜色覆盖
 from module_素材处理.core.素材文件夹功能.FontToPng2.model import ChengYu
 from module_素材处理.core.素材文件夹功能.FontToPng2.model import database
+
+
+@dataclass
+class FontSize:
+    width: int
+    height: int
+    top_height: int
 
 
 class FontToPng:
@@ -24,13 +33,18 @@ class FontToPng:
     font_size = 380
     font_color = (60, 60, 90)
     bg_color = (255, 255, 255)
+
+    watermark_color = (120, 120, 120)
     watermark_gutter = 80
-    img_border = 200
+
+    bg_margin = 250
 
     font_width = 1500
     font_height = 500
 
     has_watermark = True
+
+    has_pinyin = True
 
     @property
     def png_path(self):
@@ -95,7 +109,7 @@ class FontToPng:
         if self.has_watermark is True:
             # 处理水印
             watermark = Image.open((IMG_PATH / self.tb_name / 'site_logo.png').as_posix())
-            watermark = fun_颜色覆盖(img=watermark, color=(120, 120, 120))
+            watermark = fun_颜色覆盖(img=watermark, color=self.watermark_color)
             watermark = watermark.rotate(15, expand=True, resample=0)
             watermark.thumbnail((150, 150), resample=1)
             watermark = fun_图片添加不透明度(watermark, .05)
@@ -159,35 +173,61 @@ class FontToPng:
 
         return word
 
+    def fun_获取字体大小(self, word: str, font_size: int) -> FontSize:
+        true_font = ImageFont.truetype(self.font_path.as_posix(), size=font_size)
+        bbox = true_font.getbbox(word)
+        return FontSize(
+            width=bbox[2],
+            height=bbox[3] - bbox[1],
+            top_height=bbox[1]
+        )
+
+    @staticmethod
+    def fun_汉字转拼音(word: str):
+        pinyin_str = lazy_pinyin(word)
+        pinyin_str = ' '.join(pinyin_str)
+        pinyin_str = pinyin_str.title()
+        return pinyin_str
+
     def fun_make_pil(self, word: str):
-        # 确定标题的字体
-        title_true_font = ImageFont.truetype(self.font_path.as_posix(), size=self.font_size)
-        title_bbox = title_true_font.getbbox(word)
-        title_width = title_bbox[2]
-        title_height = title_bbox[3] - title_bbox[1]
-
-        while title_width > self.font_width - self.img_border:
-            self.font_size -= 1
-            title_true_font = ImageFont.truetype(self.font_path.as_posix(), size=self.font_size)
-            title_bbox = title_true_font.getbbox(word)
-            title_width = title_bbox[2]
-            title_height = title_bbox[3] - title_bbox[1]
-
-        while title_height > self.font_height - self.img_border:
-            self.font_size -= 1
-            title_true_font = ImageFont.truetype(self.font_path.as_posix(), size=self.font_size)
-            title_bbox = title_true_font.getbbox(word)
-            title_width = title_bbox[2]
-            title_height = title_bbox[3] - title_bbox[1]
-
         font_bg = self.fun_制作背景(size=(self.font_width, self.font_height))
         draw = ImageDraw.Draw(font_bg)
-        left = int((font_bg.width - title_width) / 2)
-        top = int((font_bg.height - title_height) / 2)
+        gutter = 40
 
+        pinyin_size = 28
+        pinyin_str = '- ' + self.fun_汉字转拼音(word) + ' -'
+        if self.has_pinyin is True:
+            pinyin_bbox = self.fun_获取字体大小(pinyin_str, pinyin_size)
+        else:
+            pinyin_bbox = FontSize(height=0, width=0, top_height=0)
+
+        # 确定标题的字体
+        font_bbox = self.fun_获取字体大小(word, self.font_size)
+
+        while font_bbox.width > self.font_width - self.bg_margin:
+            self.font_size -= 1
+            font_bbox = self.fun_获取字体大小(word, self.font_size)
+
+        while font_bbox.height + pinyin_bbox.height + gutter > self.font_height - self.bg_margin:
+            self.font_size -= 1
+            font_bbox = self.fun_获取字体大小(word, self.font_size)
+
+        # 写标题
+        left = int((font_bg.width - font_bbox.width) / 2)
+        top = int((font_bg.height - (font_bbox.height + pinyin_bbox.height + gutter + pinyin_bbox.top_height)) / 2)
         draw.text(
-            (left, top - title_bbox[1]), word, fill=self.font_color, font=title_true_font
+            (left, top), word, fill=self.font_color, font=ImageFont.truetype(self.font_path.as_posix(), self.font_size)
         )
+
+        if self.has_pinyin is True:
+            # 写拼音
+            left = int((font_bg.width - pinyin_bbox.width) / 2)
+            top += font_bbox.height + gutter + pinyin_bbox.top_height
+            draw.text(
+                (left, top), pinyin_str, fill=self.font_color,
+                font=ImageFont.truetype(self.font_path.as_posix(), pinyin_size)
+            )
+
         return font_bg
 
     def main(self):
@@ -198,11 +238,16 @@ class FontToPng:
 
 if __name__ == '__main__':
     ftp = FontToPng(
-        font_path=Path(r'E:\小夕素材\9000-9999\9261\9261\000_099\小夕素材(3).ttf'),
-        tb_name='饭桶设计'
+        font_path=Path(r'E:\小夕素材\9000-9999\9261\9261\1600_1699\小夕素材(1691).ttf'),
+        tb_name='小夕素材'
     )
-    fbg = ftp.fun_make_pil('小夕设计 xiaoxi design')
-    fbg.show()
+    ftp.has_watermark = False
+    ftp.font_color = (255, 255, 255)
+    ftp.bg_color = (0, 40, 165, 0)
+    ftp.font_width = 3000
+    ftp.font_height = 1000
+    ftp.has_pinyin = False
+    fbg = ftp.fun_make_pil('- hua qian yue xia -')
 
-    # up_path = Path(rf'C:\Users\wuweihua\Desktop\UPLOAD\1.png')
-    # fbg.save(up_path.as_posix())
+    up_path = Path(r'C:\Users\wuweihua\Desktop\UPLOAD\1.png')
+    fbg.save(up_path.as_posix())

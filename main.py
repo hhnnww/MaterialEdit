@@ -1,9 +1,18 @@
 from fastapi import FastAPI
+from fastapi import Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from module_素材处理.router import router_制作详情, router_制作首图, router_文件夹信息, router_文件夹操作, router_未使用目录
-from module_素材采集.router import router_素材采集, router_获取素材, router_下载目录移动到素材目录, router_单页素材采集
+from module_素材处理.router import router_制作详情
+from module_素材处理.router import router_制作首图
+from module_素材处理.router import router_文件夹信息
+from module_素材处理.router import router_文件夹操作
+from module_素材处理.router import router_未使用目录
+from module_素材采集.core.model import database
+from module_素材采集.router import router_下载目录移动到素材目录
+from module_素材采集.router import router_单页素材采集
+from module_素材采集.router import router_素材采集
+from module_素材采集.router import router_获取素材
 
 app = FastAPI()
 
@@ -14,6 +23,20 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.middleware('http')
+def auto_close_database(request: Request, call_next):
+    if database.is_closed() is True:
+        database.connect()
+
+    response = call_next(request)
+
+    if database.is_closed() is not True:
+        database.close()
+
+    return response
+
 
 app.include_router(router_文件夹操作.router)
 app.include_router(router_文件夹信息.router)
