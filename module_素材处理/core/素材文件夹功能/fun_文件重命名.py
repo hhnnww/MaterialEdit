@@ -58,7 +58,16 @@ class MaterialFolderRename:
 
         return num
 
+    def all_file(self):
+        all_file = []
+        for in_file in self.folder.rglob('*'):
+            if in_file.is_file():
+                all_file.append(in_file)
+
+        all_file.sort(key=lambda k: k.suffix.lower())
+        return all_file
+
     def main(self):
         num = 1
-        for in_file in self.folder.rglob('*'):
+        for in_file in self.all_file():
             num = self.fun_修改单个文件(in_file, num)

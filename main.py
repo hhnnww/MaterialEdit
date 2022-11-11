@@ -13,6 +13,7 @@ from module_素材采集.router import router_下载目录移动到素材目录
 from module_素材采集.router import router_单页素材采集
 from module_素材采集.router import router_素材采集
 from module_素材采集.router import router_获取素材
+from module_素材处理.router import router_字体文件生成图片
 
 app = FastAPI()
 
@@ -47,5 +48,6 @@ app.include_router(router_获取素材.router)
 app.include_router(router_下载目录移动到素材目录.router)
 app.include_router(router_单页素材采集.router)
 app.include_router(router_未使用目录.router)
+app.include_router(router_字体文件生成图片.router)
 
 app.mount('/static', StaticFiles(directory='static', html=True), name='static')

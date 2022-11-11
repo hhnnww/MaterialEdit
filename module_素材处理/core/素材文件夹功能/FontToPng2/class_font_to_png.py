@@ -12,8 +12,7 @@ from peewee import fn
 from pypinyin import lazy_pinyin
 
 from module_素材处理.core.setting import IMG_PATH
-from module_素材处理.core.图片编辑.fun_调整图片不透明度 import fun_图片添加不透明度
-from module_素材处理.core.图片编辑.fun_颜色覆盖 import fun_颜色覆盖
+from module_素材处理.core.图片编辑 import PICEdit
 from module_素材处理.core.素材文件夹功能.FontToPng2.model import ChengYu
 from module_素材处理.core.素材文件夹功能.FontToPng2.model import database
 
@@ -44,8 +43,6 @@ class FontToPng:
 
     has_watermark = True
 
-    has_pinyin = True
-
     @property
     def png_path(self):
         return self.font_path.with_suffix('.png')
@@ -56,14 +53,16 @@ class FontToPng:
 
     @cached_property
     def font_cmap(self):
-        return self.font_obj.getBestCmap()
+        fc = self.font_obj.getBestCmap()
+        return fc
 
-    @property
+    @cached_property
     def is_chinese_font(self):
-        if len(self.font_cmap) > 1000:
-            return True
-
-        return False
+        try:
+            if len(self.font_cmap) > 1000:
+                return True
+        except:
+            return False
 
     @staticmethod
     def has_chinese(string):
@@ -109,10 +108,10 @@ class FontToPng:
         if self.has_watermark is True:
             # 处理水印
             watermark = Image.open((IMG_PATH / self.tb_name / 'site_logo.png').as_posix())
-            watermark = fun_颜色覆盖(img=watermark, color=self.watermark_color)
+            watermark = PICEdit.fun_颜色覆盖(img=watermark, color=self.watermark_color)
             watermark = watermark.rotate(15, expand=True, resample=0)
             watermark.thumbnail((150, 150), resample=1)
-            watermark = fun_图片添加不透明度(watermark, .05)
+            watermark = PICEdit.fun_图片添加不透明度(watermark, .05)
 
             # 粘贴水印
             left, top = 0, 0 - int(watermark.height / 2)
@@ -143,9 +142,7 @@ class FontToPng:
 
     @staticmethod
     def fun_随机获取成语() -> str:
-        with database:
-            chengyu = ChengYu.select().order_by(fn.Random())[0]
-
+        chengyu = ChengYu.select().order_by(fn.Random())[0]
         return chengyu.ci
 
     @staticmethod
@@ -178,7 +175,7 @@ class FontToPng:
         bbox = true_font.getbbox(word)
         return FontSize(
             width=bbox[2],
-            height=bbox[3] - bbox[1],
+            height=bbox[3],
             top_height=bbox[1]
         )
 
@@ -192,14 +189,6 @@ class FontToPng:
     def fun_make_pil(self, word: str):
         font_bg = self.fun_制作背景(size=(self.font_width, self.font_height))
         draw = ImageDraw.Draw(font_bg)
-        gutter = 40
-
-        pinyin_size = 28
-        pinyin_str = '- ' + self.fun_汉字转拼音(word) + ' -'
-        if self.has_pinyin is True:
-            pinyin_bbox = self.fun_获取字体大小(pinyin_str, pinyin_size)
-        else:
-            pinyin_bbox = FontSize(height=0, width=0, top_height=0)
 
         # 确定标题的字体
         font_bbox = self.fun_获取字体大小(word, self.font_size)
@@ -208,46 +197,32 @@ class FontToPng:
             self.font_size -= 1
             font_bbox = self.fun_获取字体大小(word, self.font_size)
 
-        while font_bbox.height + pinyin_bbox.height + gutter > self.font_height - self.bg_margin:
+        while font_bbox.height > self.font_height - self.bg_margin:
             self.font_size -= 1
             font_bbox = self.fun_获取字体大小(word, self.font_size)
 
         # 写标题
         left = int((font_bg.width - font_bbox.width) / 2)
-        top = int((font_bg.height - (font_bbox.height + pinyin_bbox.height + gutter + pinyin_bbox.top_height)) / 2)
+        top = int((font_bg.height - font_bbox.height) / 2) - int(font_bbox.top_height / 2)
         draw.text(
             (left, top), word, fill=self.font_color, font=ImageFont.truetype(self.font_path.as_posix(), self.font_size)
         )
 
-        if self.has_pinyin is True:
-            # 写拼音
-            left = int((font_bg.width - pinyin_bbox.width) / 2)
-            top += font_bbox.height + gutter + pinyin_bbox.top_height
-            draw.text(
-                (left, top), pinyin_str, fill=self.font_color,
-                font=ImageFont.truetype(self.font_path.as_posix(), pinyin_size)
-            )
-
         return font_bg
 
     def main(self):
-        if self.png_path.exists() is False:
-            bg = self.fun_make_pil(self.fun_确定成语())
-            bg.save(self.png_path.as_posix())
+        with database:
+            if self.png_path.exists() is False:
+                bg = self.fun_make_pil(self.fun_确定成语())
+                bg.save(self.png_path.as_posix())
 
 
 if __name__ == '__main__':
     ftp = FontToPng(
-        font_path=Path(r'E:\小夕素材\9000-9999\9261\9261\1600_1699\小夕素材(1691).ttf'),
+        font_path=Path(r'G:\饭桶设计\1000-1999\1015\1015\300_399\饭桶设计(391).otf'),
         tb_name='小夕素材'
     )
-    ftp.has_watermark = False
-    ftp.font_color = (255, 255, 255)
-    ftp.bg_color = (0, 40, 165, 0)
-    ftp.font_width = 3000
-    ftp.font_height = 1000
-    ftp.has_pinyin = False
-    fbg = ftp.fun_make_pil('- hua qian yue xia -')
-
-    up_path = Path(r'C:\Users\wuweihua\Desktop\UPLOAD\1.png')
-    fbg.save(up_path.as_posix())
+    fbg = ftp.fun_make_pil(ftp.fun_确定成语())
+    fbg.show()
+    # up_path = Path(r'C:\Users\wuweihua\Desktop\UPLOAD\1.png')
+    # fbg.save(up_path.as_posix())
