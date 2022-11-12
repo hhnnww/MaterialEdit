@@ -1,5 +1,5 @@
 from pathlib import Path
-
+from tqdm import tqdm
 from PIL import Image
 from fastapi import APIRouter
 from pydantic import BaseModel
@@ -32,6 +32,8 @@ class ItemIn(BaseModel):
     详情水印: bool
 
     详情素材信息: bool
+    详情使用图片数量: int
+    详情使用图片排序: bool
 
 
 @router.post('/make_xq')
@@ -85,6 +87,10 @@ def make_xq(item_in: ItemIn):
     # 制作预览图
     if item_in.详情使用图片 == '所有图片':
         preview_pic_list = mff.fun_指定遍历(mfs.preview_path, IMAGE_FILE_SUFFIX)
+        if item_in.详情使用图片排序 is False:
+            preview_pic_list.reverse()
+
+        preview_pic_list = preview_pic_list[:item_in.详情使用图片数量]
     else:
         preview_pic_list = [Path(img) for img in item_in.img_list]
 
@@ -109,7 +115,7 @@ def make_xq(item_in: ItemIn):
     bg = Image.new('RGBA', (bg_width, bg_height), (255, 255, 255))
 
     top = 0
-    for pil in all_pil:
+    for pil in tqdm(all_pil, ncols=100, desc='制作详情'):
         bg.paste(pil, (0, top), pil)
         top += pil.height
         pil.close()

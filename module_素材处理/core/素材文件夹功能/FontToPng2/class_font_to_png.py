@@ -10,10 +10,11 @@ from faker import Faker
 from fontTools.ttLib.ttFont import TTFont
 from peewee import fn
 from pypinyin import lazy_pinyin
+import zhconv
 
 from module_素材处理.core.setting import IMG_PATH
 from module_素材处理.core.图片编辑 import PICEdit
-from module_素材处理.core.素材文件夹功能.FontToPng2.model import ChengYu
+from module_素材处理.core.素材文件夹功能.FontToPng2.model import TangShi
 from module_素材处理.core.素材文件夹功能.FontToPng2.model import database
 
 
@@ -29,17 +30,17 @@ class FontToPng:
         self.font_path = font_path
         self.tb_name = tb_name
 
-    font_size = 380
+    font_size = 180
     font_color = (60, 60, 90)
     bg_color = (255, 255, 255)
 
     watermark_color = (120, 120, 120)
     watermark_gutter = 80
 
-    bg_margin = 250
+    bg_margin = 150
 
     font_width = 1500
-    font_height = 500
+    font_height = 300
 
     has_watermark = True
 
@@ -58,11 +59,10 @@ class FontToPng:
 
     @cached_property
     def is_chinese_font(self):
-        try:
-            if len(self.font_cmap) > 1000:
-                return True
-        except:
-            return False
+        if len(self.font_cmap) > 1000:
+            return True
+
+        return False
 
     @staticmethod
     def has_chinese(string):
@@ -142,8 +142,13 @@ class FontToPng:
 
     @staticmethod
     def fun_随机获取成语() -> str:
-        chengyu = ChengYu.select().order_by(fn.Random())[0]
-        return chengyu.ci
+        with database:
+            chengyu = TangShi.select().order_by(fn.Random())[0].ci
+
+        chengyu = chengyu.replace('，', ' ')
+        chengyu = chengyu.replace('。', '')
+        chengyu = zhconv.convert(chengyu, 'zh-hans')
+        return chengyu
 
     @staticmethod
     def fun_随机获取英文单词() -> str:
@@ -160,6 +165,8 @@ class FontToPng:
             while self.fun_判断字体是否包含本文(word) is False:
                 if num < 100:
                     word = self.fun_随机获取成语()
+                elif 200 > num >= 100:
+                    word = zhconv.convert(self.fun_随机获取成语(), 'zh-hant')
                 else:
                     word = 'hello word'
                     break
@@ -211,15 +218,14 @@ class FontToPng:
         return font_bg
 
     def main(self):
-        with database:
-            if self.png_path.exists() is False:
-                bg = self.fun_make_pil(self.fun_确定成语())
-                bg.save(self.png_path.as_posix())
+        if self.png_path.exists() is False:
+            bg = self.fun_make_pil(self.fun_确定成语())
+            bg.save(self.png_path.as_posix())
 
 
 if __name__ == '__main__':
     ftp = FontToPng(
-        font_path=Path(r'G:\饭桶设计\1000-1999\1015\1015\300_399\饭桶设计(391).otf'),
+        font_path=Path(r'G:\饭桶设计\1000-1999\1015\1015\000_099\饭桶设计(1).otf'),
         tb_name='小夕素材'
     )
     fbg = ftp.fun_make_pil(ftp.fun_确定成语())

@@ -1,5 +1,6 @@
-from peewee import *
 from pathlib import Path
+
+from peewee import *
 
 db_path = Path(__file__).parent / 'db.db'
 database = SqliteDatabase(db_path.as_posix())
@@ -14,8 +15,12 @@ class CiDian(BaseModel):
     ci = CharField(max_length=128, unique=True)
 
 
-class ChengYu(BaseModel):
-    ci = CharField(max_length=128, unique=True)
+class ChengYu(CiDian):
+    pass
+
+
+class TangShi(ChengYu):
+    pass
 
 
 if __name__ == '__main__':

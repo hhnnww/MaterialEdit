@@ -10,6 +10,7 @@ from module_素材处理.core.setting import MATERIAL_FILE_SUFFIX
 from module_素材处理.core.setting import TEXT_COLOR
 from module_素材处理.core.图片编辑.class_picedit import PICEdit
 from module_素材处理.core.素材文件夹功能.fun_指定遍历 import fun_指定遍历
+from tqdm import tqdm
 
 
 @dataclass

@@ -7,9 +7,7 @@ def fun_获取数字(file_path: Path) -> int:
     if len(num_list) == 0:
         return 0
 
-    num = ''.join(num_list)
-    num = int(num)
-
+    num = int(num_list[0])
     return num
 
 

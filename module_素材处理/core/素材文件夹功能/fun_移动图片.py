@@ -3,6 +3,7 @@ from pathlib import Path
 
 from module_素材处理.core.setting import IMAGE_FILE_SUFFIX
 from module_素材处理.core.素材文件夹功能.fun_指定遍历 import fun_指定遍历
+from tqdm import tqdm
 
 
 def fun_复制图片到指定目录(ori: Path, dst: Path, rename: bool = False):
@@ -15,7 +16,7 @@ def fun_复制图片到指定目录(ori: Path, dst: Path, rename: bool = False):
         return
 
     num = 1
-    for in_file in all_file:
+    for in_file in tqdm(all_file, desc='复制到制定目录', ncols=100):
         in_file_parts = list(in_file.parts)
         ori_parts = list(ori.parts)
         dst_parts = list(dst.parts)

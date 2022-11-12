@@ -150,7 +150,8 @@ class MaterialPathAction:
         )
         water_pil.thumbnail((150, 150), 1)
         padding = 30
-        for in_file in self.ma_func.fun_指定遍历(self.ma_path.material_path, IMAGE_FILE_SUFFIX):
+        for in_file in tqdm(self.ma_func.fun_指定遍历(self.ma_path.material_path, IMAGE_FILE_SUFFIX),
+                            desc='图片添加水印', ncols=100):
             with Image.open(in_file.as_posix()) as im:
                 if 1500 not in im.size:
                     im.thumbnail((1500, 1500), 1)

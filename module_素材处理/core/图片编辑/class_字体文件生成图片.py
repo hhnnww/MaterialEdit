@@ -10,7 +10,7 @@ class FontToPIL:
         self.text = text
         self.direction = direction
 
-    font_size = 280
+    font_size = 480
     font_color = (255, 255, 255)
     background = (255, 255, 255, 0)
 
