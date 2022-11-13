@@ -1,8 +1,11 @@
 from functools import cached_property
 from pathlib import Path
-from typing import Literal, Tuple
+from typing import Literal
+from typing import Tuple
 
-from PIL import Image, ImageFont, ImageDraw
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
 
 from module_素材处理.core.setting import FONT_PATH
 from module_素材处理.core.图片编辑.fun_边框删除 import DelPILBorder
@@ -11,32 +14,35 @@ FONT_WEIGHT_TYPE = Literal['l', 'r', 'm', 'b', 'h']
 
 
 class TextToPIL:
-    def __init__(self, text: str, font_weight: FONT_WEIGHT_TYPE, font_size: int, text_color: Tuple, bg_color: Tuple):
+    def __init__(self, text: str, font_weight: FONT_WEIGHT_TYPE, font_size: int, text_color: Tuple, bg_color: Tuple,
+                 font_family: str = 'xiaomi'):
         self.text = text
         self.font_weight = font_weight
         self.font_size = font_size
         self.text_color = text_color
         self.bg_color = bg_color
+        self.font_family = font_family
 
     @cached_property
     def fun_根据字重选择字体(self) -> Path:
+
         font_name = ''
+        if self.font_family == 'xiaomi':
+            match self.font_weight:
+                case 'l':
+                    font_name = 'MiSans-Light.ttf'
+                case 'm':
+                    font_name = 'MiSans-Medium.ttf'
+                case 'r':
+                    font_name = 'MiSans-Regular.ttf'
+                case 'b':
+                    font_name = 'MiSans-Bold.ttf'
+                case 'h':
+                    font_name = 'MiSans-Heavy.ttf'
 
-        match self.font_weight:
-            case 'l':
-                font_name = 'MiSans-Light.ttf'
-            case 'm':
-                font_name = 'MiSans-Medium.ttf'
-            case 'r':
-                font_name = 'MiSans-Regular.ttf'
-            case 'b':
-                font_name = 'MiSans-Bold.ttf'
-            case 'h':
-                font_name = 'MiSans-Heavy.ttf'
-
-        font_path = FONT_PATH / 'MISans' / font_name
-        if font_path.exists() is False:
-            raise IndexError('字体路径不存在')
+            font_path = FONT_PATH / 'MISans' / font_name
+        else:
+            font_path = FONT_PATH / 'OPPOSans' / f'OPPOSans-{self.font_weight.upper()}.ttf'
 
         return font_path
 

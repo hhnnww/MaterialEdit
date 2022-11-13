@@ -6,8 +6,8 @@ from fastapi import APIRouter
 from fastapi.responses import Response
 from pydantic import BaseModel
 
-from module_素材处理.core.素材文件夹功能 import MaterialFolderStructure
 from module_素材处理.core.素材文件夹信息 import MaterialInfo
+from module_素材处理.core.素材文件夹功能 import MaterialFolderStructure
 
 router = APIRouter(prefix='/GetMaterialInfo')
 
@@ -29,6 +29,8 @@ class OutModel(BaseModel):
     预览图列表: list
     效果图列表: list
 
+    素材格式标题: str
+
 
 @router.post('/base_info')
 def get_base_info(item_in: ItemIn) -> OutModel:
@@ -48,7 +50,9 @@ def get_base_info(item_in: ItemIn) -> OutModel:
         next_path=mfs.next_path,
 
         预览图列表=mfs.preview_img_list,
-        效果图列表=mfs.effect_img_list
+        效果图列表=mfs.effect_img_list,
+
+        素材格式标题=mi.pro_素材格式标题
     )
 
     return om

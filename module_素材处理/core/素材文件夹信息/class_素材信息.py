@@ -50,6 +50,30 @@ class MaterialInfo:
 
         return ma_format
 
+    @cached_property
+    def pro_素材格式标题(self):
+        ma_list = []
+        for maf in MATERIAL_FILE_SUFFIX:
+            ma_count = len([in_file for in_file in self.all_material_file if in_file.suffix.lower() == maf])
+            ma_list.append(
+                (ma_count, maf.lower())
+            )
+        ma_list.sort(key=lambda k: k[0], reverse=True)
+
+        match ma_list[0][1]:
+            case '.psd' | '.psb':
+                return 'PSD分层设计素材'
+            case '.ai':
+                return 'AI矢量设计素材'
+            case '.eps':
+                return 'EPS矢量设计素材'
+            case '.otf':
+                return 'OTF字体安装包素材'
+            case '.ttf':
+                return 'TTF字体安装包素材'
+            case '.ppt' | '.pptx':
+                return 'PPT幻灯片素材'
+
 
 if __name__ == '__main__':
     mi = MaterialInfo(r'G:\饭桶设计\0-999\0055\0055')
@@ -57,3 +81,4 @@ if __name__ == '__main__':
     pprint(' '.join(mi.pro_素材格式))
     pprint(mi.pro_文件夹尺寸)
     pprint(mi.pro_源文件列表)
+    pprint(mi.pro_素材格式标题)

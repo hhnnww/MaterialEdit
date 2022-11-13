@@ -8,6 +8,7 @@ from module_素材处理.core.制作首图 import STHeiJingStyle
 from module_素材处理.core.制作首图 import STLayoutOneX
 from module_素材处理.core.制作首图 import STMake
 from module_素材处理.core.制作首图 import SmallSizeModel
+from module_素材处理.core.制作首图.样式.class_t500 import STT500
 
 # 错落首图
 # from module_素材处理.core.制作首图.布局.class_错落布局 import STLayoutScat
@@ -26,6 +27,7 @@ class ItemIn(BaseModel):
     tb_name: str
     gutter: int
     首图名称: int
+    素材格式标题: str
 
 
 @router.post('/make_st')
@@ -36,7 +38,6 @@ def make_st(item_in: ItemIn):
             if in_file.stem in [str(i) for i in range(0, 9)]:
                 in_file.unlink()
 
-    st_width, st_height = 1500, 1500
     small_pic_mode = 1
 
     # 构建首图的小图缩小模式
@@ -50,8 +51,8 @@ def make_st(item_in: ItemIn):
         small_pic_mode = SmallSizeModel.ALL_AUTO
 
     # 构建首图尺寸
+    st_width, st_height = 1500, 1500
     if item_in.st_style == '黑鲸':
-        st_width = 1500
         st_height = 1300
 
     # 构建布局
@@ -89,6 +90,9 @@ def make_st(item_in: ItemIn):
         bg = STHeiJingStyle(layout_bg=bg, material_format_list=item_in.material_format_list.split(' '),
                             tb_name=item_in.tb_name, title=item_in.title.upper(),
                             material_id=item_in.material_id).main()
+    elif item_in.st_style == 'T500':
+        bg = STT500(st=bg, title=item_in.title, sc_id=item_in.material_id, tb_name=item_in.tb_name,
+                    type_title=item_in.素材格式标题).main()
 
     # 保存首图
     if UP_FOLDER.exists() is False:
