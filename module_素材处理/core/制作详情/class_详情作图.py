@@ -4,13 +4,13 @@ from pathlib import Path
 from typing import List
 
 from PIL import Image
+from tqdm import tqdm
 
 from module_素材处理.core.setting import IMG_PATH
 from module_素材处理.core.setting import MATERIAL_FILE_SUFFIX
 from module_素材处理.core.setting import TEXT_COLOR
 from module_素材处理.core.图片编辑.class_picedit import PICEdit
 from module_素材处理.core.素材文件夹功能.fun_指定遍历 import fun_指定遍历
-from tqdm import tqdm
 
 
 @dataclass
@@ -58,15 +58,20 @@ class XQMakePIC:
     def fun_组合列表(self):
         comb_list = []
         line_comb = []
+        large_pic = 20
+        for num, img_type in enumerate(self.fun_构建列表):
+            if (num == 0 or num > large_pic) and img_type.ratio > 1.3:
+                comb_list.append([img_type])
+                large_pic += 20
 
-        for img_type in self.fun_构建列表:
-            line_comb.append(img_type)
+            else:
+                line_comb.append(img_type)
 
-            # 选择单排数量
-            line_sum_ratio = sum([in_img.ratio for in_img in line_comb])
-            if len(line_comb) == self.single_pic_num or line_sum_ratio >= 5:
-                comb_list.append(line_comb.copy())
-                line_comb = []
+                # 选择单排数量
+                line_sum_ratio = sum([in_img.ratio for in_img in line_comb])
+                if len(line_comb) == self.single_pic_num or line_sum_ratio >= 5:
+                    comb_list.append(line_comb.copy())
+                    line_comb = []
 
             # 如果到了最后一行还有图片
             if img_type == self.fun_构建列表[-1]:
@@ -178,9 +183,11 @@ class XQMakePIC:
 
     def main(self):
         pil_list = []
-        for line_num, line_comb in enumerate(self.fun_组合列表):
+        line_num = 0
+        for line_comb in tqdm(self.fun_组合列表, desc='制作详情', ncols=100):
             line_pil = self.fun_制作单行(line_comb, line_num)
             pil_list.append(line_pil)
+            line_num += 1
 
         xq_height = sum([pil.height for pil in pil_list])
         bg = Image.new('RGBA', (self.xq_width, xq_height), (255, 255, 255))
@@ -192,11 +199,3 @@ class XQMakePIC:
             pil.close()
 
         return bg
-
-
-if __name__ == '__main__':
-    XQMakePIC(
-        fun_指定遍历(Path(r'G:\饭桶设计\1000-1999\1808\预览图'), ['.png']), 1.3,
-        material_path=Path(r'G:\饭桶设计\1000-1999\1808\1808'), has_material_info=False,
-        tb_name='饭桶设计'
-    ).main().show()

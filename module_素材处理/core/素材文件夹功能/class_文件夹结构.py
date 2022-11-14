@@ -2,7 +2,6 @@ import re
 import shutil
 from functools import cached_property
 from pathlib import Path
-from random import shuffle
 
 from pydantic import BaseModel
 
@@ -81,7 +80,7 @@ class MaterialFolderStructure:
                 dir_new_name = self.material_path / in_file.name
                 num = 1
                 while dir_new_name.exists() is True:
-                    file_new_name = self.material_path / f'{in_file.stem}({num}){in_file.suffix}'
+                    dir_new_name = self.material_path / f'{in_file.stem}({num}){in_file.suffix}'
                     num += 1
                 in_file.rename(dir_new_name)
 

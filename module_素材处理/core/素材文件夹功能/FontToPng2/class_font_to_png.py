@@ -3,6 +3,7 @@ from functools import cached_property
 from pathlib import Path
 from typing import Tuple
 
+import zhconv
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
@@ -10,11 +11,10 @@ from faker import Faker
 from fontTools.ttLib.ttFont import TTFont
 from peewee import fn
 from pypinyin import lazy_pinyin
-import zhconv
 
 from module_素材处理.core.setting import IMG_PATH
 from module_素材处理.core.图片编辑 import PICEdit
-from module_素材处理.core.素材文件夹功能.FontToPng2.model import TangShi
+from module_素材处理.core.素材文件夹功能.FontToPng2.model import ChengYu
 from module_素材处理.core.素材文件夹功能.FontToPng2.model import database
 
 
@@ -30,7 +30,7 @@ class FontToPng:
         self.font_path = font_path
         self.tb_name = tb_name
 
-    font_size = 180
+    font_size = 220
     font_color = (60, 60, 90)
     bg_color = (255, 255, 255)
 
@@ -40,7 +40,7 @@ class FontToPng:
     bg_margin = 150
 
     font_width = 1500
-    font_height = 300
+    font_height = 700
 
     has_watermark = True
 
@@ -143,7 +143,7 @@ class FontToPng:
     @staticmethod
     def fun_随机获取成语() -> str:
         with database:
-            chengyu = TangShi.select().order_by(fn.Random())[0].ci
+            chengyu = ChengYu.select().order_by(fn.Random())[0].ci
 
         chengyu = chengyu.replace('，', ' ')
         chengyu = chengyu.replace('。', '')
@@ -204,16 +204,43 @@ class FontToPng:
             self.font_size -= 1
             font_bbox = self.fun_获取字体大小(word, self.font_size)
 
-        while font_bbox.height > self.font_height - self.bg_margin:
+        while font_bbox.height > 300:
             self.font_size -= 1
             font_bbox = self.fun_获取字体大小(word, self.font_size)
 
+        # 广告语
+        ad_title = ''
+        if self.tb_name == '小夕素材':
+            ad_title = '小|夕|素|材|设|计'
+        elif self.tb_name == '饭桶设计':
+            ad_title = '饭|桶|设|计'
+
+        ad_title = ' '.join(list(ad_title))
+        ad_pil = PICEdit.fun_单行文字(text=ad_title, font_weight='l', font_size=36, text_color=self.font_color,
+                                      bg_color=(255, 255, 255, 0), font_family='xiaomi').main()
+
+        # 拼音
+        pinyin_title = '-- ' + ' '.join(lazy_pinyin(hans=word)).title() + ' --'
+        pinyin_pil = PICEdit.fun_单行文字(text=pinyin_title, font_weight='l', font_size=36, text_color=self.font_color,
+                                          bg_color=(255, 255, 255, 0), font_family='xiaomi').main()
+
+        # 粘贴广告
+        gutter = 60
+        top = int((font_bg.height - (ad_pil.height + pinyin_pil.height + font_bbox.height + (gutter * 2))) / 2)
+        left = int((font_bg.width - ad_pil.width) / 2)
+        font_bg.paste(ad_pil, (left, top), ad_pil)
+        top += ad_pil.height + gutter
+
         # 写标题
         left = int((font_bg.width - font_bbox.width) / 2)
-        top = int((font_bg.height - font_bbox.height) / 2) - int(font_bbox.top_height / 2)
         draw.text(
             (left, top), word, fill=self.font_color, font=ImageFont.truetype(self.font_path.as_posix(), self.font_size)
         )
+        top += font_bbox.height + gutter
+
+        # 写拼音
+        left = int((font_bg.width - pinyin_pil.width) / 2)
+        font_bg.paste(pinyin_pil, (left, top), pinyin_pil)
 
         return font_bg
 
