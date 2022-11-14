@@ -58,11 +58,11 @@ class XQMakePIC:
     def fun_组合列表(self):
         comb_list = []
         line_comb = []
-        large_pic = 20
+        large_pic = 10
         for num, img_type in enumerate(self.fun_构建列表):
             if (num == 0 or num > large_pic) and img_type.ratio > 1.3:
                 comb_list.append([img_type])
-                large_pic += 20
+                large_pic += 10
 
             else:
                 line_comb.append(img_type)
@@ -74,7 +74,7 @@ class XQMakePIC:
                     line_comb = []
 
             # 如果到了最后一行还有图片
-            if img_type == self.fun_构建列表[-1]:
+            if num == len(self.fun_构建列表) - 1:
                 if len(line_comb) > 0:
                     comb_list.append(line_comb.copy())
 
