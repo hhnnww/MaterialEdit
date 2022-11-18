@@ -5,7 +5,8 @@ from win32com.client import Dispatch
 
 from module_素材处理.core.setting import OUT_PATH
 from module_素材处理.core.素材文件夹功能.PSFile2.fun_1_遍历所有图层 import run_所有图层
-from module_素材处理.core.素材文件夹功能.PSFile2.fun_PS基础操作 import s, dialog
+from module_素材处理.core.素材文件夹功能.PSFile2.fun_PS基础操作 import dialog
+from module_素材处理.core.素材文件夹功能.PSFile2.fun_PS基础操作 import s
 
 
 def fun_清空OUT_PATH():
@@ -89,9 +90,18 @@ def fun_两个数字中间(num, a, b):
 
 
 def is_export_layer(item, doc_bounds):
-    bounds = item.Bounds
-    item_width = bounds[2] - bounds[0]
-    item_height = bounds[3] - bounds[1]
+    if item.Kind not in [1, 17]:
+        return False
+
+    l, t, r, b = item.Bounds
+    if l < 0 or t < 0 or r > doc_bounds[0] or b > doc_bounds[1]:
+        return False
+
+    if r < 0 or l > doc_bounds[0]:
+        return False
+
+    if t > doc_bounds[1] or b < 0:
+        return False
 
     if item.Grouped is True:
         return False
@@ -99,22 +109,7 @@ def is_export_layer(item, doc_bounds):
     if item.Visible is False:
         return False
 
-    if item_width > doc_bounds[0] or item_height > doc_bounds[1]:
-        return False
-
-    # 起点不在文档中间
-    if fun_两个数字中间(bounds[0], 0, doc_bounds[0]) is False or fun_两个数字中间(bounds[1], 0, doc_bounds[1]) is False:
-        return False
-
-    # 终点不在文档中间
-    if fun_两个数字中间(bounds[2], 0, doc_bounds[0]) is False or fun_两个数字中间(bounds[3], 0,
-                                                                                  doc_bounds[1]) is False:
-        return False
-
-    if item.Kind in [1, 17]:
-        return True
-
-    return False
+    return True
 
 
 def run_导出所有图层(in_doc, file: Path):
@@ -131,7 +126,6 @@ def run_导出所有图层(in_doc, file: Path):
             item.Delete()
 
         elif is_export_layer(item, (in_doc.Width, in_doc.Height)) is True:
-            print(item.Name)
             img_path = fun_导出单个图层(item, file)
             art_layer_item_list.append(
                 dict(

@@ -108,27 +108,7 @@ class PSFile:
 
 
 if __name__ == '__main__':
-    ad_list = fun_所有广告图片()
+    psf = PSFile.open(ps_file=r'E:\小夕素材\9000-9999\9264\9264\小夕素材(19).psd', tb_name='小夕素材',
+                      ad_pic_list=fun_所有广告图片())
 
-
-    def fun_处理PSD(ps_file: str):
-        psf = PSFile.open(ps_file, '小夕素材', ad_list)
-        psf.run_删广告_导出_加广告()
-
-
-    def fun_处理文件夹(dir_path: Path):
-        for in_file in dir_path.iterdir():
-            png_path = in_file.with_suffix('.png')
-            if in_file.is_file():
-                if in_file.suffix.lower() in ['.psd']:
-                    if png_path.exists() is False:
-                        print(f'\n处理:{in_file}')
-                        # fun_处理PSD(in_file.as_posix())
-                        psf = PSFile.open(in_file.as_posix(), '小夕素材', ad_list)
-                        export_png(ref_doc=psf.doc, file=psf.file, ad_layer_name=psf.ad_layer_name, del_ad_layer=False)
-                        psf.doc.Close(2)
-
-
-    fun_处理PSD(
-        r'E:\DOWN\新建文件夹\新建文件夹\小夕素材(17).psd'
-    )
+    psf.run_删广告_导出_加广告()

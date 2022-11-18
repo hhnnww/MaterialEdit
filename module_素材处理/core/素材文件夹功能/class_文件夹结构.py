@@ -3,7 +3,9 @@ import shutil
 from functools import cached_property
 from pathlib import Path
 
+from PIL import Image
 from pydantic import BaseModel
+from tqdm import tqdm
 
 from module_素材处理.core.setting import IMAGE_FILE_SUFFIX
 from module_素材处理.core.素材文件夹功能.fun_指定遍历 import fun_指定遍历
@@ -18,6 +20,7 @@ class PathType(BaseModel):
 class ImageType(BaseModel):
     path: str = ''
     name: str = ''
+    ratio: float = 0
 
 
 class MaterialFolderStructure:
@@ -142,6 +145,7 @@ class MaterialFolderStructure:
             img_obj = ImageType()
             img_obj.path = in_file.as_posix()
             img_obj.name = in_file.name
+            img_obj.ratio = 0.0
 
             img_list.append(img_obj.dict())
 
@@ -153,17 +157,20 @@ class MaterialFolderStructure:
             return []
 
         img_list = []
-        for in_file in fun_指定遍历(self.preview_path, IMAGE_FILE_SUFFIX):
+        for in_file in tqdm(fun_指定遍历(self.preview_path, IMAGE_FILE_SUFFIX), desc='获取图片尺寸', ncols=100):
             img_obj = ImageType()
             img_obj.path = in_file.as_posix()
             img_obj.name = in_file.name
 
+            with Image.open(in_file.as_posix()) as im:
+                img_obj.ratio = round(im.width / im.height, 3)
+
             img_list.append(img_obj.dict())
 
+        img_list.sort(key=lambda k: k.get('ratio'))
         return img_list
 
 
 if __name__ == '__main__':
-    mp = MaterialFolderStructure(r'G:\饭桶设计\0-999\0055')
-    print(mp.prev_path)
-    print(mp.next_path)
+    mp = MaterialFolderStructure(r'E:\小夕素材\9000-9999\9264')
+    print(mp.preview_img_list)
