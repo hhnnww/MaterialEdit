@@ -94,16 +94,13 @@ class MaterialFolderStructure:
             num_int = int(num[0])
             return num_int
 
-        return None
+        return 0
 
     @cached_property
     def prev_path(self):
         obj = PathType(exist=True, path='')
 
-        if self.fun_获取素材文件夹ID is None:
-            obj.exist = False
-
-        if self.fun_获取素材文件夹ID <= 0:
+        if self.fun_获取素材文件夹ID == 0:
             obj.exist = False
 
         prev_num_int = self.fun_获取素材文件夹ID - 1
@@ -121,7 +118,7 @@ class MaterialFolderStructure:
     def next_path(self):
         obj = PathType()
 
-        if self.fun_获取素材文件夹ID is None:
+        if self.fun_获取素材文件夹ID == 0:
             obj.exist = False
 
         prev_num_int = self.fun_获取素材文件夹ID + 1

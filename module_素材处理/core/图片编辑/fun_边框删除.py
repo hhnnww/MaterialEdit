@@ -1,5 +1,6 @@
 from functools import cached_property
-from typing import Tuple, Optional
+from typing import Optional
+from typing import Tuple
 
 from PIL import Image
 
@@ -57,7 +58,10 @@ class DelPILBorder:
 
     def main(self) -> Image.Image:
         bbox = (self.left, self.upper, self.right, self.bottom)
-        img = self.img.crop(bbox)
+        try:
+            img = self.img.crop(bbox)
+        except:
+            return self.img
         return img
 
 
