@@ -3,7 +3,6 @@ import shutil
 from functools import cached_property
 from pathlib import Path
 
-from PIL import Image
 from pydantic import BaseModel
 from tqdm import tqdm
 
