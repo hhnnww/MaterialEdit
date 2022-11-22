@@ -93,17 +93,17 @@ def is_export_layer(item, doc_bounds):
     if item.Kind not in [1, 17]:
         return False
 
-    l, t, r, b = item.Bounds
-    if l < 0 or t < 0 or r > doc_bounds[0] or b > doc_bounds[1]:
+    if item.BlendMode != 2:
         return False
 
-    if r < 0 or l > doc_bounds[0]:
-        return False
-
-    if t > doc_bounds[1] or b < 0:
+    if int(item.FillOpacity) < 100:
         return False
 
     if item.Grouped is True:
+        return False
+
+    l, t, r, b = item.Bounds
+    if r < 0 or b < 0 or l > doc_bounds[0] or t > doc_bounds[1]:
         return False
 
     if item.Visible is False:

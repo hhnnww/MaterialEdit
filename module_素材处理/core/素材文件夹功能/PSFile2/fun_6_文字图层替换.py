@@ -23,8 +23,9 @@ def fun_文字图层替换内容(item):
         ('80053384', '12345677'),
         ('baotuwang', 'xiaoxiwang'),
         ('abaotu', 'xiaoxi'),
-        ('BAOTUWANG','xiaoxisc'),
-        ('abaotu','xiaoxisc')
+        ('BAOTUWANG', 'xiaoxisc'),
+        ('abaotu', 'xiaoxisc'),
+        ('iBaoTu', 'xiaoxi')
     ]
 
     for key in keywords:

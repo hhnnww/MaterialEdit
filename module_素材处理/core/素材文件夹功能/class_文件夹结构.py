@@ -9,6 +9,7 @@ from tqdm import tqdm
 
 from module_素材处理.core.setting import IMAGE_FILE_SUFFIX
 from module_素材处理.core.素材文件夹功能.fun_指定遍历 import fun_指定遍历
+from module_素材处理.core.素材文件夹功能.fun_获取数字 import fun_获取数字
 
 
 class PathType(BaseModel):
@@ -155,16 +156,18 @@ class MaterialFolderStructure:
 
         img_list = []
         for in_file in tqdm(fun_指定遍历(self.preview_path, IMAGE_FILE_SUFFIX), desc='获取图片尺寸', ncols=100):
+            in_file: Path
+
             img_obj = ImageType()
             img_obj.path = in_file.as_posix()
             img_obj.name = in_file.name
 
-            with Image.open(in_file.as_posix()) as im:
-                img_obj.ratio = round(im.width / im.height, 3)
+            # with Image.open(in_file.as_posix()) as im:
+            #     img_obj.ratio = round(im.width / im.height, 3)
 
             img_list.append(img_obj.dict())
 
-        img_list.sort(key=lambda k: k.get('ratio'))
+        img_list.sort(key=lambda k: fun_获取数字(Path(k.get('path'))), reverse=True)
         return img_list
 
 
