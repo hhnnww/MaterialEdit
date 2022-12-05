@@ -3,6 +3,7 @@ import shutil
 from functools import cached_property
 from pathlib import Path
 
+from PIL import Image
 from pydantic import BaseModel
 from tqdm import tqdm
 
@@ -161,12 +162,14 @@ class MaterialFolderStructure:
             img_obj.path = in_file.as_posix()
             img_obj.name = in_file.name
 
-            # with Image.open(in_file.as_posix()) as im:
-            #     img_obj.ratio = round(im.width / im.height, 3)
+            with Image.open(in_file.as_posix()) as im:
+                img_obj.ratio = round(im.width / im.height, 3)
 
             img_list.append(img_obj.dict())
 
-        img_list.sort(key=lambda k: fun_获取数字(Path(k.get('path'))), reverse=True)
+        img_list.sort(key=lambda k: k.get('ratio'))
+        # img_list.sort(key=lambda k: fun_获取数字(Path(k.get('path'))), reverse=True)
+        
         return img_list
 
 

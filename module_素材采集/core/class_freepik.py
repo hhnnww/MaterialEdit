@@ -18,7 +18,7 @@ class SCFreePik:
         url_dict = parse_qs(url_parse.query)
         url_dict['sort'] = ['recent']
 
-        for x in range(1, 20):
+        for x in range(1, self.max_page + 1):
             url_dict['page'] = [str(x)]
             ori_query = '?'
             for item in url_dict.items():
