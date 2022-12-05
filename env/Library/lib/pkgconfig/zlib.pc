@@ -1,0 +1,13 @@
+prefix=C:/ProgramData/Miniconda3/envs/FTDesign/Library
+exec_prefix=C:/ProgramData/Miniconda3/envs/FTDesign/Library
+libdir=C:/ProgramData/Miniconda3/envs/FTDesign/Library/lib
+sharedlibdir=C:/ProgramData/Miniconda3/envs/FTDesign/Library/lib
+includedir=C:/ProgramData/Miniconda3/envs/FTDesign/Library/include
+
+Name: zlib
+Description: zlib compression library
+Version: 1.2.12
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz
+Cflags: -I${includedir}

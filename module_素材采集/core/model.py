@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from peewee import *
 
-database = MySQLDatabase('ftdesign', user='root', password='', host='127.0.0.1', port=3306)
+database = MySQLDatabase('ftdesign', user='root', password='', host='192.168.0.101', port=3306)
 
 
 class BaseModel(Model):
