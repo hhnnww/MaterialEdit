@@ -115,10 +115,10 @@ def is_export_layer(item, doc_bounds):
     return True
 
 
-def run_导出所有图层(in_doc, file: Path):
+def run_导出所有图层(in_doc, file: Path, ad_name:str):
     # fun_清空OUT_PATH()
 
-    all_item = run_所有图层(in_doc)
+    all_item = run_所有图层(in_doc,ad_name)
     art_layer_item_list = []
     text_item_list = []
     for item in all_item:

@@ -73,12 +73,10 @@ def fun_根图层(in_doc):
     return artlayers_list
 
 
-def run_所有图层(in_doc):
+def run_所有图层(in_doc, ad_name: str):
     """
     先获取根图层
     然后遍历所有编组，把所有编组都合并到列表中
-    :param in_doc:
-    :return:
     """
     art_layers_list = []
     art_layers_list.extend(fun_根图层(in_doc))
@@ -86,10 +84,14 @@ def run_所有图层(in_doc):
     for layerset in run_所有编组(in_doc):
         if layerset.ArtLayers.Count > 0:
             for in_art_layer in layerset.ArtLayers:
-                # 修改图层名
-                fun_修改图层和编组名(in_art_layer)
+                if in_art_layer.Name == ad_name:
+                    in_art_layer.Locked = False
+                    in_art_layer.Delete()
 
-                art_layers_list.append(in_art_layer)
+                else:
+                    # 修改图层名
+                    fun_修改图层和编组名(in_art_layer)
+                    art_layers_list.append(in_art_layer)
 
     return art_layers_list
 

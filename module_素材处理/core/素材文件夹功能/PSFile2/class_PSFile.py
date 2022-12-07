@@ -39,7 +39,7 @@ class PSFile:
         return ps_cla
 
     def fun_删除广告(self):
-        all_item = run_导出所有图层(in_doc=self.doc, file=self.file)
+        all_item = run_导出所有图层(in_doc=self.doc, file=self.file, ad_name=self.ad_layer_name)
         art_item_list = all_item[0]
         text_item_list = all_item[1]
 
