@@ -106,6 +106,9 @@ def is_export_layer(item, doc_bounds):
     if r < 0 or b < 0 or l > doc_bounds[0] or t > doc_bounds[1]:
         return False
 
+    if int(abs(r - l)) > int(doc_bounds[0] / 3) or int(abs(b - t)) > int(doc_bounds[1] / 3):
+        return False
+
     if item.Visible is False:
         return False
 
@@ -119,6 +122,7 @@ def run_导出所有图层(in_doc, file: Path):
     art_layer_item_list = []
     text_item_list = []
     for item in all_item:
+        print(f'导出图层:{item.Name}')
         if item.Bounds == (0.0, 0.0, 0.0, 0.0):
             if item.AllLocked is True:
                 item.AllLocked = False

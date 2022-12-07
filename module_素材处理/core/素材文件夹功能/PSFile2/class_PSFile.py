@@ -46,6 +46,7 @@ class PSFile:
         # 删除图形图层广告
         for item in art_item_list:
             img_path = item.get('img_path')
+            print(f'对比图片: {img_path}')
 
             if img_path.exists() is True:
 
