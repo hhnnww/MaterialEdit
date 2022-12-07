@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="3fc9bece-576d-4549-9eeb-842654074927" name="黄硕电脑" url="http://localhost">
-        <fileTransfer mountedRoot="Z:\素材处理2.0" accessType="MOUNT" port="0" />
+        <fileTransfer mountedRoot="Z:\MaterialEdit2.0" accessType="MOUNT" port="0" />
       </webServer>
     </option>
   </component>

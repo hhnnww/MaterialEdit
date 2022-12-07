@@ -64,8 +64,8 @@ class PPTPICMerge:
         y = self.gutter
         for pil in pil_list:
             width = int(oneline_height * (pil.width / pil.height))
-            img = PICEdit.fun_图片裁剪(pil, (width, oneline_height))
-            img = PICEdit.fun_图片圆角(img)
+            img = PICEdit.fun_图片裁剪(pil, width, oneline_height)
+            img = PICEdit.fun_图片圆角(img, 20).main()
             bg.paste(img, (x, y), img)
             x += img.width + self.gutter
 
