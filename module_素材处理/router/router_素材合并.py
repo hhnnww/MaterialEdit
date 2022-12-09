@@ -12,7 +12,7 @@ class StoreType(BaseModel):
 router = APIRouter(prefix='/material_merge')
 
 
-@router.post('/merge')
+@router.post('')
 def material_merge(item_in: StoreType):
     md = MaterialDirMerge(
         ori_path=item_in.ori_path,
