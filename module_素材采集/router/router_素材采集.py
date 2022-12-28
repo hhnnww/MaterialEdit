@@ -1,6 +1,7 @@
 from dataclasses import asdict
 from pathlib import Path
 
+import peewee
 from fastapi import APIRouter
 from pydantic import BaseModel
 
@@ -63,10 +64,13 @@ def run_scrapy(item_in: ItemIn):
     for ma_obj in all_material_list:
         count = model.select().where(model.hash == ma_obj.hash).count()
         if count == 0:
-            res = model.create(
-                **asdict(ma_obj)
-            )
-            print(res)
+            try:
+                res = model.create(
+                    **asdict(ma_obj)
+                )
+                print(res)
+            except peewee.IntegrityError:
+                print('素材重复.')
         else:
             print('素材存在，跳过。')
 
