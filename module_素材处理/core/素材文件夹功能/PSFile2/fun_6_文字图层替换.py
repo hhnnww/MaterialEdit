@@ -27,7 +27,9 @@ def fun_文字图层替换内容(item):
         ('abaotu', 'xiaoxisc'),
         ('iBaoTu', 'xiaoxi'),
         ('mige', 'xiaoxisc'),
-        ('米鸽', '小夕')
+        ('米鸽', '小夕'),
+        ('51miz', 'xiaoxisc'),
+        ('觅知', '小夕')
     ]
 
     for key in keywords:
