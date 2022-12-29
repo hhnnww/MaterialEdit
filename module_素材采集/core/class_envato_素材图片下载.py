@@ -15,6 +15,8 @@ class SCEnvatoPICDown:
         if socket.gethostname() == 'wuweihua':
             return Path(r'G:\DOWN')
 
+        return Path(r'G:\DOWN')
+
     @cached_property
     def material_dict(self) -> dict:
         """获取包含素材信息的字典"""
