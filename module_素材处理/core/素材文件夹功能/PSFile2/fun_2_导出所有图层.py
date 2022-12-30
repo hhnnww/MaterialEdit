@@ -106,11 +106,11 @@ def is_export_layer(item, doc_bounds):
     if r < 0 or b < 0 or l > doc_bounds[0] or t > doc_bounds[1]:
         return False
 
-    if int(abs(r - l)) > int(doc_bounds[0] / 3) or int(abs(b - t)) > int(doc_bounds[1] / 3):
-        return False
+    # if int(abs(r - l)) > int(doc_bounds[0] / 3) or int(abs(b - t)) > int(doc_bounds[1] / 3):
+    #     return False
 
-    if item.Visible is False:
-        return False
+    # if item.Visible is False:
+    #     return False
 
     return True
 
