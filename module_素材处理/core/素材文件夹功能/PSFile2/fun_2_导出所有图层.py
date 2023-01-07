@@ -107,7 +107,7 @@ def is_export_layer(item, doc_bounds):
 
     # 如果在文档之外
     l, t, r, b = item.Bounds
-    if r <= 0 or b <= 0 or l >= doc_bounds[0] or t >= doc_bounds[1]:
+    if r < 0 or b < 0 or l > doc_bounds[0] or t > doc_bounds[1]:
         return False
 
     # 如果大于宽高三分之一
