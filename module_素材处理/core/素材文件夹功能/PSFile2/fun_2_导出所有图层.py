@@ -111,8 +111,8 @@ def is_export_layer(item, doc_bounds):
         return False
 
     # 如果大于宽高三分之一
-    if int(abs(r - l)) > int(doc_bounds[0] / 3) or int(abs(b - t)) > int(doc_bounds[1] / 3):
-        return False
+    # if int(abs(r - l)) > int(doc_bounds[0] / 3) or int(abs(b - t)) > int(doc_bounds[1] / 3):
+    #     return False
 
     # 如果是隐藏图层
     if item.Visible is False:
