@@ -94,36 +94,37 @@ def is_export_layer(item, doc_bounds):
         return False
 
     # 混合模式如果不是正常
-    if item.BlendMode != 2:
-        return False
+    # if item.BlendMode != 2:
+    #     return False
 
     # 透明度如果不是100%
-    if int(item.FillOpacity) < 100:
-        return False
+    # if int(item.FillOpacity) < 100:
+    #     return False
 
     # 如果是印盖图层
     if item.Grouped is True:
         return False
 
-    # 如果在文档之外
     l, t, r, b = item.Bounds
-    if r < 0 or b < 0 or l > doc_bounds[0] or t > doc_bounds[1]:
+    # 如果在文档之外
+    if r <= 0 or b <= 0 or l >= doc_bounds[0] or t >= doc_bounds[1] \
+            or l <= 0 or r >= doc_bounds[0] or t <= 0 or b >= doc_bounds[1]:
         return False
 
     # 如果大于宽高三分之一
-    # if int(abs(r - l)) > int(doc_bounds[0] / 3) or int(abs(b - t)) > int(doc_bounds[1] / 3):
-    #     return False
+    if int(abs(r - l)) > int(doc_bounds[0] / 3) or int(abs(b - t)) > int(doc_bounds[1] / 3):
+        return False
 
     # 如果是隐藏图层
-    if item.Visible is False:
-        return False
+    # if item.Visible is False:
+    #     return False
 
     return True
 
 
-def run_导出所有图层(in_doc, file: Path, ad_name: str):
+def run_导出所有图层(in_doc, file: Path):
     # fun_清空OUT_PATH()
-    all_item = run_所有图层(in_doc, ad_name)
+    all_item = run_所有图层(in_doc)
     art_layer_item_list = []
     text_item_list = []
     for item in all_item:

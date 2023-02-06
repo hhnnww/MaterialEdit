@@ -5,7 +5,9 @@ import face_recognition
 from win32com.client import Dispatch
 
 from module_素材处理.core.素材文件夹功能.PSFile2.fun_2_导出所有图层 import run_导出所有图层
-from module_素材处理.core.素材文件夹功能.PSFile2.fun_3_对比所有图片 import fun_打开图片, run_对比所有图片, fun_所有广告图片
+from module_素材处理.core.素材文件夹功能.PSFile2.fun_3_对比所有图片 import fun_所有广告图片
+from module_素材处理.core.素材文件夹功能.PSFile2.fun_3_对比所有图片 import fun_打开图片
+from module_素材处理.core.素材文件夹功能.PSFile2.fun_3_对比所有图片 import run_对比所有图片
 from module_素材处理.core.素材文件夹功能.PSFile2.fun_4_导出PNG import export_png
 from module_素材处理.core.素材文件夹功能.PSFile2.fun_5_插入广告 import fun_插入广告
 from module_素材处理.core.素材文件夹功能.PSFile2.fun_6_文字图层替换 import fun_文字图层替换内容
@@ -39,7 +41,7 @@ class PSFile:
         return ps_cla
 
     def fun_删除广告(self):
-        all_item = run_导出所有图层(in_doc=self.doc, file=self.file, ad_name=self.ad_layer_name)
+        all_item = run_导出所有图层(in_doc=self.doc, file=self.file)
         art_item_list = all_item[0]
         text_item_list = all_item[1]
 
@@ -50,8 +52,14 @@ class PSFile:
 
             if img_path.exists() is True:
 
+                # 设置图片导出超时时间，太长了就不等了。
+                time_out = 0
                 while img_path.stat().st_size == 0:
                     time.sleep(1)
+                    time_out += 1
+
+                    if time_out >= 30:
+                        continue
 
                 img = fun_打开图片(img_path.as_posix())
                 res = run_对比所有图片(img, self.ad_pic_list)

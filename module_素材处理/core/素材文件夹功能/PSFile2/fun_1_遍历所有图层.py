@@ -1,4 +1,11 @@
 def fun_修改图层和编组名(in_layer):
+    if in_layer.Name == '隐藏 或 删除此图层即可开始您的编辑.':
+        if in_layer.AllLocked is True:
+            in_layer.AllLocked = False
+
+        in_layer.Delete()
+        return False
+
     layer_prefix = ''
     if in_layer.LayerType == 1:
         layer_prefix = '图层'
@@ -6,7 +13,7 @@ def fun_修改图层和编组名(in_layer):
         layer_prefix = '编组'
 
     if in_layer.Name == f'{layer_prefix} {in_layer.id}':
-        return
+        return True
 
     visible = in_layer.Visible
 
@@ -22,6 +29,8 @@ def fun_修改图层和编组名(in_layer):
     in_layer.AllLocked = False
 
     in_layer.Visible = visible
+
+    return True
 
 
 def fun_归递编组(layerset):
@@ -67,13 +76,13 @@ def fun_根图层(in_doc):
     artlayers_list = []
     if in_doc.ArtLayers.Count > 0:
         for in_art_layer in in_doc.ArtLayers:
-            fun_修改图层和编组名(in_art_layer)
-            artlayers_list.append(in_art_layer)
+            if fun_修改图层和编组名(in_art_layer) is True:
+                artlayers_list.append(in_art_layer)
 
     return artlayers_list
 
 
-def run_所有图层(in_doc, ad_name: str):
+def run_所有图层(in_doc):
     """
     先获取根图层
     然后遍历所有编组，把所有编组都合并到列表中
@@ -84,13 +93,7 @@ def run_所有图层(in_doc, ad_name: str):
     for layerset in run_所有编组(in_doc):
         if layerset.ArtLayers.Count > 0:
             for in_art_layer in layerset.ArtLayers:
-                if in_art_layer.Name == ad_name:
-                    in_art_layer.Locked = False
-                    in_art_layer.Delete()
-
-                else:
-                    # 修改图层名
-                    fun_修改图层和编组名(in_art_layer)
+                if fun_修改图层和编组名(in_art_layer) is True:
                     art_layers_list.append(in_art_layer)
 
     return art_layers_list
