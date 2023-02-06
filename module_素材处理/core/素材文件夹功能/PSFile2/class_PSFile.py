@@ -54,12 +54,17 @@ class PSFile:
 
                 # 设置图片导出超时时间，太长了就不等了。
                 time_out = 0
+                time_out_state = False
                 while img_path.stat().st_size == 0:
                     time.sleep(1)
                     time_out += 1
 
                     if time_out >= 30:
+                        time_out_state = True
                         continue
+
+                if time_out_state is True:
+                    continue
 
                 img = fun_打开图片(img_path.as_posix())
                 res = run_对比所有图片(img, self.ad_pic_list)
