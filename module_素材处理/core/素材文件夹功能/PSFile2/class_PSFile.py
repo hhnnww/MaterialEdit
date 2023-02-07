@@ -61,7 +61,7 @@ class PSFile:
 
                     if time_out >= 30:
                         time_out_state = True
-                        continue
+                        break
 
                 if time_out_state is True:
                     continue
