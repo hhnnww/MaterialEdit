@@ -1,5 +1,5 @@
 def fun_修改图层和编组名(in_layer):
-    if in_layer.Name == '隐藏 或 删除此图层即可开始您的编辑.':
+    if in_layer.Name.lower() in ['隐藏 或 删除此图层即可开始您的编辑.', 'sy']:
         if in_layer.AllLocked is True:
             in_layer.AllLocked = False
 
