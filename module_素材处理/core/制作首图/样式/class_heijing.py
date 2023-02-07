@@ -50,6 +50,11 @@ class STHeiJingStyle:
             text_color=(255, 255, 255),
             border_color=(255, 143, 106),
             bg_color=(187, 53, 24)
+        ),
+        pro=dict(
+            text_color=(255, 255, 255),
+            border_color=(255, 143, 106),
+            bg_color=(187, 53, 24)
         )
     )
 
