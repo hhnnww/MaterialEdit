@@ -54,7 +54,11 @@ def fun_归递编组(layerset):
     # 修改编组名称
     fun_修改图层和编组名(layerset)
 
-    if layerset.LayerSets.Count > 0:
+    try:
+        (layerset.LayerSets.Count > 0) is True
+    except:
+        pass
+    else:
         for in_layerset in layerset.LayerSets:
             layerset_list.extend(fun_归递编组(in_layerset))
 
@@ -69,8 +73,11 @@ def run_所有编组(in_doc):
     :return:
     """
     layerset_list = []
-
-    if in_doc.LayerSets.Count > 0:
+    try:
+        (in_doc.LayerSets.Count > 0) is True
+    except:
+        pass
+    else:
         for in_layerset in in_doc.LayerSets:
             layerset_list.extend(fun_归递编组(in_layerset))
 
@@ -101,7 +108,11 @@ def run_所有图层(in_doc):
     art_layers_list.extend(fun_根图层(in_doc))
 
     for layerset in run_所有编组(in_doc):
-        if layerset.ArtLayers.Count > 0:
+        try:
+            (layerset.ArtLayers.Count > 0) is True
+        except:
+            pass
+        else:
             for in_art_layer in layerset.ArtLayers:
                 if fun_修改图层和编组名(in_art_layer) is True:
                     art_layers_list.append(in_art_layer)
