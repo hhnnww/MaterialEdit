@@ -36,6 +36,11 @@ class STHeiJingStyle:
             border_color=(255, 154, 0),
             bg_color=(51, 0, 0)
         ),
+        svg=dict(
+            text_color=(255, 154, 0),
+            border_color=(255, 154, 0),
+            bg_color=(51, 0, 0)
+        ),
         ppt=dict(
             text_color=(255, 255, 255),
             border_color=(255, 143, 106),
