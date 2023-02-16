@@ -3,12 +3,13 @@ from typing import Generator, List
 
 from module_素材采集.core.class_htmldown import HTMLDown
 from module_素材采集.core.model import MaterialType
+import re
 
 
 class SCQianKu:
     def __init__(self, start_url: str, max_page: int, cookie: str = ''):
-        if 'default' not in start_url:
-            start_url = start_url.replace('-1-1/', '-1-0-0-0-0-default-0-1/')
+        # if 'default' not in start_url:
+        #     start_url = start_url.replace('-1-1/', '-1-0-0-0-0-default-0-1/')
 
         self.start_url = start_url
         self.max_page = max_page
@@ -16,7 +17,8 @@ class SCQianKu:
 
     def fun_列表页构建(self):
         for x in range(1, self.max_page + 1):
-            url = self.start_url.replace('-1/', f'-{x}/')
+            # url = self.start_url.replace('-1/', f'-{x}/')
+            url = re.sub('-0-(\d+)/', f'-{x}', self.start_url)
             yield url
 
     def fun_获取单页(self, url: str) -> Generator:
