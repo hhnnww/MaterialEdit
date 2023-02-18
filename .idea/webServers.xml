@@ -5,6 +5,13 @@
       <webServer id="3fc9bece-576d-4549-9eeb-842654074927" name="黄硕电脑" url="http://localhost">
         <fileTransfer mountedRoot="Z:\MaterialEdit2.0" accessType="MOUNT" port="0" />
       </webServer>
+      <webServer id="ff44e72f-daa1-4088-820b-453c2926e6b1" name="阿里云" url="http://118.31.52.167">
+        <fileTransfer accessType="SFTP" host="118.31.52.167" port="22" sshConfigId="c61ab665-b8b1-4539-9765-732df2ed59fc" sshConfig="Administrator@118.31.52.167:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>

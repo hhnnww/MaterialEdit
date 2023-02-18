@@ -5,16 +5,17 @@ import peewee
 from fastapi import APIRouter
 from pydantic import BaseModel
 
+from module_素材采集.core.class_allfreedown import SCAllFreeDown
 from module_素材采集.core.class_envato import SCEnvato
 from module_素材采集.core.class_envato_素材图片下载 import SCEnvatoPICDown
 from module_素材采集.core.class_freepik import SCFreePik
+from module_素材采集.core.class_pngtree import SCPngTree
+from module_素材采集.core.class_享设计 import SCXiangSheJi
 from module_素材采集.core.class_包图 import SCBaoTu
 from module_素材采集.core.class_千图 import SCQianTu
 from module_素材采集.core.class_千库 import SCQianKu
 from module_素材采集.core.class_摄图 import SCSheTu
-from module_素材采集.core.class_pngtree import SCPngTree
-from module_素材采集.core.model import fun_获取MODEL, database
-from module_素材采集.core.class_allfreedown import SCAllFreeDown
+from module_素材采集.core.model import fun_获取MODEL
 
 router = APIRouter(prefix='/scrapy')
 
@@ -46,6 +47,9 @@ def run_scrapy(item_in: ItemIn):
         case '千库':
             all_material_list = SCQianKu(start_url=item_in.url, max_page=item_in.max_page,
                                          cookie=item_in.cookie).main()
+        case '享设计':
+            all_material_list = SCXiangSheJi(start_url=item_in.url, max_page=item_in.max_page,
+                                             cookie=item_in.cookie).main()
         case 'envato':
             all_material_list = SCEnvato(start_url=item_in.url, max_page=item_in.max_page,
                                          cookie=item_in.cookie).main()

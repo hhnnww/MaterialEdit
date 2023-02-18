@@ -59,7 +59,7 @@ class PSFile:
                     time.sleep(1)
                     time_out += 1
 
-                    if time_out >= 30:
+                    if time_out >= 60:
                         time_out_state = True
                         break
 
