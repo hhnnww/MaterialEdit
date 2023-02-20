@@ -31,7 +31,8 @@ def fun_文字图层替换内容(item):
         ('51miz', 'xiaoxisc'),
         ('觅知', '小夕'),
         ('麦设计', '小夕素材'),
-        ('maisj.net', 'xiaoxisc.com')
+        ('maisj.net', 'xiaoxisc.com'),
+        ('农民设计', '小夕设计')
     ]
 
     for key in keywords:

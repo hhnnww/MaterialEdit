@@ -29,7 +29,7 @@ def fun_修改图层和编组名(in_layer):
 
     if in_layer.LayerType == 1:
         if in_layer.Kind == 2:
-            in_layer.name = in_layer.TextItem.Contents
+            in_layer.Name = in_layer.TextItem.Contents
         else:
             in_layer.Name = f'{layer_prefix} {in_layer.id}'
 

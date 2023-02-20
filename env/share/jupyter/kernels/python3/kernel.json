@@ -1,6 +1,6 @@
 {
  "argv": [
-  "python",
+  "F:/MyProject/FTDesign/fastapi/env\\python.exe",
   "-m",
   "ipykernel_launcher",
   "-f",
