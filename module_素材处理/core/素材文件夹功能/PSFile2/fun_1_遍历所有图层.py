@@ -94,6 +94,7 @@ def fun_根图层(in_doc):
     if in_doc.ArtLayers.Count > 0:
         for in_art_layer in in_doc.ArtLayers:
             if fun_修改图层和编组名(in_art_layer) is True:
+                fun_修改图层和编组名(in_art_layer)
                 artlayers_list.append(in_art_layer)
 
     return artlayers_list
