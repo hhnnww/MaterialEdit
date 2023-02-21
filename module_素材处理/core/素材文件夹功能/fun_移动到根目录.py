@@ -13,7 +13,7 @@ def fun_移动到根目录(folder: Path):
                     new_path = folder / (in_file.stem + f' ({num})' + in_file.suffix)
                     num += 1
 
-                print(f'移动到根目录:{new_path}')
+                print(f'移动到根目录:{new_path.as_posix().encode("utf-8")}')
                 in_file.rename(new_path)
 
     # 删除所有文件夹

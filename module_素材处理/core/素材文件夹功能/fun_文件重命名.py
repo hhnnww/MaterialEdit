@@ -46,7 +46,7 @@ class MaterialFolderRename:
                 new_ma_file = in_file.with_stem(self.tb_name + f'({num})')
 
             # 修改源文件名字
-            print(f'文件重命名：{in_file}')
+            print(f'文件重命名：{in_file.as_posix()}')
             in_file.rename(in_file.with_stem(self.tb_name + f'({num})'))
 
             # 修改图片名字
