@@ -32,6 +32,8 @@ def fun_修改图层和编组名(in_layer):
             in_layer.Name = in_layer.TextItem.Contents
         else:
             in_layer.Name = f'{layer_prefix} {in_layer.id}'
+    else:
+        in_layer.Name = f'{layer_prefix} {in_layer.id}'
 
     in_layer.Unlink()
 
@@ -93,7 +95,8 @@ def fun_根图层(in_doc):
     artlayers_list = []
     if in_doc.ArtLayers.Count > 0:
         for in_art_layer in in_doc.ArtLayers:
-            if fun_修改图层和编组名(in_art_layer) is True:
+            res = fun_修改图层和编组名(in_art_layer)
+            if res is True:
                 fun_修改图层和编组名(in_art_layer)
                 artlayers_list.append(in_art_layer)
 
