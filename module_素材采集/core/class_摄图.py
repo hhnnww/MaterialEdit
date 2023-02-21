@@ -15,8 +15,10 @@ class SCSheTu:
     def fun_列表页构建(self):
         # https://699pic.com/soso/longtaitou-new------psd---0--2.html
         for x in range(1, self.max_page + 1):
-            # url = re.sub('-psd-all-\d+?-0', f'-psd-all-{x}-0', self.start_url)
-            url = re.sub('-(\d+)\.html', f'-{x}.html', self.start_url)
+            if '-psd-all-' in self.start_url:
+                url = re.sub('-psd-all-\d+?-0', f'-psd-all-{x}-0', self.start_url)
+            else:
+                url = re.sub('-(\d+)\.html', f'-{x}.html', self.start_url)
             yield url
 
     def fun_获取单页(self, url: str) -> Generator:
@@ -34,6 +36,7 @@ class SCSheTu:
 
     def main(self) -> List[MaterialType]:
         for url in self.fun_列表页构建():
+            print(url)
             for ma in self.fun_获取单页(url):
                 yield ma
 

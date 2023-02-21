@@ -8,6 +8,7 @@ def fun_修改图层和编组名(in_layer):
         '千图小程序',
         'logo',
         '微信图片_20220602162527',
+        '03 (2)'
     ]
     if in_layer.Name.lower() in ad_layer_name_list:
         if in_layer.AllLocked is True:
