@@ -38,7 +38,8 @@ class ItemIn(BaseModel):
 
 @router.post('/make_xq')
 def make_xq(item_in: ItemIn):
-    print(item_in)
+    print(f'制作详情：{item_in.root_path}')
+
     mfs = MaterialFolderStructure(root_path=item_in.root_path)
     mff = MaterialFolderFunction
 

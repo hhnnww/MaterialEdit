@@ -32,6 +32,8 @@ class ItemIn(BaseModel):
 
 @router.post('/make_st')
 def make_st(item_in: ItemIn):
+    print(f'制作首图: {item_in.title}')
+
     # 删除UP文件夹里面的JPG图片
     for in_file in UP_FOLDER.iterdir():
         if in_file.is_file() and in_file.suffix.lower() in ['.jpg']:
