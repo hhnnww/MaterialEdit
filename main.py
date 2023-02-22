@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi import Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
+# from fastapi.staticfiles import StaticFiles
 
 from module_素材处理.router import router_制作详情
 from module_素材处理.router import router_制作首图
