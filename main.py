@@ -1,8 +1,6 @@
-import uvicorn
 from fastapi import FastAPI
 from fastapi import Request
 from fastapi.middleware.cors import CORSMiddleware
-# from fastapi.staticfiles import StaticFiles
 
 from module_素材处理.router import router_制作详情
 from module_素材处理.router import router_制作首图
@@ -16,6 +14,8 @@ from module_素材采集.router import router_下载目录移动到素材目录
 from module_素材采集.router import router_单页素材采集
 from module_素材采集.router import router_素材采集
 from module_素材采集.router import router_获取素材
+
+# from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
