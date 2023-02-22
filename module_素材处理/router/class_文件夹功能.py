@@ -208,3 +208,6 @@ class MaterialPathAction:
 
         self.fun_复制到预览图()
         self.fun_素材图片添加水印()
+
+    def fun_压缩为RAR(self):
+        self.ma_func.fun_压缩为RAR(in_path=self.ma_path.material_path, suffix=['.otf', '.ttf'])

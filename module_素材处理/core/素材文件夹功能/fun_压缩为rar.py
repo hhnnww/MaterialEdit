@@ -2,10 +2,11 @@ import subprocess
 from pathlib import Path
 from tqdm import tqdm
 from module_素材处理.core.素材文件夹功能.fun_指定遍历 import fun_指定遍历
+from typing import List
 
 
-def fun_字体文件压缩为rar(in_path: Path) -> None:
-    all_file = fun_指定遍历(folder=in_path, suffix=['.otf', '.ttf'])
+def fun_压缩为RAR(in_path: Path, suffix: List[str]) -> None:
+    all_file = fun_指定遍历(folder=in_path, suffix=suffix)
     rar_exe = r'C:\Program Files\WinRAR\WinRAR.exe'
     for font_path in tqdm(all_file, desc='压缩字体文件为rar', ncols=100):
         rar_path = font_path.with_suffix('.rar')
@@ -24,8 +25,8 @@ def fun_字体文件压缩为rar(in_path: Path) -> None:
 
 
 if __name__ == '__main__':
-    fun_字体文件压缩为rar(
-        Path(r'E:\小夕素材\9000-9999\9261\9261')
+    fun_压缩为RAR(
+        Path(r'E:\小夕素材\9000-9999\9261\9261'), ['.otf', '.ttf']
     )
 
     # subprocess.run(
