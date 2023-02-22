@@ -1,1 +1,0 @@
-const u={tb_name:["\u5C0F\u5915\u7D20\u6750","\u996D\u6876\u8BBE\u8BA1","\u9999\u5DF4\u62C9\u7D20\u6750"],site_name:["\u5305\u56FE","\u5343\u56FE","\u6444\u56FE","\u5343\u5E93","\u4EAB\u8BBE\u8BA1","envato","freepik","pngtree","allfreedown"]};export{u as s};

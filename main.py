@@ -52,4 +52,4 @@ app.include_router(router_未使用目录.router)
 app.include_router(router_字体文件生成图片.router)
 app.include_router(router_素材合并.router)
 
-app.mount('/static', StaticFiles(directory='static', html=True), name='static')
+# app.mount('/static', StaticFiles(directory='static', html=True), name='static')
