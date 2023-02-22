@@ -9,19 +9,21 @@ def fun_修改图层和编组名(in_layer):
         '摄图网logo - 新（排版专用）',
         '摄图网logo白色',
         '二维码小文案',
-        '水印', 'logo', '二维码', '千库编辑', '千库网logo'
+        '水印', 'logo', '二维码', '千库编辑', '千库网logo', '千库网二维码'
     )
     for ad_layer_name_single in ad_name_include:
         if ad_layer_name_single in in_layer.Name.lower():
             if in_layer.AllLocked is True:
                 in_layer.AllLocked = False
+            print(f'删除图层:{in_layer.Name}')
             in_layer.Delete()
             return False
 
-    ad_name_is = ('隐藏 或 删除此图层即可开始您的编辑.', 'sy', '03 (2)')
+    ad_name_is = ('隐藏 或 删除此图层即可开始您的编辑.', 'sy', '03 (2)', '千库网二维码')
     if in_layer.Name.lower() in ad_name_is:
         if in_layer.AllLocked is True:
             in_layer.AllLocked = False
+        print(f'删除图层:{in_layer.Name}')
         in_layer.Delete()
         return False
 

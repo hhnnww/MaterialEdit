@@ -128,7 +128,6 @@ def run_导出所有图层(in_doc, file: Path):
     art_layer_item_list = []
     text_item_list = []
     for item in all_item:
-        print(f'导出图层:{item.Name}')
         if item.Bounds == (0.0, 0.0, 0.0, 0.0):
             if item.AllLocked is True:
                 item.AllLocked = False

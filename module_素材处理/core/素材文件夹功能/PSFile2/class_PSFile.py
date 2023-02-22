@@ -26,6 +26,7 @@ class PSFile:
 
     @classmethod
     def open(cls, ps_file: str, tb_name: str, ad_pic_list: list):
+        print(f'\n\n处理文件:{ps_file}')
         ps_cla = cls()
         app = Dispatch('Photoshop.Application')
         app.Open(ps_file)
@@ -48,8 +49,6 @@ class PSFile:
         # 删除图形图层广告
         for item in art_item_list:
             img_path = item.get('img_path')
-            print(f'对比图片: {img_path}')
-
             if img_path.exists() is True:
 
                 # 设置图片导出超时时间，太长了就不等了。
