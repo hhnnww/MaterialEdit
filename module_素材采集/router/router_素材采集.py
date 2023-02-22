@@ -16,6 +16,7 @@ from module_素材采集.core.class_千图 import SCQianTu
 from module_素材采集.core.class_千库 import SCQianKu
 from module_素材采集.core.class_摄图 import SCSheTu
 from module_素材采集.core.model import fun_获取MODEL
+from module_素材采集.core.class_草图联盟 import SCCaoTuLianMeng
 
 router = APIRouter(prefix='/scrapy')
 
@@ -64,6 +65,9 @@ def run_scrapy(item_in: ItemIn):
         case "allfreedown":
             all_material_list = SCAllFreeDown(start_url=item_in.url, max_page=item_in.max_page,
                                               cookie=item_in.cookie).main()
+        case '草图联盟':
+            all_material_list = SCCaoTuLianMeng(start_url=item_in.url, max_page=item_in.max_page,
+                                                cookie=item_in.cookie).main()
 
     for ma_obj in all_material_list:
         count = model.select().where(model.hash == ma_obj.hash).count()

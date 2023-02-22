@@ -36,7 +36,6 @@ class SCSheTu:
 
     def main(self) -> List[MaterialType]:
         for url in self.fun_列表页构建():
-            print(url)
             for ma in self.fun_获取单页(url):
                 yield ma
 
