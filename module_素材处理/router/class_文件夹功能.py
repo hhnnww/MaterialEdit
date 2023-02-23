@@ -27,6 +27,9 @@ class MaterialPathAction:
         self.ma_path = MaterialFolderStructure(root_path=item_in.root_path)
         self.ma_func = MaterialFolderFunction
 
+    def fun_生成SKP批量导出脚本(self):
+        self.ma_func.fun_生成SKP批量导出脚本(in_path=self.ma_path.material_path)
+
     def fun_按数字分类(self):
         self.ma_func.fun_按数字分类(in_path=self.ma_path.material_path).main()
         self.ma_func.fun_按数字分类(in_path=self.ma_path.preview_path).main()

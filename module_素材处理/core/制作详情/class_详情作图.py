@@ -143,10 +143,12 @@ class XQMakePIC:
             if self.has_material_info is True:
                 material_file = self.fun_查找源文件(img_type.path)
                 if material_file is not None:
-                    if material_file.suffix.lower() not in ['.ai', '.eps']:
+                    if material_file.suffix.lower() in ['.psd', '.psb']:
                         size = f'{img_type.width}*{img_type.height}(PX)'
-                    else:
+                    elif material_file.suffix.lower() in ['.ai', '.eps']:
                         size = f'矢量设计素材'
+                    else:
+                        size = f' '
 
                     small_im_info_pil = self.fun_制作信息(stem=material_file.name.upper(), size_info=size)
                     mt = small_im_info_pil.height

@@ -29,6 +29,9 @@ def material_folder_function(item_in: ItemIn):
     ma = MaterialPathAction(item_in)
 
     match item_in.action_name:
+        case '生成SKP批量导出脚本':
+            ma.fun_生成SKP批量导出脚本()
+
         case "压缩字体为RAR":
             ma.fun_压缩为RAR()
 

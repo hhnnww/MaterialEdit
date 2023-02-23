@@ -15,6 +15,7 @@ from .fun_压缩为rar import fun_压缩为RAR
 from .fun_按数字分类 import CateByNum
 from .fun_按格式分类 import CateBySuffix
 from .fun_重命名字体文件 import FontPathReName
+from .fun_生成SKP批量导出 import fun_生成SKP批量导出脚本
 
 
 class MaterialFolderFunction:
@@ -34,3 +35,4 @@ class MaterialFolderFunction:
     fun_字体生成图片 = FontToPng
     fun_按数字分类 = CateByNum
     fun_压缩为RAR = fun_压缩为RAR
+    fun_生成SKP批量导出脚本 = fun_生成SKP批量导出脚本

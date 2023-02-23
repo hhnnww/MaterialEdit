@@ -73,6 +73,8 @@ class MaterialInfo:
                 return 'TTF字体安装包素材'
             case '.ppt' | '.pptx':
                 return 'PPT幻灯片素材'
+            case '.skp':
+                return 'SU草图大师素材'
 
 
 if __name__ == '__main__':

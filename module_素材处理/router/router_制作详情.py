@@ -1,8 +1,9 @@
 from pathlib import Path
-from tqdm import tqdm
+
 from PIL import Image
 from fastapi import APIRouter
 from pydantic import BaseModel
+from tqdm import tqdm
 
 from module_素材处理.core.setting import IMAGE_FILE_SUFFIX
 from module_素材处理.core.setting import UP_FOLDER
@@ -48,17 +49,27 @@ def make_xq(item_in: ItemIn):
             if 'xq_' in in_file.stem:
                 in_file.unlink()
 
+    text_list = [
+        ('素材ID', item_in.素材ID),
+        ('素材格式', item_in.素材格式),
+        ('素材数量', item_in.源文件列表),
+        ('素材大小', item_in.源文件大小),
+    ]
+
+    if item_in.tb_name == '泡泡素材':
+        text_list.extend([
+            ('*源文件预览', '本店素材均有预览图与源文件文件名对应，可直接单个按需下载，查找更方便。'),
+            ('*下载方式', '本店仅支持百度网盘下载，不支持邮箱及直接发送，无法使用网盘的地方请勿购买。')
+        ])
+
+    else:
+        text_list.extend([('* 购买须知', '本店都是设计师专用素材，不是图片，非设计师请勿购买，本店不提供任何使用教程。'),
+                          ('* 样机须知', '本店均为白膜样机，不提供样机内贴图！'),
+                          ('* 海报须知', '本店海报均不提供字体！')])
+
     # 制作数据图
     info_pil = XQInfoPic(
-        text_list=[
-            ('素材ID', item_in.素材ID),
-            ('素材格式', item_in.素材格式),
-            ('素材数量', item_in.源文件列表),
-            ('素材大小', item_in.源文件大小),
-            ('* 购买须知', '本店都是设计师专用素材，不是图片，非设计师请勿购买，本店不提供任何使用教程。'),
-            ('* 样机须知', '本店均为白膜样机，不提供样机内贴图！'),
-            ('* 海报须知', '本店海报均不提供字体！')
-        ]
+        text_list=text_list
     ).main()
 
     all_pil = [

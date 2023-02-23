@@ -1,8 +1,10 @@
 import zipfile
 from pathlib import Path
 
-from module_素材处理.core.素材文件夹功能.fun_指定遍历 import fun_指定遍历
 from tqdm import tqdm
+
+from module_素材处理.core.素材文件夹功能.fun_指定遍历 import fun_指定遍历
+from module_素材处理.core.素材文件夹功能.fun_解压RAR import fun_解压RAR
 
 
 def fun_解压ZIP(in_path: Path):
@@ -18,3 +20,5 @@ def fun_解压ZIP(in_path: Path):
                     print(f'损坏的zip文件：{in_file}')
 
             in_file.unlink()
+
+    fun_解压RAR(in_path=in_path)

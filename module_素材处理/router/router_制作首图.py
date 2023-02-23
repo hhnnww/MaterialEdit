@@ -56,6 +56,8 @@ def make_st(item_in: ItemIn):
     st_width, st_height = 1500, 1500
     if item_in.st_style == '黑鲸':
         st_height = 1300
+    elif item_in.st_style == '巴扎嘿':
+        st_width = 1000
 
     # 构建布局
     if item_in.small_pic_mode == 'OneAndX':
@@ -95,6 +97,9 @@ def make_st(item_in: ItemIn):
     elif item_in.st_style == 'T500':
         bg = STT500(st=bg, title=item_in.title, sc_id=item_in.material_id, tb_name=item_in.tb_name,
                     type_title=item_in.素材格式标题).main()
+    elif item_in.st_style == '巴扎嘿':
+        # TODO:制作一个巴扎嘿首图
+        pass
 
     # 保存首图
     if UP_FOLDER.exists() is False:
