@@ -29,6 +29,9 @@ def material_folder_function(item_in: ItemIn):
     ma = MaterialPathAction(item_in)
 
     match item_in.action_name:
+        case '制作文件夹预览图':
+            ma.fun_制作文件夹预览()
+
         case '素材图蜘蛛水印':
             ma.fun_素材图蜘蛛水印()
 

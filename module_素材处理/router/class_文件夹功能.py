@@ -27,6 +27,9 @@ class MaterialPathAction:
         self.ma_path = MaterialFolderStructure(root_path=item_in.root_path)
         self.ma_func = MaterialFolderFunction
 
+    def fun_制作文件夹预览(self):
+        self.ma_func.fun_制作文件夹预览(in_path=self.ma_path.material_path).main()
+
     def fun_素材图蜘蛛水印(self):
         self.ma_func.fun_素材图蜘蛛水印(in_path=self.ma_path.material_path, tb_name=self.item_in.tb_name)
 

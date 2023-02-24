@@ -12,7 +12,7 @@ def fun_生成SKP批量导出脚本(in_path: Path):
   view.write_image(
     filename: img_path,
     width: 2000,
-    height: 1500,
+    height: 1236,
     antialias: true,
     transparent: false
   )

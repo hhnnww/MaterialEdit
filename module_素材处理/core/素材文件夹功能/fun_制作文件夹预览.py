@@ -17,25 +17,28 @@ class MakePathPreviewImage:
         self.pic_width = 3500
         self.gutter = 20
         self.info_height = 150
+        self.line_pic_num = 10
 
     def fun_构建文件夹(self):
+        path_list = []
         for in_folder in self.in_path.iterdir():
             if in_folder.is_dir():
-                yield in_folder
+                path_list.append(in_folder)
+
+        return path_list
 
     @staticmethod
     def fun_文件夹获取所有图片(in_folder: Path) -> List[Path]:
         img_list = fun_指定遍历(folder=in_folder, suffix=IMAGE_FILE_SUFFIX)
         return img_list
 
-    @staticmethod
-    def fun_构建图片列表(img_list) -> List[List[Path]]:
+    def fun_构建图片列表(self, img_list) -> List[List[Path]]:
         new_list = []
         in_list = []
         for num, img in enumerate(img_list):
             in_list.append(img)
 
-            if len(in_list) == 10:
+            if len(in_list) == self.line_pic_num:
                 new_list.append(in_list.copy())
                 in_list = []
 
@@ -116,6 +119,7 @@ class MakePathPreviewImage:
 
     def main(self):
         for in_folder in tqdm(self.fun_构建文件夹(), desc='构建文件夹预览图', ncols=100):
+            print(f'\n制作预览图:{in_folder}\n')
             self.fun_文件夹构建整体(in_folder)
 
 
