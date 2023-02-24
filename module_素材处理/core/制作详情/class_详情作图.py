@@ -39,6 +39,7 @@ class XQMakePIC:
 
         self.xq_width = 1500
         self.gutter = 30
+        self.one_line_radio = 5
 
     @cached_property
     def fun_构建列表(self):
@@ -69,7 +70,7 @@ class XQMakePIC:
 
                 # 选择单排数量
                 line_sum_ratio = sum([in_img.ratio for in_img in line_comb])
-                if len(line_comb) == self.single_pic_num or line_sum_ratio >= 5:
+                if len(line_comb) == self.single_pic_num or line_sum_ratio >= self.one_line_radio:
                     comb_list.append(line_comb.copy())
                     line_comb = []
 

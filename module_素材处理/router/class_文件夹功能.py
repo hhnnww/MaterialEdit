@@ -27,6 +27,9 @@ class MaterialPathAction:
         self.ma_path = MaterialFolderStructure(root_path=item_in.root_path)
         self.ma_func = MaterialFolderFunction
 
+    def fun_素材图蜘蛛水印(self):
+        self.ma_func.fun_素材图蜘蛛水印(in_path=self.ma_path.material_path, tb_name=self.item_in.tb_name)
+
     def fun_生成SKP批量导出脚本(self):
         self.ma_func.fun_生成SKP批量导出脚本(in_path=self.ma_path.material_path)
 

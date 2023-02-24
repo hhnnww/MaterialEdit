@@ -26,6 +26,8 @@ end\n\n"""
             file_args = f"save_view_to_png '{in_file.as_posix()}','{png_path.as_posix()}'\n"
             start_args += file_args
 
+    start_args += '\n\nUI.messagebox("图片已经全部导出完成!~")'
+
     cmd_path.write_text(start_args, encoding='utf-8')
 
 

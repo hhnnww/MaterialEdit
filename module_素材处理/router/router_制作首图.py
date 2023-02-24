@@ -9,6 +9,7 @@ from module_素材处理.core.制作首图 import STLayoutOneX
 from module_素材处理.core.制作首图 import STMake
 from module_素材处理.core.制作首图 import SmallSizeModel
 from module_素材处理.core.制作首图.样式.class_t500 import STT500
+from module_素材处理.core.制作首图.样式.class_巴扎嘿 import STBaZhaHeiStyle
 
 # 错落首图
 # from module_素材处理.core.制作首图.布局.class_错落布局 import STLayoutScat
@@ -28,6 +29,7 @@ class ItemIn(BaseModel):
     gutter: int
     首图名称: int
     素材格式标题: str
+    源文件数量: int
 
 
 @router.post('/make_st')
@@ -98,8 +100,9 @@ def make_st(item_in: ItemIn):
         bg = STT500(st=bg, title=item_in.title, sc_id=item_in.material_id, tb_name=item_in.tb_name,
                     type_title=item_in.素材格式标题).main()
     elif item_in.st_style == '巴扎嘿':
-        # TODO:制作一个巴扎嘿首图
-        pass
+        bg = STBaZhaHeiStyle(st_layout=bg, title=item_in.title, material_num=str(item_in.源文件数量),
+                             material_format_title=item_in.素材格式标题, material_id=item_in.material_id,
+                             tb_name=item_in.tb_name).main()
 
     # 保存首图
     if UP_FOLDER.exists() is False:

@@ -16,6 +16,7 @@ from .fun_按数字分类 import CateByNum
 from .fun_按格式分类 import CateBySuffix
 from .fun_重命名字体文件 import FontPathReName
 from .fun_生成SKP批量导出 import fun_生成SKP批量导出脚本
+from .fun_素材图蜘蛛水印 import fun_素材图蜘蛛水印
 
 
 class MaterialFolderFunction:
@@ -36,3 +37,4 @@ class MaterialFolderFunction:
     fun_按数字分类 = CateByNum
     fun_压缩为RAR = fun_压缩为RAR
     fun_生成SKP批量导出脚本 = fun_生成SKP批量导出脚本
+    fun_素材图蜘蛛水印 = fun_素材图蜘蛛水印
