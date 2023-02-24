@@ -14,10 +14,10 @@ class MakePathPreviewImage:
     def __init__(self, in_path: Path):
         self.in_path = in_path
 
-        self.pic_width = 3500
+        self.pic_width = 2500
         self.gutter = 20
         self.info_height = 150
-        self.line_pic_num = 10
+        self.line_pic_num = 5
 
     def fun_构建文件夹(self):
         path_list = []
@@ -69,7 +69,7 @@ class MakePathPreviewImage:
 
         line_all_radio = sum([pil.width / pil.height for pil in pil_list])
 
-        ori_width = self.pic_width - (len(pil_list) * self.gutter)
+        ori_width = self.pic_width - ((len(pil_list)+1) * self.gutter)
         pic_height = int((ori_width / line_all_radio)) + self.info_height
 
         bg = Image.new('RGBA', (self.pic_width, pic_height), (255, 255, 255))
@@ -78,6 +78,9 @@ class MakePathPreviewImage:
         top = self.gutter
         for pil in pil_list:
             pil_width = int(ori_width / (line_all_radio / (pil.width / pil.height)))
+            if pil_width > self.pic_width / 5:
+                pil_width = int(self.pic_width / 5)
+
             pil.thumbnail((pil_width, 9999), 1)
             pil = self.fun_单个图片加名字(pil)
             bg.paste(pil, (left, top), pil)
