@@ -9,7 +9,7 @@ def fun_修改图层和编组名(in_layer):
         '摄图网logo - 新（排版专用）',
         '摄图网logo白色',
         '二维码小文案',
-        '水印', '二维码', '千库编辑', '千库网logo', '千库网二维码'
+        '水印', '二维码', '千库编辑', '千库网logo', '千库网二维码','千库编辑'
     )
     for ad_layer_name_single in ad_name_include:
         if in_layer.LayerType == 1 and in_layer.Kind != 2:
@@ -20,7 +20,7 @@ def fun_修改图层和编组名(in_layer):
                 in_layer.Delete()
                 return False
 
-    ad_name_is = ('隐藏 或 删除此图层即可开始您的编辑.', 'sy', '03 (2)', '千库网二维码')
+    ad_name_is = ('隐藏 或 删除此图层即可开始您的编辑.', 'sy', '03 (2)', '千库网二维码', '底标', '千库编辑公众号二维码')
     if in_layer.LayerType == 1 and in_layer.Kind != 2:
         if in_layer.Name.lower() in ad_name_is:
             if in_layer.AllLocked is True:
@@ -106,12 +106,11 @@ def fun_根图层(in_doc):
     :return:
     """
     artlayers_list = []
-    if in_doc.ArtLayers.Count > 0:
-        for in_art_layer in in_doc.ArtLayers:
-            res = fun_修改图层和编组名(in_art_layer)
-            if res is True:
-                fun_修改图层和编组名(in_art_layer)
-                artlayers_list.append(in_art_layer)
+
+    for in_art_layer in in_doc.ArtLayers:
+        res = fun_修改图层和编组名(in_art_layer)
+        if res is True:
+            artlayers_list.append(in_art_layer)
 
     return artlayers_list
 

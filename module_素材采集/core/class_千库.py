@@ -18,8 +18,11 @@ class SCQianKu:
     def fun_列表页构建(self):
         for x in range(1, self.max_page + 1):
             # https://588ku.com/so/funvjiehaibao-0-0-0-0-0-default-0-2/
+            # https://588ku.com/so/funvjiezhanban-1-0-0-0-0-bid-2-2/
+            # https://588ku.com/so/chuntianhaibao-1-0-0-0-0-bid-2-1/
             # url = self.start_url.replace('-1/', f'-{x}/')
-            url = re.sub('-0-(\d+)/', f'-0-{x}/', self.start_url)
+            url = re.sub('-(\d+)/', f'-{x}/', self.start_url)
+
             yield url
 
     def fun_获取单页(self, url: str) -> Generator:

@@ -10,6 +10,15 @@ class SCSinglePage:
         self.html = HTML(html=html)
         self.url = url
 
+    def taobao(self):
+        ma_list = self.html.find(r'#J_ShopSearchResult > div > div.shop-hesper-bd.grid > div > dl')
+        for ma in ma_list:
+            url = 'https:' + ma.find('.photo a', first=True).attrs.get('href')
+            img = 'https:' + ma.find('.photo a img', first=True).attrs.get('src')
+            img = img.replace('_180x180.jpg', '')
+
+            yield MaterialType(url=url, img=img, hash=sha256(url.encode('utf-8')).hexdigest())
+
     def qiantu(self):
         for ma in self.html.find(
                 '.pic-container.qtd-card-container > .qtd-card.qtas-pic-card.qtd-card-a.qtd-normal-card'):
@@ -57,3 +66,6 @@ class SCSinglePage:
 
         elif '588ku.com' in self.url:
             return self.qianku()
+
+        elif 'taobao.com' in self.url:
+            return self.taobao()

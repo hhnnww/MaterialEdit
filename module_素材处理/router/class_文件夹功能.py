@@ -53,6 +53,7 @@ class MaterialPathAction:
 
     def fun_移动到根目录(self):
         self.ma_func.fun_移动到根目录(self.ma_path.material_path)
+        self.ma_func.fun_移动到根目录(self.ma_path.preview_path)
 
     def fun_删除广告文件(self):
         for in_file in self.ma_func.fun_指定遍历(self.ma_path.material_path, AD_FILE_SUFFIX):

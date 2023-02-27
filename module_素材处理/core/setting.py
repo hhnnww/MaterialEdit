@@ -7,7 +7,7 @@ IMG_PATH = Path(__file__).parent / 'IMAGE'
 FONT_PATH = Path(__file__).parent / 'FONTS'
 
 # 源文件列表、图片列表、广告文件列表
-MATERIAL_FILE_SUFFIX = ['.psd', '.psb', '.ai', '.eps', '.otf', '.ttf', '.pptx', '.ppt','.skp']
+MATERIAL_FILE_SUFFIX = ['.psd', '.psb', '.ai', '.eps', '.otf', '.ttf', '.pptx', '.ppt', '.skp']
 IMAGE_FILE_SUFFIX = ['.png', '.jpg', '.jpeg']
 AD_FILE_SUFFIX = ['.html', '.url', '.txt', '.exe', '.pdf']
 FONT_SUFFIX = ['.otf', '.ttf']

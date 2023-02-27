@@ -17,14 +17,20 @@ def single_page_scrapy(item_in: ItemIn):
     all_post = SCSinglePage(html=item_in.body, url=item_in.url).main()
 
     site_name = ''
+    tb_name = '小夕素材'
+
     if '58pic.com' in item_in.url:
         site_name = '千图'
     elif 'ibaotu.com' in item_in.url:
         site_name = '包图'
     elif '588ku.com' in item_in.url:
         site_name = '千库'
-        
-    model = fun_获取MODEL(tb_name='小夕素材', site_name=site_name)
+
+    elif 'shop117213828.taobao.com' in item_in.url:
+        tb_name = '泡泡素材'
+        site_name = '淘宝'
+
+    model = fun_获取MODEL(tb_name=tb_name, site_name=site_name)
 
     for ma in all_post:
         count = model.select().where(model.hash == ma.hash).count()
