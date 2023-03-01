@@ -65,6 +65,9 @@ class MaterialPathAction:
                 if in_file.stat().st_size < 8000:
                     in_file.unlink()
 
+                if '扫码进店免费领取资料' in in_file.stem and in_file.suffix.lower() == '.jpg':
+                    in_file.unlink()
+
     def fun_解压ZIP(self):
         self.ma_func.fun_解压ZIP(in_path=self.ma_path.material_path)
 
