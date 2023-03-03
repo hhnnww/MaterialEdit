@@ -92,11 +92,8 @@ class GetAllLayer:
         return sets_list
 
     def run_构建所有编组(self):
-        set_list = []
         for in_set in self.fun_所有根编组():
-            set_list.extend(self.fun_归递编组(in_set))
-
-        self.set_list = set_list
+            self.set_list.extend(self.fun_归递编组(in_set))
 
     def run_构建所有图层(self):
         self.layer_list.extend(self.fun_所有根图层())
@@ -109,7 +106,7 @@ class GetAllLayer:
         for in_set in self.set_list:
             self.fun_修改图层和编组名(in_set)
 
-        for num, in_layer in enumerate(self.layer_list):
+        for in_layer in self.layer_list:
             if self.fun_修改图层和编组名(in_layer) is False:
                 self.layer_list.remove(in_layer)
 
@@ -120,4 +117,5 @@ if __name__ == '__main__':
     app = Dispatch('photoshop.application')
     doc = app.ActiveDocument
     gal = GetAllLayer(doc)
+    print(gal.set_list)
     print(gal.layer_list)
