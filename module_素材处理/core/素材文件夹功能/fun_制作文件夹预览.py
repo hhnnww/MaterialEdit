@@ -69,7 +69,7 @@ class MakePathPreviewImage:
 
         line_all_radio = sum([pil.width / pil.height for pil in pil_list])
 
-        ori_width = self.pic_width - ((len(pil_list)+1) * self.gutter)
+        ori_width = self.pic_width - ((len(pil_list) + 1) * self.gutter)
         pic_height = int((ori_width / line_all_radio)) + self.info_height
 
         bg = Image.new('RGBA', (self.pic_width, pic_height), (255, 255, 255))
@@ -78,8 +78,8 @@ class MakePathPreviewImage:
         top = self.gutter
         for pil in pil_list:
             pil_width = int(ori_width / (line_all_radio / (pil.width / pil.height)))
-            if pil_width > self.pic_width / 5:
-                pil_width = int(self.pic_width / 5)
+            # if pil_width > self.pic_width / 5:
+            #     pil_width = int(self.pic_width / 5)
 
             pil.thumbnail((pil_width, 9999), 1)
             pil = self.fun_单个图片加名字(pil)
@@ -97,9 +97,9 @@ class MakePathPreviewImage:
         pil.close()
 
         gutter = 10
-        ma_name = PICEdit.fun_单行文字(text=ma_name, font_weight='r', font_size=220, text_color=(120, 120, 120),
+        ma_name = PICEdit.fun_单行文字(text=ma_name, font_weight='r', font_size=30, text_color=(120, 120, 120),
                                        bg_color=(255, 255, 255)).main()
-        ma_name.thumbnail((bg.width - (gutter * 10), 9999), 1)
+        # ma_name.thumbnail((bg.width - (gutter * 10), 9999), 1)
         bg.paste(ma_name, (0, pil.height + (gutter * 2)), ma_name)
         ma_name.close()
         return bg
@@ -116,8 +116,9 @@ class MakePathPreviewImage:
             top += pil.height
             pil.close()
 
-        png_path = in_folder.parent / (in_folder.stem + '.png')
-        bg.save(png_path)
+        png_path = in_folder.parent / (in_folder.stem + '.jpg')
+        bg = bg.convert('RGBA')
+        bg.save(png_path,quatily=80)
         bg.close()
 
     def main(self):
@@ -128,6 +129,6 @@ class MakePathPreviewImage:
 
 if __name__ == '__main__':
     path_img = MakePathPreviewImage(
-        in_path=Path(r'F:\泡泡素材\10000-19999\10001\10001')
+        in_path=Path(r'E:\小夕素材\4000-4999\4749\4749')
     )
     path_img.main()

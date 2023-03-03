@@ -4,7 +4,8 @@ from pathlib import Path
 from win32com.client import Dispatch
 
 from module_素材处理.core.setting import OUT_PATH
-from module_素材处理.core.素材文件夹功能.PSFile2.fun_1_遍历所有图层 import run_所有图层
+# from module_素材处理.core.素材文件夹功能.PSFile2.fun_1_遍历所有图层 import run_所有图层
+from module_素材处理.core.素材文件夹功能.PSFile2.fun_1_2_遍历所有图层 import GetAllLayer
 from module_素材处理.core.素材文件夹功能.PSFile2.fun_PS基础操作 import dialog
 from module_素材处理.core.素材文件夹功能.PSFile2.fun_PS基础操作 import s
 
@@ -124,7 +125,9 @@ def is_export_layer(item, doc_bounds):
 
 def run_导出所有图层(in_doc, file: Path):
     # fun_清空OUT_PATH()
-    all_item = run_所有图层(in_doc)
+    gal = GetAllLayer(in_doc)
+    all_item = gal.layer_list
+
     art_layer_item_list = []
     text_item_list = []
     for item in all_item:

@@ -9,16 +9,17 @@ def fun_修改图层和编组名(in_layer):
         '摄图网logo - 新（排版专用）',
         '摄图网logo白色',
         '二维码小文案',
-        '水印', '二维码', '千库编辑', '千库网logo', '千库网二维码','千库编辑'
+        '水印', '二维码', '千库编辑', '千库网logo', '千库网二维码', '千库编辑'
     )
     for ad_layer_name_single in ad_name_include:
-        if in_layer.LayerType == 1 and in_layer.Kind != 2:
-            if ad_layer_name_single in in_layer.Name.lower():
-                if in_layer.AllLocked is True:
-                    in_layer.AllLocked = False
-                print(f'删除图层:{in_layer.Name}')
-                in_layer.Delete()
-                return False
+        if in_layer.LayerType == 1:
+            if in_layer.Kind != 2:
+                if ad_layer_name_single in str(in_layer.Name).lower():
+                    if in_layer.AllLocked is True:
+                        in_layer.AllLocked = False
+                    print(f'删除图层:{in_layer.Name}')
+                    in_layer.Delete()
+                    return False
 
     ad_name_is = ('隐藏 或 删除此图层即可开始您的编辑.', 'sy', '03 (2)', '千库网二维码', '底标', '千库编辑公众号二维码')
     if in_layer.LayerType == 1 and in_layer.Kind != 2:
@@ -29,31 +30,31 @@ def fun_修改图层和编组名(in_layer):
             in_layer.Delete()
             return False
 
-    layer_prefix = ''
-    if in_layer.LayerType == 1:
-        layer_prefix = '图层'
-    elif in_layer.LayerType == 2:
-        layer_prefix = '编组'
-
-    if in_layer.Name == f'{layer_prefix} {in_layer.id}':
-        return True
-
-    visible = in_layer.Visible
-
-    if in_layer.LayerType == 1:
-        if in_layer.Kind == 2:
-            in_layer.Name = in_layer.TextItem.Contents
-        else:
-            in_layer.Name = f'{layer_prefix} {in_layer.id}'
-    else:
-        in_layer.Name = f'{layer_prefix} {in_layer.id}'
-
-    in_layer.Unlink()
-
-    in_layer.AllLocked = True
-    in_layer.AllLocked = False
-
-    in_layer.Visible = visible
+    # layer_prefix = ''
+    # if in_layer.LayerType == 1:
+    #     layer_prefix = '图层'
+    # elif in_layer.LayerType == 2:
+    #     layer_prefix = '编组'
+    #
+    # if in_layer.Name == f'{layer_prefix} {in_layer.id}':
+    #     return True
+    #
+    # visible = in_layer.Visible
+    #
+    # if in_layer.LayerType == 1:
+    #     if in_layer.Kind == 2:
+    #         in_layer.Name = in_layer.TextItem.Contents
+    #     else:
+    #         in_layer.Name = f'{layer_prefix} {in_layer.id}'
+    # else:
+    #     in_layer.Name = f'{layer_prefix} {in_layer.id}'
+    #
+    # in_layer.Unlink()
+    #
+    # in_layer.AllLocked = True
+    # in_layer.AllLocked = False
+    #
+    # in_layer.Visible = visible
 
     return True
 
@@ -121,7 +122,8 @@ def run_所有图层(in_doc):
     然后遍历所有编组，把所有编组都合并到列表中
     """
     art_layers_list = []
-    art_layers_list.extend(fun_根图层(in_doc))
+    doc_artlayers = fun_根图层(in_doc)
+    art_layers_list.extend(doc_artlayers)
 
     for layerset in run_所有编组(in_doc):
         try:
