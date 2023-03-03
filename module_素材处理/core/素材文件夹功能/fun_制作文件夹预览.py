@@ -117,8 +117,8 @@ class MakePathPreviewImage:
             pil.close()
 
         png_path = in_folder.parent / (in_folder.stem + '.jpg')
-        bg = bg.convert('RGBA')
-        bg.save(png_path,quatily=80)
+        bg = bg.convert('RGB')
+        bg.save(png_path, quality=80)
         bg.close()
 
     def main(self):
@@ -129,6 +129,6 @@ class MakePathPreviewImage:
 
 if __name__ == '__main__':
     path_img = MakePathPreviewImage(
-        in_path=Path(r'E:\小夕素材\4000-4999\4749\4749')
+        in_path=Path(r'E:\小夕素材\4000-4999\4786\4786')
     )
     path_img.main()

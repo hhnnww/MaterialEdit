@@ -1,40 +1,11 @@
+from module_素材处理.core.素材文件夹功能.PSFile2.open_yaml import open_yml
+
+
 def fun_文字图层替换内容(item):
     visible = item.Visible
     item.AllLocked = False
 
-    keywords = [
-        ('千图', '小夕'),
-        ('包图', '小夕'),
-        ('58pic', 'xiaoxisc'),
-        ('58PIC', 'xiaoxisc'),
-        ('千小图', '小夕夕'),
-        ('摄图', '小夕'),
-        ('699pic', 'xiaoxisc'),
-        ('千/图', '小/夕'),
-        ('baidu', 'xiaoxisc'),
-        ('ibaotu', 'XiaoXi'),
-        ('XIAO HUA', 'XiaoXi'),
-        ('ibaotu', 'XiaoXi'),
-        ('千库', '小夕'),
-        ('千|图', '小|夕'),
-        ('588ku', 'xiaoxisc'),
-        ('qianku', 'xiaoxisc'),
-        ('shetuwang', 'xiaoxiwang'),
-        ('80053384', '12345677'),
-        ('baotuwang', 'xiaoxiwang'),
-        ('abaotu', 'xiaoxi'),
-        ('BAOTUWANG', 'xiaoxisc'),
-        ('abaotu', 'xiaoxisc'),
-        ('iBaoTu', 'xiaoxi'),
-        ('mige', 'xiaoxisc'),
-        ('米鸽', '小夕'),
-        ('51miz', 'xiaoxisc'),
-        ('觅知', '小夕'),
-        ('麦设计', '小夕素材'),
-        ('maisj.net', 'xiaoxisc.com'),
-        ('农民设计', '小夕设计'),
-        ('猪大叔', '小夕')
-    ]
+    keywords = open_yml().get('ad_replace_keywords')
 
     for key in keywords:
         if key[0].lower() in str(item.textItem.Contents).lower():

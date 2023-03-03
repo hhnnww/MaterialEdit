@@ -1,0 +1,94 @@
+# 如果如下关键词,图层名包含他们,则判断为广告图层,直接删除.
+include_name_list:
+  - 摄图网二维码
+  - 摄图网二维码
+  - sttttt
+  - 摄图网水印
+  - 千图小程序
+  - 微信图片_20220602162527
+  - 摄图网水印
+  - 摄图网logo - 新（排版专用）
+  - 摄图网logo白色
+  - 二维码小文案
+  - 水印
+  - 二维码
+  - 千库编辑
+  - 千库网logo
+  - 千库网二维码
+  - 千库编辑
+  - logo
+  - 摄图网LOGO元素（排版专用）
+
+# 如果图层名完全等于如下的,判断为广告图层,直接删除.
+is_name_list:
+  - 隐藏 或 删除此图层即可开始您的编辑.
+  - sy
+  - 03 (2)
+  - 千库网二维码
+  - 底标
+  - 千库编辑公众号二维码
+
+# 本文图层替换关键词
+ad_replace_keywords:
+  - - 千图
+    - 小夕
+  - - 包图
+    - 小夕
+  - - 58pic
+    - xiaoxisc
+  - - 58PIC
+    - xiaoxisc
+  - - 千小图
+    - 小夕夕
+  - - 摄图
+    - 小夕
+  - - 699pic
+    - xiaoxisc
+  - - 千/图
+    - 小/夕
+  - - baidu
+    - xiaoxisc
+  - - ibaotu
+    - XiaoXi
+  - - XIAO HUA
+    - XiaoXi
+  - - ibaotu
+    - XiaoXi
+  - - 千库
+    - 小夕
+  - - 千|图
+    - 小|夕
+  - - 588ku
+    - xiaoxisc
+  - - qianku
+    - xiaoxisc
+  - - shetuwang
+    - xiaoxiwang
+  - - '80053384'
+    - '12345677'
+  - - baotuwang
+    - xiaoxiwang
+  - - abaotu
+    - xiaoxi
+  - - BAOTUWANG
+    - xiaoxisc
+  - - abaotu
+    - xiaoxisc
+  - - iBaoTu
+    - xiaoxi
+  - - mige
+    - xiaoxisc
+  - - 米鸽
+    - 小夕
+  - - 51miz
+    - xiaoxisc
+  - - 觅知
+    - 小夕
+  - - 麦设计
+    - 小夕素材
+  - - maisj.net
+    - xiaoxisc.com
+  - - 农民设计
+    - 小夕设计
+  - - 猪大叔
+    - 小夕

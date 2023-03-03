@@ -1,4 +1,5 @@
 from win32com.client import CDispatch
+from module_素材处理.core.素材文件夹功能.PSFile2.open_yaml import open_yml
 
 
 class GetAllLayer:
@@ -9,22 +10,11 @@ class GetAllLayer:
         self.run_构建所有编组()
         self.run_构建所有图层()
         self.run_处理所有编组和图层()
+        self.yaml = open_yml()
 
-    @staticmethod
-    def fun_修改图层和编组名(in_layer):
-        ad_name_include = (
-            '摄图网二维码',
-            'sttttt',
-            '摄图网水印',
-            '千图小程序',
-            '微信图片_20220602162527',
-            '摄图网水印',
-            '摄图网logo - 新（排版专用）',
-            '摄图网logo白色',
-            '二维码小文案',
-            '水印', '二维码', '千库编辑', '千库网logo', '千库网二维码', '千库编辑', 'logo'
-        )
-        for ad_layer_name_single in ad_name_include:
+    def fun_修改图层和编组名(self, in_layer):
+
+        for ad_layer_name_single in self.yaml.get('include_name_list'):
             if in_layer.LayerType == 1:
                 if in_layer.Kind != 2:
                     if ad_layer_name_single in str(in_layer.Name).lower():
@@ -34,10 +24,8 @@ class GetAllLayer:
                         in_layer.Delete()
                         return False
 
-        ad_name_is = (
-            '隐藏 或 删除此图层即可开始您的编辑.', 'sy', '03 (2)', '千库网二维码', '底标', '千库编辑公众号二维码')
         if in_layer.LayerType == 1 and in_layer.Kind != 2:
-            if in_layer.Name.lower() in ad_name_is:
+            if in_layer.Name.lower() in self.yaml.get('is_name_list'):
                 if in_layer.AllLocked is True:
                     in_layer.AllLocked = False
                 print(f'删除图层:{in_layer.Name}')
