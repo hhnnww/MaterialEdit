@@ -115,3 +115,14 @@ def make_st(item_in: ItemIn):
 
     new_bg.save(st_path, quality=80)
     new_bg.close()
+
+    # 制作附图
+    bg = STMake(
+        st_list=layout, st_width=600, st_height=800, gutter=item_in.gutter, bg_color=(255, 255, 255),
+        small_pic_size_mode=small_pic_mode
+    ).main()
+
+    ft_path = (UP_FOLDER / f'ft.jpg').as_posix()
+    bg = bg.convert('RGB')
+    bg.save(ft_path, quality=80)
+    bg.close()
