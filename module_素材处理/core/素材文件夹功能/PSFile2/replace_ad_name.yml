@@ -25,12 +25,17 @@ include_name_list:
   - 底标
   - 底标
   - 文字
+  - 二位码
+  - 摄图网logo-新
+  - 摄图网二维码
+  - 摄图网水印
 
 # 如果图层名完全等于如下的,判断为广告图层,直接删除.
 is_name_list:
   - 隐藏 或 删除此图层即可开始您的编辑.
   - sy
   - 03 (2)
+  - cli_1000px
 
 # 本文图层替换关键词
 ad_replace_keywords:
@@ -98,3 +103,5 @@ ad_replace_keywords:
     - 小夕
   - - 千\库
     - 小\夕
+  - - ztupic
+    - xiaoxi

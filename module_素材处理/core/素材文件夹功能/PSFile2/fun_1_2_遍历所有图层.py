@@ -21,7 +21,9 @@ class GetAllLayer:
         for ad_layer_name_single in ad_name_include:
             if in_layer.LayerType == 1:
                 if in_layer.Kind != 2:
-                    if ad_layer_name_single in str(in_layer.Name).lower():
+                    layer_name = in_layer.Name
+                    layer_name = str(layer_name).lower()
+                    if ad_layer_name_single in layer_name:
                         if in_layer.AllLocked is True:
                             in_layer.AllLocked = False
                         print(f'删除图层:{in_layer.Name}')
@@ -31,7 +33,9 @@ class GetAllLayer:
         # 如果等于
         ad_name_is = yaml_dict.get('is_name_list')
         if in_layer.LayerType == 1 and in_layer.Kind != 2:
-            if in_layer.Name.lower() in ad_name_is:
+            layer_name = in_layer.Name
+            layer_name = str(layer_name).lower()
+            if layer_name in ad_name_is:
                 if in_layer.AllLocked is True:
                     in_layer.AllLocked = False
                 print(f'删除图层:{in_layer.Name}')
