@@ -30,6 +30,10 @@ def single_page_scrapy(item_in: ItemIn):
         tb_name = '泡泡素材'
         site_name = '淘宝'
 
+    elif 'anyusj.com' in item_in.url:
+        tb_name = '饭桶设计'
+        site_name = '安鱼'
+
     model = fun_获取MODEL(tb_name=tb_name, site_name=site_name)
 
     for ma in all_post:

@@ -1,5 +1,5 @@
 from hashlib import sha256
-
+from pathlib import Path
 from requests_html import HTML
 
 from module_素材采集.core.model import MaterialType
@@ -57,6 +57,12 @@ class SCSinglePage:
             img = 'https:' + ma.find('img.lazy', first=True).attrs.get('data-original')
             yield MaterialType(url=url, img=img, hash=sha256(url.encode('utf-8')).hexdigest())
 
+    def anyu(self):
+        for ma in self.html.find(r'#J_postList > article'):
+            url = ma.find('a.media-pic', first=True).attrs.get('href')
+            img = ma.find('a.media-pic img', first=True).attrs.get('src')
+            yield MaterialType(url=url, img=img, hash=sha256(url.encode('utf-8')).hexdigest())
+
     def main(self):
         if '58pic.com' in self.url:
             return self.qiantu()
@@ -69,3 +75,6 @@ class SCSinglePage:
 
         elif 'taobao.com' in self.url:
             return self.taobao()
+
+        elif 'anyusj.com' in self.url:
+            return self.anyu()

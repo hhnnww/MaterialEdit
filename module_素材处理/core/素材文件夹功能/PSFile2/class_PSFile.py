@@ -11,7 +11,7 @@ from module_素材处理.core.素材文件夹功能.PSFile2.fun_3_对比所有�
 from module_素材处理.core.素材文件夹功能.PSFile2.fun_4_导出PNG import export_png
 from module_素材处理.core.素材文件夹功能.PSFile2.fun_5_插入广告 import fun_插入广告
 from module_素材处理.core.素材文件夹功能.PSFile2.fun_6_文字图层替换 import fun_文字图层替换内容
-from module_素材处理.core.素材文件夹功能.PSFile2.fun_PS基础操作 import fun_选择图层
+from module_素材处理.core.素材文件夹功能.PSFile2.fun_PS基础操作 import fun_选择图层, select_0
 from module_素材处理.core.素材文件夹功能.PSFile2.fun_清除和添加注释 import fun_清理注释
 from module_素材处理.core.素材文件夹功能.PSFile2.fun_高斯模糊 import gaussianBlur_0
 
@@ -39,6 +39,7 @@ class PSFile:
         ps_cla.ad_pic_list = ad_pic_list
 
         fun_清理注释(app=app)
+        select_0(app=app, doc=ps_cla.doc)
         return ps_cla
 
     def fun_删除广告(self):

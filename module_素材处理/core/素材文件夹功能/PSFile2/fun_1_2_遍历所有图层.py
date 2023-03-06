@@ -1,5 +1,8 @@
 from win32com.client import CDispatch
+
 from module_素材处理.core.素材文件夹功能.PSFile2.open_yaml import open_yml
+
+yaml_dict = open_yml()
 
 
 class GetAllLayer:
@@ -10,11 +13,12 @@ class GetAllLayer:
         self.run_构建所有编组()
         self.run_构建所有图层()
         self.run_处理所有编组和图层()
-        self.yaml = open_yml()
 
-    def fun_修改图层和编组名(self, in_layer):
-
-        for ad_layer_name_single in self.yaml.get('include_name_list'):
+    @staticmethod
+    def fun_判断图层名字来删除广告(in_layer):
+        # 如果包含
+        ad_name_include = yaml_dict.get('include_name_list')
+        for ad_layer_name_single in ad_name_include:
             if in_layer.LayerType == 1:
                 if in_layer.Kind != 2:
                     if ad_layer_name_single in str(in_layer.Name).lower():
@@ -24,14 +28,18 @@ class GetAllLayer:
                         in_layer.Delete()
                         return False
 
+        # 如果等于
+        ad_name_is = yaml_dict.get('is_name_list')
         if in_layer.LayerType == 1 and in_layer.Kind != 2:
-            if in_layer.Name.lower() in self.yaml.get('is_name_list'):
+            if in_layer.Name.lower() in ad_name_is:
                 if in_layer.AllLocked is True:
                     in_layer.AllLocked = False
                 print(f'删除图层:{in_layer.Name}')
                 in_layer.Delete()
                 return False
 
+    @staticmethod
+    def fun_修改图层和编组名字(in_layer):
         layer_prefix = ''
         if in_layer.LayerType == 1:
             layer_prefix = '图层'
@@ -92,11 +100,13 @@ class GetAllLayer:
 
     def run_处理所有编组和图层(self):
         for in_set in self.set_list:
-            self.fun_修改图层和编组名(in_set)
+            self.fun_修改图层和编组名字(in_set)
 
         for in_layer in self.layer_list:
-            if self.fun_修改图层和编组名(in_layer) is False:
+            if self.fun_判断图层名字来删除广告(in_layer) is False:
                 self.layer_list.remove(in_layer)
+            # else:
+            #     self.fun_修改图层和编组名字(in_layer)
 
 
 if __name__ == '__main__':
