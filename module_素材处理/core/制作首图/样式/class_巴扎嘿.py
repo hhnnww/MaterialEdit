@@ -26,7 +26,7 @@ class STBaZhaHeiStyle:
         top = 50
         padding = 50
         for title_line in self.title:
-            title_line_pil = PICEdit.fun_单行文字(text=title_line, font_weight='b', font_size=220,
+            title_line_pil = PICEdit.fun_单行文字(text=title_line, font_weight='m', font_size=220,
                                                   text_color=(255, 255, 255), bg_color=(0, 0, 0)).main()
             title_line_pil.thumbnail((500 - (padding * 2), 99999), 1)
             left = self.fun_计算边距(self.style_bg, title_line_pil, 'x')

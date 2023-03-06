@@ -35,6 +35,8 @@ class ItemIn(BaseModel):
 @router.post('/make_st')
 def make_st(item_in: ItemIn):
     print(f'制作首图: {item_in.title}')
+    ft_path = (UP_FOLDER / f'ft.jpg')
+    ft_path.unlink()
 
     # 删除UP文件夹里面的JPG图片
     for in_file in UP_FOLDER.iterdir():
@@ -122,7 +124,6 @@ def make_st(item_in: ItemIn):
         small_pic_size_mode=small_pic_mode
     ).main()
 
-    ft_path = (UP_FOLDER / f'ft.jpg').as_posix()
     bg = bg.convert('RGB')
-    bg.save(ft_path, quality=80)
+    bg.save(ft_path.as_posix(), quality=80)
     bg.close()
