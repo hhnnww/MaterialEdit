@@ -1,5 +1,4 @@
 from hashlib import sha256
-from pathlib import Path
 from requests_html import HTML
 
 from module_素材采集.core.model import MaterialType
