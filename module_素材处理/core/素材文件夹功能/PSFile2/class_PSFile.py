@@ -11,9 +11,11 @@ from module_素材处理.core.素材文件夹功能.PSFile2.fun_3_对比所有�
 from module_素材处理.core.素材文件夹功能.PSFile2.fun_4_导出PNG import export_png
 from module_素材处理.core.素材文件夹功能.PSFile2.fun_5_插入广告 import fun_插入广告
 from module_素材处理.core.素材文件夹功能.PSFile2.fun_6_文字图层替换 import fun_文字图层替换内容
-from module_素材处理.core.素材文件夹功能.PSFile2.fun_PS基础操作 import fun_选择图层, select_0
+from module_素材处理.core.素材文件夹功能.PSFile2.fun_PS基础操作 import fun_选择图层
+from module_素材处理.core.素材文件夹功能.PSFile2.fun_PS基础操作 import select_0
 from module_素材处理.core.素材文件夹功能.PSFile2.fun_清除和添加注释 import fun_清理注释
 from module_素材处理.core.素材文件夹功能.PSFile2.fun_高斯模糊 import gaussianBlur_0
+from module_素材处理.core.素材文件夹功能.PSFile2.open_yaml import open_yml
 
 
 class PSFile:
@@ -105,11 +107,24 @@ class PSFile:
         self.doc.Close(2)
 
     def run_导出_加广告(self):
+        ad_layers_list = open_yml().get('export_name_list')
+        layer_list = []
 
-        ad_layers_list = ['DELETE THIS LAYER']
-        for item in self.doc.ArtLayers:
-            if str(item.Name).lower() in [layer_name.lower() for layer_name in ad_layers_list]:
-                item.Delete()
+        for art_layer in self.doc.ArtLayers:
+            layer_list.append(art_layer)
+
+        for art_layer in layer_list:
+            art_layer_name = str(art_layer.Name).lower()
+
+            for ad_name in ad_layers_list:
+
+                ad_name = ad_name.lower()
+
+                if ad_name in art_layer_name:
+                    if art_layer.AllLocked is True:
+                        art_layer.AllLocked = False
+
+                    art_layer.Delete()
 
         self.fun_导出PNG()
         self.fun_插入广告()

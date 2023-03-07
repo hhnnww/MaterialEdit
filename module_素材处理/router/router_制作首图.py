@@ -36,7 +36,8 @@ class ItemIn(BaseModel):
 def make_st(item_in: ItemIn):
     print(f'制作首图: {item_in.title}')
     ft_path = (UP_FOLDER / f'ft.jpg')
-    ft_path.unlink()
+    if ft_path.exists() is True:
+        ft_path.unlink()
 
     # 删除UP文件夹里面的JPG图片
     for in_file in UP_FOLDER.iterdir():

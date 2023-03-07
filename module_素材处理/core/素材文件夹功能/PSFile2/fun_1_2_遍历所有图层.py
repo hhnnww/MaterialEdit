@@ -96,7 +96,8 @@ class GetAllLayer:
             self.set_list.extend(self.fun_归递编组(in_set))
 
     def run_构建所有图层(self):
-        self.layer_list.extend(self.fun_所有根图层())
+        doc_artlayers = self.fun_所有根图层()
+        self.layer_list.extend(doc_artlayers)
 
         for in_set in self.set_list:
             for in_layer in in_set.ArtLayers:

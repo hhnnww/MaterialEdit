@@ -1,3 +1,8 @@
+export_name_list:
+  - DELETE THIS LAYER
+  - HELP — Show me
+  - 隐藏 或 删除此图层即可开始您的编辑.
+
 # 如果如下关键词,图层名包含他们,则判断为广告图层,直接删除.
 include_name_list:
   - 摄图网二维码
