@@ -110,8 +110,8 @@ class GetAllLayer:
         for in_layer in self.layer_list:
             if self.fun_判断图层名字来删除广告(in_layer) is False:
                 self.layer_list.remove(in_layer)
-            # else:
-            #     self.fun_修改图层和编组名字(in_layer)
+            else:
+                self.fun_修改图层和编组名字(in_layer)
 
 
 if __name__ == '__main__':
