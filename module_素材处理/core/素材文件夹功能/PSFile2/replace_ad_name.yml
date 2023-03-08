@@ -43,6 +43,7 @@ is_name_list:
   - 03 (2)
   - cli_1000px
   - 文字
+  - 底标
 
 # 本文图层替换关键词
 ad_replace_keywords:

@@ -62,8 +62,13 @@ class SCEnvatoPICDown:
     def material_down_path(self):
         """素材下载目录"""
         ma_down_path = self.down_path / self.material_dict.get('slug')
-        if ma_down_path.exists() is False:
-            ma_down_path.mkdir()
+        num = 1
+
+        while ma_down_path.exists() is True:
+            ma_down_path = self.down_path / (self.material_dict.get('slug') + '_' + str(num))
+            num += 1
+
+        ma_down_path.mkdir()
 
         return ma_down_path
 
@@ -75,8 +80,7 @@ class SCEnvatoPICDown:
 
             if png_path.exists() is True:
                 num += 1
-                print(f'图片存在，不下载:{png_path.as_posix()}')
-                continue
+                png_path = self.material_down_path / f'{num}.png'
 
             png_path.write_bytes(HTMLDown(img).content)
             num += 1
