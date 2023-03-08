@@ -42,6 +42,7 @@ is_name_list:
   - sy
   - 03 (2)
   - cli_1000px
+  - 文字
 
 # 本文图层替换关键词
 ad_replace_keywords:
@@ -111,3 +112,5 @@ ad_replace_keywords:
     - 小\夕
   - - ztupic
     - xiaoxi
+  - - qiantuwangit
+    - xiaoxisc

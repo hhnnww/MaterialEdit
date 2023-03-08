@@ -53,7 +53,7 @@ class PSFile:
         for item in art_item_list:
             img_path = item.get('img_path')
             if img_path.exists() is True:
-
+                print(f'对比图层：{item.get("item").Name}')
                 # 设置图片导出超时时间，太长了就不等了。
                 time_out = 0
                 time_out_state = False
@@ -137,7 +137,7 @@ class PSFile:
 
 
 if __name__ == '__main__':
-    psf = PSFile.open(ps_file=r'E:\小夕素材\9000-9999\9264\9264\小夕素材(19).psd', tb_name='小夕素材',
+    psf = PSFile.open(ps_file=r'E:\小夕素材\9000-9999\9286\9286\小夕素材(3).psd', tb_name='小夕素材',
                       ad_pic_list=fun_所有广告图片())
 
     psf.run_删广告_导出_加广告()

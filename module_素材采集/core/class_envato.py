@@ -3,6 +3,7 @@ from module_素材采集.core.class_htmldown import HTMLDown
 from module_素材采集.core.model import MaterialType
 import json
 from hashlib import sha256
+from tqdm import tqdm
 
 
 class SCEnvato:
@@ -15,8 +16,12 @@ class SCEnvato:
         self.cookie = cookie
 
     def fun_列表页(self):
+        # https://elements.envato.com/user/helloDigi/graphic-templates?page=1
+        if '?page=' not in self.start_url:
+            self.start_url = self.start_url + '?page=1'
+
         for x in range(1, self.max_page + 1):
-            url = re.sub('/pg-\d+', f'/pg-{x}', self.start_url)
+            url = re.sub('\?page=(\d+)', f'?page={x}', self.start_url)
             yield url
 
     def fun_列表页中获取素材(self, url):
@@ -50,7 +55,7 @@ class SCEnvato:
             )
 
     def main(self):
-        for page in self.fun_列表页():
+        for page in tqdm(list(self.fun_列表页()), desc='采集', ncols=100):
             for ma in self.fun_列表页中获取素材(page):
                 yield ma
 

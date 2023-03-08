@@ -76,7 +76,7 @@ def run_scrapy(item_in: ItemIn):
                 res = model.create(
                     **asdict(ma_obj)
                 )
-                print(res)
+                print(f"\n采集成功:{res}\n")
             except peewee.IntegrityError:
                 print('素材重复.')
         else:

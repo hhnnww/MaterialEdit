@@ -18,6 +18,7 @@ class GetAllLayer:
     def fun_判断图层名字来删除广告(in_layer):
         # 如果包含
         ad_name_include = yaml_dict.get('include_name_list')
+
         for ad_layer_name_single in ad_name_include:
             if in_layer.LayerType == 1:
                 if in_layer.Kind != 2:
@@ -108,8 +109,10 @@ class GetAllLayer:
             self.fun_修改图层和编组名字(in_set)
 
         for in_layer in self.layer_list:
-            if self.fun_判断图层名字来删除广告(in_layer) is False:
+            res = self.fun_判断图层名字来删除广告(in_layer)
+            if res is False:
                 self.layer_list.remove(in_layer)
+
             else:
                 self.fun_修改图层和编组名字(in_layer)
 
@@ -120,5 +123,5 @@ if __name__ == '__main__':
     app = Dispatch('photoshop.application')
     doc = app.ActiveDocument
     gal = GetAllLayer(doc)
-    print(gal.set_list)
-    print(gal.layer_list)
+    for layer in gal.layer_list:
+        print(layer.Name)
