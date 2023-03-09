@@ -19,6 +19,9 @@ class LayoutProportion:
 
 class HorizontalImageAuto:
     def __init__(self, pic_list: List[str], st_width: int, st_height: int, gutter: int):
+        while len(pic_list) < 20:
+            pic_list += pic_list
+
         self.pic_list = pic_list
         self.pil_list = self.fun_构建列表()[:20]
 
