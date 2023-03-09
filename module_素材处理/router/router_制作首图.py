@@ -35,9 +35,11 @@ class ItemIn(BaseModel):
 @router.post('/make_st')
 def make_st(item_in: ItemIn):
     print(f'制作首图: {item_in.title}')
-    ft_path = (UP_FOLDER / f'ft.jpg')
-    if ft_path.exists() is True:
-        ft_path.unlink()
+
+    # 删除附图
+    # ft_path = (UP_FOLDER / f'ft.jpg')
+    # if ft_path.exists() is True:
+    #     ft_path.unlink()
 
     # 删除UP文件夹里面的JPG图片
     for in_file in UP_FOLDER.iterdir():
@@ -64,35 +66,46 @@ def make_st(item_in: ItemIn):
     elif item_in.st_style == '巴扎嘿':
         st_width = 1000
 
-    # 构建布局
-    if item_in.small_pic_mode == 'OneAndX':
-        # 构建1-X布局
-        layout = STLayoutOneX(
-            pic_list=item_in.img_list,
-            st_height=st_height,
-            st_width=st_width
-        ).main()
+    if item_in.small_pic_mode == '竖排自适应':
+        from module_素材处理.core.制作首图.布局.class_竖排图片 import VerticalImages
+        bg = VerticalImages(pic_list=item_in.img_list[:30], st_width=st_width, st_height=st_height,
+                            gutter=item_in.gutter).main()
 
-        # 直接构建首图
-        # bg = STLayoutScat(
-        #     img_list=item_in.img_list,
-        #     st_width=st_width,
-        #     st_height=st_height,
-        #     gutter=item_in.gutter,
-        #     st_row=item_in.st_row
-        # ).main()
-
+    elif item_in.small_pic_mode == '横排自适应':
+        from module_素材处理.core.制作首图.布局.class_横排错乱布局 import HorizontalImage
+        bg = HorizontalImage(pic_list=item_in.img_list[:30], st_width=st_width, st_height=st_height,
+                             gutter=item_in.gutter).main()
     else:
-        # 构建根据行数的布局
-        layout = STAutoLayout(
-            img_list=item_in.img_list[:30],
-            st_width=st_width,
-            st_height=st_height,
-            st_row=item_in.st_row
-        ).main()
+        # 构建布局
+        if item_in.small_pic_mode == 'OneAndX':
+            # 构建1-X布局
+            layout = STLayoutOneX(
+                pic_list=item_in.img_list,
+                st_height=st_height,
+                st_width=st_width
+            ).main()
 
-    bg = STMake(st_list=layout, st_width=st_width, st_height=st_height, gutter=item_in.gutter, bg_color=(255, 255, 255),
-                small_pic_size_mode=small_pic_mode).main()
+            # 直接构建首图
+            # bg = STLayoutScat(
+            #     img_list=item_in.img_list,
+            #     st_width=st_width,
+            #     st_height=st_height,
+            #     gutter=item_in.gutter,
+            #     st_row=item_in.st_row
+            # ).main()
+
+        else:
+            # 构建根据行数的布局
+            layout = STAutoLayout(
+                img_list=item_in.img_list[:30],
+                st_width=st_width,
+                st_height=st_height,
+                st_row=item_in.st_row
+            ).main()
+
+        bg = STMake(st_list=layout, st_width=st_width, st_height=st_height, gutter=item_in.gutter,
+                    bg_color=(255, 255, 255),
+                    small_pic_size_mode=small_pic_mode).main()
 
     # 制作首图样式图
     if item_in.st_style == '黑鲸':
@@ -120,11 +133,20 @@ def make_st(item_in: ItemIn):
     new_bg.close()
 
     # 制作附图
-    bg = STMake(
-        st_list=layout, st_width=600, st_height=800, gutter=item_in.gutter, bg_color=(255, 255, 255),
-        small_pic_size_mode=small_pic_mode
-    ).main()
+    # if item_in.small_pic_mode in ['竖排自适应', '横排自适应']:
+    #     small_pic_mode = SmallSizeModel.AVERAGE
+    #     layout = STAutoLayout(
+    #         img_list=item_in.img_list[:30],
+    #         st_width=st_width,
+    #         st_height=st_height,
+    #         st_row=item_in.st_row
+    #     ).main()
+    #
+    # bg = STMake(
+    #     st_list=layout, st_width=600, st_height=800, gutter=item_in.gutter, bg_color=(255, 255, 255),
+    #     small_pic_size_mode=small_pic_mode
+    # ).main()
 
-    bg = bg.convert('RGB')
-    bg.save(ft_path.as_posix(), quality=80)
-    bg.close()
+    # bg = bg.convert('RGB')
+    # bg.save(ft_path.as_posix(), quality=80)
+    # bg.close()
