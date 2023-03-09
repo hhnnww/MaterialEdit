@@ -103,7 +103,7 @@ class HorizontalImageAuto:
                 colx = self.gutter
                 y_top = coly
 
-            if coly+im.height >= self.st_height:
+            if num % self.fun_计算最合适的比例.coly == 0 and num > 2:
                 coly = y_top
                 colx += self.gutter + im.width
 
@@ -121,7 +121,7 @@ if __name__ == '__main__':
             pic_list.append(in_file.as_posix())
 
     hia = HorizontalImageAuto(
-        pic_list=pic_list, st_width=1500, st_height=1300, gutter=16
+        pic_list=pic_list, st_width=1500, st_height=1300, gutter=0
     )
 
     hia.main().show()
