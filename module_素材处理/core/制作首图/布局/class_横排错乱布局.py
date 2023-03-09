@@ -27,7 +27,6 @@ class HorizontalImage:
                         ratio=im.width / im.height
                     )
                 )
-
         return my_img_list
 
     def fun_制作第一张图片(self, img: MyImg):

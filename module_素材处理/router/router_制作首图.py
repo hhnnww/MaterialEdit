@@ -72,9 +72,9 @@ def make_st(item_in: ItemIn):
                             gutter=item_in.gutter).main()
 
     elif item_in.small_pic_mode == '横排自适应':
-        from module_素材处理.core.制作首图.布局.class_横排错乱布局 import HorizontalImage
-        bg = HorizontalImage(pic_list=item_in.img_list[:30], st_width=st_width, st_height=st_height,
-                             gutter=item_in.gutter).main()
+        from module_素材处理.core.制作首图.布局.class_横排错乱布局自适应 import HorizontalImageAuto
+        bg = HorizontalImageAuto(pic_list=item_in.img_list[:30], st_width=st_width, st_height=st_height,
+                                 gutter=item_in.gutter).main()
     else:
         # 构建布局
         if item_in.small_pic_mode == 'OneAndX':
