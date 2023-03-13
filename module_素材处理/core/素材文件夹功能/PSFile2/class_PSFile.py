@@ -31,7 +31,12 @@ class PSFile:
         print(f'\n\n处理文件:{ps_file}')
         ps_cla = cls()
         app = Dispatch('Photoshop.Application')
-        app.Open(ps_file)
+        try:
+            app.Open(ps_file)
+        except Exception as err:
+            print(err)
+            return False
+
         ps_cla.app = app
         ps_cla.doc = ps_cla.app.ActiveDocument
         app.displayDialogs = 3

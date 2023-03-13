@@ -109,7 +109,9 @@ class MaterialPathAction:
             if self.fun_has_img(in_file) is False:
                 ps_obj = self.ma_func.fun_PS操作.open(in_file.as_posix(), tb_name=self.item_in.tb_name,
                                                       ad_pic_list=self.ma_func.fun_PS广告图片())
-                ps_obj.run_删广告_导出_加广告()
+
+                if ps_obj is not False:
+                    ps_obj.run_删广告_导出_加广告()
 
         pythoncom.CoUninitialize()
 

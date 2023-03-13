@@ -11,4 +11,8 @@ def open_yml() -> dict:
 
 
 if __name__ == '__main__':
-    print(open_yml().get('ad_replace_keywords'))
+    ad_name_is = open_yml().get('include_name_list')
+    layer_name = '千库网二维码'
+    for ad_name in ad_name_is:
+        if ad_name in layer_name:
+            print(ad_name)

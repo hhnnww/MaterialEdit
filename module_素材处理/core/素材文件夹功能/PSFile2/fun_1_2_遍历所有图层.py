@@ -10,22 +10,21 @@ class GetAllLayer:
         self.in_doc = in_doc
         self.layer_list = []
         self.set_list = []
+
         self.run_构建所有编组()
         self.run_构建所有图层()
-        self.run_处理所有编组和图层()
 
-    def fun_判断图层名字来删除广告(self, in_layer):
-        self.in_doc.ActiveLayer = in_layer
+        # self.run_处理所有编组和图层()
 
+    @staticmethod
+    def fun_判断图层名字来删除广告(in_layer: CDispatch):
         # 如果包含
         ad_name_include = yaml_dict.get('include_name_list')
 
         for ad_layer_name_single in ad_name_include:
             if in_layer.LayerType == 1:
                 if in_layer.Kind != 2:
-                    layer_name = in_layer.Name
-                    layer_name = str(layer_name).lower()
-                    if ad_layer_name_single in layer_name:
+                    if ad_layer_name_single in in_layer.Name.lower():
                         if in_layer.AllLocked is True:
                             in_layer.AllLocked = False
                         print(f'删除图层:{in_layer.Name}')
@@ -35,14 +34,14 @@ class GetAllLayer:
         # 如果等于
         ad_name_is = yaml_dict.get('is_name_list')
         if in_layer.LayerType == 1 and in_layer.Kind != 2:
-            layer_name = in_layer.Name
-            layer_name = str(layer_name).lower()
-            if layer_name in ad_name_is:
+            if in_layer.Name.lower() in ad_name_is:
                 if in_layer.AllLocked is True:
                     in_layer.AllLocked = False
                 print(f'删除图层:{in_layer.Name}')
                 in_layer.Delete()
                 return False
+
+        return True
 
     @staticmethod
     def fun_修改图层和编组名字(in_layer):
@@ -77,29 +76,31 @@ class GetAllLayer:
     def fun_所有根图层(self):
         layer_list = []
         for in_layer in self.in_doc.ArtLayers:
-            self.in_doc.ActiveLayer = in_layer
-            layer_list.append(in_layer)
+            res = self.fun_判断图层名字来删除广告(in_layer)
+            if res is True:
+                self.fun_修改图层和编组名字(in_layer)
+                layer_list.append(in_layer)
 
         return layer_list
 
     def fun_所有根编组(self):
         set_list = []
         for in_layer in self.in_doc.LayerSets:
-            self.in_doc.ActiveLayer = in_layer
+            self.fun_修改图层和编组名字(in_layer)
             set_list.append(in_layer)
+
         return set_list
 
     def fun_归递编组(self, ps_set):
         sets_list = [ps_set]
         for in_set in ps_set.LayerSets:
-            self.in_doc.ActiveLayer = in_set
+            self.fun_修改图层和编组名字(in_set)
             sets_list.extend(self.fun_归递编组(in_set))
 
         return sets_list
 
     def run_构建所有编组(self):
         for in_set in self.fun_所有根编组():
-            self.in_doc.ActiveLayer = in_set
             self.set_list.extend(self.fun_归递编组(in_set))
 
     def run_构建所有图层(self):
@@ -108,29 +109,42 @@ class GetAllLayer:
 
         for in_set in self.set_list:
             for in_layer in in_set.ArtLayers:
-                self.in_doc.ActiveLayer = in_layer
-                self.layer_list.append(in_layer)
+                res = self.fun_判断图层名字来删除广告(in_layer)
 
-    def run_处理所有编组和图层(self):
-        for in_set in self.set_list:
-            self.in_doc.ActiveLayer = in_set
-            self.fun_修改图层和编组名字(in_set)
+                if res is True:
+                    self.fun_修改图层和编组名字(in_layer)
+                    self.layer_list.append(in_layer)
 
-        for in_layer in self.layer_list:
-            self.in_doc.ActiveLayer = in_layer
-            res = self.fun_判断图层名字来删除广告(in_layer)
-            if res is False:
-                self.layer_list.remove(in_layer)
-
-            else:
-                self.fun_修改图层和编组名字(in_layer)
+    # def run_处理所有编组和图层(self):
+    #     # 先列出要删除的
+    #     wait_del = []
+    #     for num, in_layer in enumerate(self.layer_list):
+    #         res = self.fun_判断图层名字来删除广告(in_layer)
+    #         if res is False:
+    #             wait_del.append(num)
+    #         else:
+    #             self.fun_修改图层和编组名字(in_layer)
+    #
+    #     # 再进行列表删除
+    #     for num in wait_del:
+    #         self.layer_list.pop(num)
+    #
+    #     for in_set in self.set_list:
+    #         # self.in_doc.ActiveLayer = in_set
+    #         try:
+    #             self.fun_修改图层和编组名字(in_set)
+    #         except Exception as err:
+    #             print(err)
 
 
 if __name__ == '__main__':
     from win32com.client import Dispatch
+    from pprint import pprint
 
     app = Dispatch('photoshop.application')
+    app.Open(r'E:\小夕素材\9000-9999\9290\9290\小夕素材(2).psd')
     doc = app.ActiveDocument
     gal = GetAllLayer(doc)
-    for layer in gal.layer_list:
-        print(layer.Name)
+    pprint(
+        gal.layer_list
+    )

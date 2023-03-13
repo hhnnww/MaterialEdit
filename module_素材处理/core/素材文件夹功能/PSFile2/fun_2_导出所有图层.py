@@ -131,6 +131,12 @@ def run_导出所有图层(in_doc, file: Path):
     art_layer_item_list = []
     text_item_list = []
     for item in all_item:
+        # try:
+        #     print('处理：', item.Name)
+        # except Exception as err:
+        #     print(err)
+        #     continue
+
         if item.Bounds == (0.0, 0.0, 0.0, 0.0):
             if item.AllLocked is True:
                 item.AllLocked = False
@@ -138,7 +144,7 @@ def run_导出所有图层(in_doc, file: Path):
             item.Delete()
 
         elif is_export_layer(item, (in_doc.Width, in_doc.Height)) is True:
-            print(f'导出图层：{item.Name}')
+            print('导出：', item.Name)
             img_path = fun_导出单个图层(item, file)
             art_layer_item_list.append(
                 dict(
