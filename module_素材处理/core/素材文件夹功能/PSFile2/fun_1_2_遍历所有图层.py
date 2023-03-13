@@ -14,8 +14,9 @@ class GetAllLayer:
         self.run_构建所有图层()
         self.run_处理所有编组和图层()
 
-    @staticmethod
-    def fun_判断图层名字来删除广告(in_layer):
+    def fun_判断图层名字来删除广告(self, in_layer):
+        self.in_doc.ActiveLayer = in_layer
+
         # 如果包含
         ad_name_include = yaml_dict.get('include_name_list')
 
@@ -76,24 +77,29 @@ class GetAllLayer:
     def fun_所有根图层(self):
         layer_list = []
         for in_layer in self.in_doc.ArtLayers:
+            self.in_doc.ActiveLayer = in_layer
             layer_list.append(in_layer)
+
         return layer_list
 
     def fun_所有根编组(self):
         set_list = []
         for in_layer in self.in_doc.LayerSets:
+            self.in_doc.ActiveLayer = in_layer
             set_list.append(in_layer)
         return set_list
 
     def fun_归递编组(self, ps_set):
         sets_list = [ps_set]
         for in_set in ps_set.LayerSets:
+            self.in_doc.ActiveLayer = in_set
             sets_list.extend(self.fun_归递编组(in_set))
 
         return sets_list
 
     def run_构建所有编组(self):
         for in_set in self.fun_所有根编组():
+            self.in_doc.ActiveLayer = in_set
             self.set_list.extend(self.fun_归递编组(in_set))
 
     def run_构建所有图层(self):
@@ -102,13 +108,16 @@ class GetAllLayer:
 
         for in_set in self.set_list:
             for in_layer in in_set.ArtLayers:
+                self.in_doc.ActiveLayer = in_layer
                 self.layer_list.append(in_layer)
 
     def run_处理所有编组和图层(self):
         for in_set in self.set_list:
+            self.in_doc.ActiveLayer = in_set
             self.fun_修改图层和编组名字(in_set)
 
         for in_layer in self.layer_list:
+            self.in_doc.ActiveLayer = in_layer
             res = self.fun_判断图层名字来删除广告(in_layer)
             if res is False:
                 self.layer_list.remove(in_layer)

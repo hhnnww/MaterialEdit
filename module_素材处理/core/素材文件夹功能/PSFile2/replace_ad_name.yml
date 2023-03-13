@@ -35,6 +35,7 @@ include_name_list:
   - 摄图网logo-新
   - 摄图网二维码
   - 摄图网水印
+  - 千库网用联系
 
 # 如果图层名完全等于如下的,判断为广告图层,直接删除.
 is_name_list:
@@ -44,6 +45,8 @@ is_name_list:
   - cli_1000px
   - 文字
   - 底标
+  - 千库网用联系
+  - 千图小程序
 
 # 本文图层替换关键词
 ad_replace_keywords:
