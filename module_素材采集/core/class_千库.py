@@ -46,12 +46,9 @@ class SCQianKu:
 
 if __name__ == '__main__':
     sc_qk = SCQianKu(
-        start_url='https://588ku.com/moban/7769450-new-0-0-0-0-0-0-2-1/',
+        start_url='https://588ku.com/moban/7769450-new-0-0-0-0-0-0-2-1',
         cookie='',
         max_page=10
     )
     for page in sc_qk.fun_列表页构建():
         print(page)
-
-    for ma_obj in sc_qk.fun_获取单页(r'https://588ku.com/moban/7769450-new-0-0-0-0-0-0-2-3/'):
-        print(ma_obj)
