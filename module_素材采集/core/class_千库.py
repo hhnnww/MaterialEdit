@@ -11,9 +11,16 @@ class SCQianKu:
         # if 'default' not in start_url:
         #     start_url = start_url.replace('-1-1/', '-1-0-0-0-0-default-0-1/')
 
-        self.start_url = start_url
+        self.start_url = self.fun_处理起始页(start_url)
         self.max_page = max_page
         self.cookie = cookie
+
+    @staticmethod
+    def fun_处理起始页(start_url: str):
+        if start_url[-1] != '/':
+            return start_url + '/'
+
+        return start_url
 
     def fun_列表页构建(self):
         for x in range(1, self.max_page + 1):
