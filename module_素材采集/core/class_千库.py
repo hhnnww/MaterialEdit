@@ -17,21 +17,17 @@ class SCQianKu:
 
     def fun_列表页构建(self):
         for x in range(1, self.max_page + 1):
-            # https://588ku.com/so/funvjiehaibao-0-0-0-0-0-default-0-2/
-            # https://588ku.com/so/funvjiezhanban-1-0-0-0-0-bid-2-2/
-            # https://588ku.com/so/chuntianhaibao-1-0-0-0-0-bid-2-1/
-            # url = self.start_url.replace('-1/', f'-{x}/')
             url = re.sub('-(\d+)/', f'-{x}/', self.start_url)
-
             yield url
 
     def fun_获取单页(self, url: str) -> Generator:
         html = HTMLDown(url, cookie=self.cookie).html
-        ma_list = html.find('.fl.model > .center-box > a.img-box')
-
+        ma_list = html.find('.fl > .center-box > a.img-box')
         for ma in ma_list:
             url = 'https:' + ma.attrs.get('href')
-            img = 'https:' + ma.find('img.lazy', first=True).attrs.get('data-original')
+
+            ori_src: str = ma.find('img.lazy', first=True).attrs.get('data-original')
+            img = 'https:' + ori_src.strip()
             yield MaterialType(url=url, img=img, hash=sha256(url.encode('utf-8')).hexdigest())
 
     def main(self) -> List[MaterialType]:
@@ -42,9 +38,13 @@ class SCQianKu:
 
 
 if __name__ == '__main__':
-    for ma_obj in SCQianKu(
-            start_url='https://588ku.com/so/102376015-1-0-0-0-0-default-0-2/',
-            cookie='',
-            max_page=10
-    ).main():
+    sc_qk = SCQianKu(
+        start_url='https://588ku.com/moban/7769450-new-0-0-0-0-0-0-2-1/',
+        cookie='',
+        max_page=10
+    )
+    for page in sc_qk.fun_列表页构建():
+        print(page)
+
+    for ma_obj in sc_qk.fun_获取单页(r'https://588ku.com/moban/7769450-new-0-0-0-0-0-0-2-3/'):
         print(ma_obj)
