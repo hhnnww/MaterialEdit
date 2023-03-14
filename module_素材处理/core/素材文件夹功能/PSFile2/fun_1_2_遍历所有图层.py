@@ -20,13 +20,13 @@ class GetAllLayer:
     def fun_判断图层名字来删除广告(in_layer: CDispatch):
         # 如果包含
         ad_name_include = yaml_dict.get('include_name_list')
+        in_layer.AllLocked = True
+        in_layer.AllLocked = False
 
         for ad_layer_name_single in ad_name_include:
             if in_layer.LayerType == 1:
                 if in_layer.Kind != 2:
                     if ad_layer_name_single in in_layer.Name.lower():
-                        if in_layer.AllLocked is True:
-                            in_layer.AllLocked = False
                         print(f'删除图层:{in_layer.Name}')
                         in_layer.Delete()
                         return False
@@ -35,8 +35,6 @@ class GetAllLayer:
         ad_name_is = yaml_dict.get('is_name_list')
         if in_layer.LayerType == 1 and in_layer.Kind != 2:
             if in_layer.Name.lower() in ad_name_is:
-                if in_layer.AllLocked is True:
-                    in_layer.AllLocked = False
                 print(f'删除图层:{in_layer.Name}')
                 in_layer.Delete()
                 return False

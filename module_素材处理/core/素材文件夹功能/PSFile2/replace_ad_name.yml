@@ -37,6 +37,8 @@ include_name_list:
   - 摄图网水印
   - 千库网用联系
   - 千库网二维码
+  - 微信图片_
+  - 订阅号
 
 # 如果图层名完全等于如下的,判断为广告图层,直接删除.
 is_name_list:
@@ -118,4 +120,6 @@ ad_replace_keywords:
   - - ztupic
     - xiaoxi
   - - qiantuwangit
+    - xiaoxisc
+  - - baotu
     - xiaoxisc

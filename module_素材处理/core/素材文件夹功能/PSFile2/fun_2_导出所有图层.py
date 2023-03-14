@@ -4,8 +4,7 @@ from pathlib import Path
 from win32com.client import Dispatch
 
 from module_素材处理.core.setting import OUT_PATH
-# from module_素材处理.core.素材文件夹功能.PSFile2.fun_1_遍历所有图层 import run_所有图层
-from module_素材处理.core.素材文件夹功能.PSFile2.fun_1_2_遍历所有图层 import GetAllLayer
+from module_素材处理.core.素材文件夹功能.PSFile2.fun_1_3_遍历所有图层 import RecursiveLayers
 from module_素材处理.core.素材文件夹功能.PSFile2.fun_PS基础操作 import dialog
 from module_素材处理.core.素材文件夹功能.PSFile2.fun_PS基础操作 import s
 
@@ -125,35 +124,36 @@ def is_export_layer(item, doc_bounds):
 
 def run_导出所有图层(in_doc, file: Path):
     # fun_清空OUT_PATH()
-    gal = GetAllLayer(in_doc)
-    all_item = gal.layer_list
+    gal = RecursiveLayers(in_doc)
+    all_item = gal.artlayer_list
 
     art_layer_item_list = []
     text_item_list = []
     for item in all_item:
-        # try:
-        #     print('处理：', item.Name)
-        # except Exception as err:
-        #     print(err)
-        #     continue
+        try:
+            print('处理：', item.Name)
+        except Exception as err:
+            print(err)
+            continue
 
-        if item.Bounds == (0.0, 0.0, 0.0, 0.0):
-            if item.AllLocked is True:
-                item.AllLocked = False
+        if item.Kind != 2:
+            if item.Bounds == (0.0, 0.0, 0.0, 0.0):
+                if item.AllLocked is True:
+                    item.AllLocked = False
 
-            item.Delete()
+                item.Delete()
 
-        elif is_export_layer(item, (in_doc.Width, in_doc.Height)) is True:
-            print('导出：', item.Name)
-            img_path = fun_导出单个图层(item, file)
-            art_layer_item_list.append(
-                dict(
-                    item=item,
-                    img_path=img_path
+            elif is_export_layer(item, (in_doc.Width, in_doc.Height)) is True:
+                print('导出：', item.Name)
+                img_path = fun_导出单个图层(item, file)
+                art_layer_item_list.append(
+                    dict(
+                        item=item,
+                        img_path=img_path
+                    )
                 )
-            )
 
-        elif item.Kind == 2:
+        else:
             text_item_list.append(item)
 
     return art_layer_item_list, text_item_list

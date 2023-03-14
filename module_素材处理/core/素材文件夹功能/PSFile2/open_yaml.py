@@ -1,5 +1,6 @@
 from pathlib import Path
 import yaml
+from dataclasses import dataclass
 
 
 def open_yml() -> dict:
@@ -8,6 +9,15 @@ def open_yml() -> dict:
 
     yml = yaml.load(yml_text, Loader=yaml.FullLoader)
     return yml
+
+
+@dataclass
+class ADNameList:
+    yaml_dict = open_yml()
+
+    include_name_list = yaml_dict.get('include_name_list')
+    is_name_list = yaml_dict.get('is_name_list')
+    export_name_list = yaml_dict.get('export_name_list')
 
 
 if __name__ == '__main__':
