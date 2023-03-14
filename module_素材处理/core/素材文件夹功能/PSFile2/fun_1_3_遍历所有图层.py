@@ -28,15 +28,11 @@ class RecursiveLayers:
             in_layer.Unlink()
             in_layer.Visible = visible
 
-        return in_layer
-
     def fun_处理图层名字(self, in_layer):
         if in_layer.Kind != 2:
-            layer = self.fun_修改图层名字(in_layer, f'图层 {in_layer.id}')
+            self.fun_修改图层名字(in_layer, f'图层 {in_layer.id}')
         else:
-            layer = self.fun_修改图层名字(in_layer, in_layer.TextItem.Contents)
-
-        return layer
+            self.fun_修改图层名字(in_layer, in_layer.TextItem.Contents)
 
     def fun_递归编组(self, layer_sets: CDispatch):
         for in_layer in layer_sets.Layers:
@@ -48,8 +44,8 @@ class RecursiveLayers:
             else:
                 if self.fun_删除包含名称广告图层(in_layer) is True:
                     if self.fun_删除等于名称广告图层(in_layer) is True:
-                        layer = self.fun_处理图层名字(in_layer)
-                        self.artlayer_list.append(layer)
+                        self.fun_处理图层名字(in_layer)
+                        self.artlayer_list.append(in_layer)
 
     @staticmethod
     def fun_删除图层(in_layer):

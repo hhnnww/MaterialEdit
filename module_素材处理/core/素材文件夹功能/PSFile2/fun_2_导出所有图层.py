@@ -18,7 +18,7 @@ def fun_清空OUT_PATH():
             shutil.rmtree(in_file)
 
 
-def fun_导出单个图层(in_layer, file: Path):
+def fun_导出单个图层(in_layer, file: Path, ref_doc):
     in_out_path = OUT_PATH / file.stem.lower()
     if in_out_path.exists() is False:
         in_out_path.mkdir(parents=True)
@@ -27,15 +27,16 @@ def fun_导出单个图层(in_layer, file: Path):
     app = Dispatch("Photoshop.Application")
 
     # 选择图层
-    desc284 = Dispatch("Photoshop.ActionDescriptor")
-    ref12 = Dispatch("Photoshop.ActionReference")
-    list8 = Dispatch("Photoshop.ActionList")
-    ref12.PutName(s("layer"), in_layer.Name)
-    desc284.PutReference(s("target"), ref12)
-    desc284.PutBoolean(s("makeVisible"), False)
-    list8.PutInteger(in_layer.id)
-    desc284.PutList(s("layerID"), list8)
-    app.ExecuteAction(s("select"), desc284, dialog())
+    # desc284 = Dispatch("Photoshop.ActionDescriptor")
+    # ref12 = Dispatch("Photoshop.ActionReference")
+    # list8 = Dispatch("Photoshop.ActionList")
+    # ref12.PutName(s("layer"), in_layer.Name)
+    # desc284.PutReference(s("target"), ref12)
+    # desc284.PutBoolean(s("makeVisible"), False)
+    # list8.PutInteger(in_layer.id)
+    # desc284.PutList(s("layerID"), list8)
+    # app.ExecuteAction(s("select"), desc284, dialog())
+    ref_doc.ActiveLayer = in_layer
 
     # 导出图片
     desc = Dispatch("Photoshop.ActionDescriptor")
@@ -145,7 +146,7 @@ def run_导出所有图层(in_doc, file: Path):
 
             elif is_export_layer(item, (in_doc.Width, in_doc.Height)) is True:
                 print('导出：', item.Name)
-                img_path = fun_导出单个图层(item, file)
+                img_path = fun_导出单个图层(item, file, in_doc)
                 art_layer_item_list.append(
                     dict(item=item, img_path=img_path)
                 )
