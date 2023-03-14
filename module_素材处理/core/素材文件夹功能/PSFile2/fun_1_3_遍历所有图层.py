@@ -18,7 +18,6 @@ class RecursiveLayers:
 
     ad_name_list = ADNameList
     artlayer_list = []
-    # layerset_list = []
 
     @staticmethod
     def fun_修改图层名字(in_layer, name: str):
@@ -44,7 +43,6 @@ class RecursiveLayers:
 
             if in_layer.LayerType == LayerType.LayerSet:
                 in_layer.Name = f'编组 {in_layer.id}'
-                # self.layerset_list.append(in_layer)
                 self.fun_递归编组(in_layer)
 
             else:
@@ -86,5 +84,4 @@ if __name__ == '__main__':
     # app.Open(r'E:\小夕素材\9000-9999\9291\9291\小夕素材(14).psd')
     d = app.ActiveDocument
     rl = RecursiveLayers(d)
-    # pprint([l.Name for l in rl.layerset_list])
     pprint([l.Name for l in rl.artlayer_list])
