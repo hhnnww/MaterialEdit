@@ -32,6 +32,7 @@ class RecursiveLayers:
                 if self.fun_删除包含名称广告图层(in_layer) is True:
                     if self.fun_删除等于名称广告图层(in_layer) is True:
                         visible = in_layer.Visible
+
                         if in_layer.Kind != 2:
                             in_layer.Name = f'图层 {in_layer.id}'
                         else:
