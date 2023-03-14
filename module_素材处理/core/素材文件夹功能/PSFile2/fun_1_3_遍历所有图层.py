@@ -76,6 +76,6 @@ if __name__ == '__main__':
 
     app = Dispatch('photoshop.application')
     app.Open(r'E:\小夕素材\9000-9999\9291\9291\小夕素材(14).psd')
-    doc = app.ActiveDocument
-    rl = RecursiveLayers(doc)
+    d = app.ActiveDocument
+    rl = RecursiveLayers(d)
     rl.run_处理所有图层()
