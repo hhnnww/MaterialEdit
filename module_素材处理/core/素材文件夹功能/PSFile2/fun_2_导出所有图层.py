@@ -131,7 +131,7 @@ def run_导出所有图层(in_doc, file: Path):
     text_item_list = []
     for item in all_item:
         try:
-            print('处理：', item.Name)
+            item.Name
         except Exception as err:
             print(err)
             continue
@@ -147,10 +147,7 @@ def run_导出所有图层(in_doc, file: Path):
                 print('导出：', item.Name)
                 img_path = fun_导出单个图层(item, file)
                 art_layer_item_list.append(
-                    dict(
-                        item=item,
-                        img_path=img_path
-                    )
+                    dict(item=item, img_path=img_path)
                 )
 
         else:

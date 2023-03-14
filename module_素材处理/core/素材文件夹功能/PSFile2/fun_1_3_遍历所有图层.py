@@ -18,65 +18,73 @@ class RecursiveLayers:
 
     ad_name_list = ADNameList
     artlayer_list = []
-    layerset_list = []
+    # layerset_list = []
+
+    @staticmethod
+    def fun_修改图层名字(in_layer, name: str):
+        if in_layer.Name != name:
+            visible = in_layer.Visible
+            in_layer.Name = name
+
+            in_layer.Unlink()
+            in_layer.Visible = visible
+
+        return in_layer
+
+    def fun_处理图层名字(self, in_layer):
+        if in_layer.Kind != 2:
+            layer = self.fun_修改图层名字(in_layer, f'图层 {in_layer.id}')
+        else:
+            layer = self.fun_修改图层名字(in_layer, in_layer.TextItem.Contents)
+
+        return layer
 
     def fun_递归编组(self, layer_sets: CDispatch):
         for in_layer in layer_sets.Layers:
 
             if in_layer.LayerType == LayerType.LayerSet:
                 in_layer.Name = f'编组 {in_layer.id}'
-                self.layerset_list.append(in_layer)
+                # self.layerset_list.append(in_layer)
                 self.fun_递归编组(in_layer)
 
             else:
                 if self.fun_删除包含名称广告图层(in_layer) is True:
                     if self.fun_删除等于名称广告图层(in_layer) is True:
-                        visible = in_layer.Visible
+                        layer = self.fun_处理图层名字(in_layer)
+                        self.artlayer_list.append(layer)
 
-                        if in_layer.Kind != 2:
-                            in_layer.Name = f'图层 {in_layer.id}'
-                        else:
-                            in_layer.Name = in_layer.TextItem.Contents
-
-                        in_layer.Unlink()
-                        in_layer.Visible = visible
-
-                        self.artlayer_list.append(in_layer)
-
-    def fun_构建列表(self):
-        self.fun_递归编组(self.doc)
+    @staticmethod
+    def fun_删除图层(in_layer):
+        print('\n删除广告图层：', in_layer.Name, '\n')
+        in_layer.AllLocked = True
+        in_layer.AllLocked = False
+        in_layer.Delete()
 
     def fun_删除包含名称广告图层(self, in_layer: CDispatch):
         for name in self.ad_name_list.include_name_list:
             if name in str(in_layer.Name).lower():
-                print('\n删除广告图层：', in_layer.Name, '\n')
-                in_layer.AllLocked = True
-                in_layer.AllLocked = False
-                in_layer.Delete()
+                self.fun_删除图层(in_layer)
                 return False
-
         return True
 
     def fun_删除等于名称广告图层(self, in_layer: CDispatch):
         for name in self.ad_name_list.is_name_list:
             if str(in_layer.Name).lower() == name:
-                print('\n删除广告图层：', in_layer.Name, '\n')
-                in_layer.AllLocked = True
-                in_layer.AllLocked = False
-                in_layer.Delete()
+                self.fun_删除图层(in_layer)
                 return False
-
         return True
 
     def run_处理所有图层(self):
-        self.fun_构建列表()
+        self.fun_递归编组(self.doc)
 
 
 if __name__ == '__main__':
     from win32com.client import Dispatch
+    from pprint import pprint
 
     app = Dispatch('photoshop.application')
-    app.Open(r'E:\小夕素材\9000-9999\9291\9291\小夕素材(14).psd')
+    # app.Open(r'E:\小夕素材\9000-9999\9291\9291\小夕素材(14).psd')
     d = app.ActiveDocument
     rl = RecursiveLayers(d)
-    rl.run_处理所有图层()
+    # pprint([l.Name for l in rl.layerset_list])
+    pprint([l.Name for l in rl.artlayer_list])
