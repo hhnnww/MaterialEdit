@@ -59,6 +59,7 @@ class PSFile:
             img_path = item.get('img_path')
             if img_path.exists() is True:
                 print(f'对比图层：{item.get("item").Name}')
+
                 # 设置图片导出超时时间，太长了就不等了。
                 time_out = 0
                 time_out_state = False
