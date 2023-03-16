@@ -1,6 +1,5 @@
 import json
 import re
-from functools import cached_property
 from hashlib import sha256
 
 from module_素材采集.core.class_htmldown import HTMLDown
@@ -13,15 +12,19 @@ class SCXiangSheJi:
         self.max_page = max_page
         self.cookie = cookie
 
-    @cached_property
-    def get_keyword(self) -> str:
-        search_key = re.findall(r'/search-(.+?)-all', self.start_url)[0]
-        return search_key
-
     def fun_构建列表页(self):
-        search_key = self.get_keyword
+        # https://www.design006.com/search-%E6%98%A5-all-all-1-all-all-1-0-2
+        # https://www.design006.com/Home/Index/get_data_index2/p/2/keywords/%E6%98%A5/color_id/all/work_type_id/all/option_most/1/is_free/all/typesetting/1/sort/0/format/2
+
+        option_list: str = re.findall(r'/search-([\s\S]*?)$', self.start_url)[0]
+        option_list = option_list.split('-')
+        key_word = option_list[0]
+        material_format = option_list[-1]
+        material_sort = option_list[3]
+        material_types = option_list[6]
+
         for x in range(1, self.max_page + 1):
-            yield f'https://www.design006.com/Home/Index/get_data_index2/p/{x}/keywords/{search_key}/color_id/all/work_type_id/all/option_most/2/is_free/all/typesetting/all/sort/0/format/all'
+            yield f'https://www.design006.com/Home/Index/get_data_index2/p/{x}/keywords/{key_word}/color_id/all/work_type_id/all/option_most/{material_sort}/is_free/all/typesetting/{material_types}/sort/0/format/{material_format}'
 
     def fun_获取单页(self, url: str):
         html = HTMLDown(url=url, cookie=self.cookie).html
