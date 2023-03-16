@@ -39,6 +39,7 @@ class RecursiveLayers:
 
             if in_layer.LayerType == LayerType.LayerSet:
                 in_layer.Name = f'编组 {in_layer.id}'
+                in_layer.AllLocked = False
                 self.fun_递归编组(in_layer)
 
             else:
@@ -50,20 +51,22 @@ class RecursiveLayers:
     @staticmethod
     def fun_删除图层(in_layer):
         print('\n删除广告图层：', in_layer.Name, '\n')
-        in_layer.AllLocked = True
-        in_layer.AllLocked = False
+
+        if in_layer.AllLocked is True:
+            in_layer.AllLocked = False
+
         in_layer.Delete()
 
     def fun_删除包含名称广告图层(self, in_layer: CDispatch):
         for name in self.ad_name_list.include_name_list:
-            if name in str(in_layer.Name).lower():
+            if str(name).lower() in str(in_layer.Name).lower():
                 self.fun_删除图层(in_layer)
                 return False
         return True
 
     def fun_删除等于名称广告图层(self, in_layer: CDispatch):
         for name in self.ad_name_list.is_name_list:
-            if str(in_layer.Name).lower() == name:
+            if str(in_layer.Name).lower() == str(name).lower():
                 self.fun_删除图层(in_layer)
                 return False
         return True
