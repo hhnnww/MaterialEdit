@@ -21,7 +21,7 @@ class HTMLDown:
     session = HTMLSession()
     port_list = [7890, 45678]
     port = None
-    ip = '127.0.0.1'
+    ip = '192.168.0.101'
     proxies_header = 'http'
 
     @cached_property

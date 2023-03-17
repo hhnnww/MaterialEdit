@@ -10,7 +10,10 @@ from module_素材采集.core.model import MaterialType
 
 class SCEnvato:
     def __init__(self, start_url: str, max_page: int, cookie: str = ''):
-        self.start_url = self.fun_构建起始页(start_url)
+        if max_page == 1:
+            self.start_url = start_url
+        else:
+            self.start_url = self.fun_构建起始页(start_url)
         self.max_page = max_page
         self.cookie = cookie
 
@@ -27,15 +30,18 @@ class SCEnvato:
         return start_url
 
     def fun_列表页(self):
-        if 'pg-' in self.start_url:
-            for x in range(1, self.max_page + 1):
-                url = re.sub('\?pg-(\d+)', f'?pg-{x}', self.start_url)
-                yield url
+        if self.max_page == 1:
+            yield self.start_url
+        else:
+            if 'pg-' in self.start_url:
+                for x in range(1, self.max_page + 1):
+                    url = re.sub('\?pg-(\d+)', f'?pg-{x}', self.start_url)
+                    yield url
 
-        elif '?page=' in self.start_url:
-            for x in range(1, self.max_page + 1):
-                url = re.sub('\?page=(\d+)', f'?page={x}', self.start_url)
-                yield url
+            elif '?page=' in self.start_url:
+                for x in range(1, self.max_page + 1):
+                    url = re.sub('\?page=(\d+)', f'?page={x}', self.start_url)
+                    yield url
 
     def fun_列表页中获取素材(self, url):
         html = HTMLDown(url, cookie=self.cookie).html

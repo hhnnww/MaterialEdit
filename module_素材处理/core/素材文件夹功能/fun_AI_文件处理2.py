@@ -1,4 +1,5 @@
 from pathlib import Path
+from time import sleep
 
 from win32com.client import Dispatch
 
@@ -10,8 +11,14 @@ class AIFile:
         self.tb_name = tb_name
 
         self.app = Dispatch('Illustrator.Application')
+        try:
+            self.app.Open(file.as_posix())
+        except Exception as err:
+            print(err)
+            self.app.Quit()
+            sleep(5)
+            self.app.Open(file.as_posix())
 
-        self.app.Open(file.as_posix())
         self.doc = self.app.ActiveDocument
 
     def fun_删除afd广告(self):
@@ -35,7 +42,7 @@ class AIFile:
 
         # 放内容
         area_text_ref = self.doc.TextFrames.AreaText(text_frame)
-        
+
         if self.tb_name == '小夕素材':
             area_text_ref.Contents = "淘宝店铺：小夕素材\nxiaoxisc.com\n购买时请认准官方店铺。"
         elif self.tb_name == '饭桶设计':
@@ -87,6 +94,7 @@ class AIFile:
 
         self.doc.SaveAs(new_file.as_posix())
         self.doc.Close(2)
+        sleep(2)
 
 
 if __name__ == '__main__':
