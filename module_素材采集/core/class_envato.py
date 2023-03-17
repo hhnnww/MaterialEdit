@@ -1,28 +1,41 @@
+import json
 import re
+from hashlib import sha256
+
+from tqdm import tqdm
+
 from module_素材采集.core.class_htmldown import HTMLDown
 from module_素材采集.core.model import MaterialType
-import json
-from hashlib import sha256
-from tqdm import tqdm
 
 
 class SCEnvato:
     def __init__(self, start_url: str, max_page: int, cookie: str = ''):
-        if 'pg-' not in start_url.split('/')[-1]:
-            start_url = start_url + '/pg-1'
-
-        self.start_url = start_url
+        self.start_url = self.fun_构建起始页(start_url)
         self.max_page = max_page
         self.cookie = cookie
 
-    def fun_列表页(self):
+    @staticmethod
+    def fun_构建起始页(start_url: str):
         # https://elements.envato.com/user/helloDigi/graphic-templates?page=1
-        if '?page=' not in self.start_url:
-            self.start_url = self.start_url + '?page=1'
+        if '?page=' not in start_url and '/user/' in start_url:
+            start_url = start_url + '?page=1'
 
-        for x in range(1, self.max_page + 1):
-            url = re.sub('\?page=(\d+)', f'?page={x}', self.start_url)
-            yield url
+        # https://elements.envato.com/graphic-templates/compatible-with-adobe-illustrator/pg-2
+        elif '/user/' not in start_url and 'pg-' not in start_url:
+            start_url = start_url + '/pg-1'
+
+        return start_url
+
+    def fun_列表页(self):
+        if 'pg-' in self.start_url:
+            for x in range(1, self.max_page + 1):
+                url = re.sub('\?pg-(\d+)', f'?pg-{x}', self.start_url)
+                yield url
+
+        elif '?page=' in self.start_url:
+            for x in range(1, self.max_page + 1):
+                url = re.sub('\?page=(\d+)', f'?page={x}', self.start_url)
+                yield url
 
     def fun_列表页中获取素材(self, url):
         html = HTMLDown(url, cookie=self.cookie).html

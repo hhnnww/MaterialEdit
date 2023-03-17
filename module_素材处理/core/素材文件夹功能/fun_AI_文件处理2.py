@@ -5,6 +5,7 @@ from win32com.client import Dispatch
 
 class AIFile:
     def __init__(self, file: Path, tb_name: str):
+        print('\n处理AI文件：', file.as_posix(), '\n')
         self.file = file
         self.tb_name = tb_name
 
@@ -34,7 +35,7 @@ class AIFile:
 
         # 放内容
         area_text_ref = self.doc.TextFrames.AreaText(text_frame)
-
+        
         if self.tb_name == '小夕素材':
             area_text_ref.Contents = "淘宝店铺：小夕素材\nxiaoxisc.com\n购买时请认准官方店铺。"
         elif self.tb_name == '饭桶设计':

@@ -33,13 +33,12 @@ class CateBySuffix:
                 new_name = in_file_path / in_file.name
 
                 if new_name.exists() is False:
-                    in_file_png_path = in_file.with_suffix('.png')
 
-                    if in_file_png_path.exists() is True:
-
-                        in_file_png_path_new = in_file_path / in_file_png_path.name
-                        if in_file_png_path_new.exists() is False:
-                            in_file_png_path.rename(in_file_png_path_new)
+                    # in_file_png_path = in_file.with_suffix('.png')
+                    # if in_file_png_path.exists() is True:
+                    #     in_file_png_path_new = in_file_path / in_file_png_path.name
+                    #     if in_file_png_path_new.exists() is False:
+                    #         in_file_png_path.rename(in_file_png_path_new)
 
                     in_file.rename(new_name)
 
