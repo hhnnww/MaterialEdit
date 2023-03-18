@@ -70,8 +70,12 @@ class STHeiJingStyle:
             text_color=(255, 255, 255),
             border_color=(108, 180, 226),
             bg_color=(0, 99, 163)
+        ),
+        jpg=dict(
+            text_color=(49, 168, 255),
+            border_color=(49, 168, 255),
+            bg_color=(0, 30, 54)
         )
-
     )
 
     def fun_制作横条背景(self):
