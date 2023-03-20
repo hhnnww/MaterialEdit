@@ -11,17 +11,16 @@ class PPTEdit:
 
     def main(self):
         ppt_export = PPTFile(self.ppt_path)
-        ppt_export.fun_导出PNG()
+        if ppt_export.fun_导出PNG() == 'ok':
+            ppt_dir = ppt_export.ppt_dir
+            bg = PPTPICMerge(ppt_dir)
+            bg = bg.main()
 
-        ppt_dir = ppt_export.ppt_dir
-        bg = PPTPICMerge(ppt_dir)
-        bg = bg.main()
-
-        ppt_png = self.ppt_path.with_suffix('.png')
-        bg.save(
-            ppt_png.as_posix()
-        )
-        shutil.rmtree(ppt_dir)
+            ppt_png = self.ppt_path.with_suffix('.png')
+            bg.save(
+                ppt_png.as_posix()
+            )
+            shutil.rmtree(ppt_dir)
 
 
 if __name__ == '__main__':
