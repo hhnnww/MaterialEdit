@@ -57,6 +57,7 @@ is_name_list:
   - LOGO
   - 摄图网水印
   - 千库网二维码
+  - 摄图网二维码
 
 # 本文图层替换关键词
 ad_replace_keywords:
@@ -130,3 +131,9 @@ ad_replace_keywords:
     - xiaoxisc
   - - baotu
     - xiaoxisc
+  - - 摄图
+    - 小夕
+  - - 699pic
+    - xiaoxi
+  - - 558ku
+    - xiaoxi

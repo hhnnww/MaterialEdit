@@ -1,3 +1,4 @@
+import json
 import re
 from hashlib import sha256
 
@@ -7,27 +8,32 @@ from module_素材采集.core.model import MaterialType
 
 class SCQianTu:
     def __init__(self, start_url: str, max_page: int, cookie: str = ''):
-        self.start_url = start_url
+        self.start_url = self.fun_构建起始页(start_url)
         self.max_page = max_page
         self.cookie = cookie
 
+    @staticmethod
+    def fun_构建起始页(start_url: str):
+        end_str = '?is_ajax=1&is_new=1'
+        if end_str not in start_url:
+            return start_url + end_str
+
     def fun_构建列表页(self):
+        # https://www.58pic.com/tupian/244776038-0-0-id-1-0-0-0_2_0_0_0_0_0-0-0-0-0-0-0-0-0.html
+        # https://www.58pic.com/tupian/244776038-0-0-id-1-0-0-0_2_0_0_0_0_0-0-0-0-0-0-0-0-2.html?is_ajax=1&is_new=1
         for x in range(1, self.max_page + 1):
             url = re.sub(r'-?(\d*?)\.html', f'-{x}.html', self.start_url)
             yield url
 
     def fun_获取单页(self, url: str):
-        html = HTMLDown(url, cookie=self.cookie).html
-        ma_list = html.find(
-            r'#qt-app > div > div > div.search-content-container > div.pic-container.qtd-card-container > div.qtd-card')
-
-        for ma in ma_list:
-            url_find = ma.find('a', first=True)
-            url = list(url_find.absolute_links)[0]
-
-            img_find = url_find.find('img.lazy', first=True)
-            img = 'https:' + img_find.attrs.get('data-original')
-
+        res = HTMLDown(url, cookie=self.cookie).html
+        data_dict: dict = json.loads(res.html)
+        data = data_dict.get('data').get('pics')
+        for obj in data:
+            obj: dict
+            url = f'https://www.58pic.com/newpic/{obj.get("id")}.html'
+            img = f"https:{obj.get('picurl')}"
+            print(url, img, '\n')
             yield MaterialType(url=url, img=img, hash=sha256(url.encode('utf-8')).hexdigest())
 
     def main(self):
