@@ -36,6 +36,8 @@ class RecursiveLayers:
 
     def fun_递归编组(self, layer_sets: CDispatch):
         for in_layer in layer_sets.Layers:
+            in_layer.AllLocked = True
+            in_layer.AllLocked = False
 
             if in_layer.LayerType == LayerType.LayerSet:
                 in_layer.Name = f'编组 {in_layer.id}'
