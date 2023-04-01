@@ -3,6 +3,7 @@ export_name_list:
   - HELP — Show me
   - 隐藏 或 删除此图层即可开始您的编辑.
   - REMOVE THIS LAYER
+  - 删除此图层，即可开始编辑
 
 # 如果如下关键词,图层名包含他们,则判断为广告图层,直接删除.
 include_name_list:
@@ -41,6 +42,7 @@ include_name_list:
   - 订阅号
   - 千库编辑
   - 电话素材
+  - 删除此图层，即可开始编辑
 
 # 如果图层名完全等于如下的,判断为广告图层,直接删除.
 is_name_list:
@@ -59,6 +61,7 @@ is_name_list:
   - 摄图网水印
   - 千库网二维码
   - 摄图网二维码
+  - 删除此图层，即可开始编辑
 
 # 本文图层替换关键词
 ad_replace_keywords:
