@@ -14,6 +14,7 @@ class SCFreePik:
         self.cookie = cookie
 
     def fun_构建列表(self):
+        # https://www.freepik.com/search?author=23&authorSlug=freepik&format=author&page=2&sort=recent&type=psd
         url_parse = urlparse(self.start_url)
         url_dict = parse_qs(url_parse.query)
         url_dict['sort'] = ['recent']
@@ -29,7 +30,7 @@ class SCFreePik:
 
     def fun_获取单页内素材(self, url):
         html = HTMLDown(url, cookie=self.cookie).html
-        ma_list = html.find('#main > div.list-view > div > div.list-content > section > div > figure.caption')
+        ma_list = html.find('#main > div.list-view > div > div.list-content > section > figure')
         for ma in ma_list:
             url: str = ma.find('a', first=True).attrs.get('href')
             img: str = ma.attrs.get('data-image')
@@ -40,3 +41,13 @@ class SCFreePik:
         for page in self.fun_构建列表():
             for ma_obj in self.fun_获取单页内素材(page):
                 yield ma_obj
+
+
+if __name__ == '__main__':
+    scf = SCFreePik(
+        start_url=r'https://www.freepik.com/search?author=23&authorSlug=freepik&format=author&page=2&sort=recent&type=psd',
+        max_page=10
+    )
+    for ma in scf.fun_获取单页内素材(
+            r'https://www.freepik.com/search?author=23&authorSlug=freepik&format=author&page=3&sort=recent&type=psd&'):
+        print(ma)
