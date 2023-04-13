@@ -215,6 +215,7 @@ class MaterialPathAction:
         self.fun_复制到效果图()
         self.fun_解压ZIP()
         self.fun_移动到根目录()
+        self.fun_复制到效果图()
         self.fun_删除广告文件()
         self.fun_删除素材图片()
         self.fun_文件重命名()
