@@ -10,8 +10,8 @@ from pydantic import BaseModel
 
 from module_素材采集.core.class_envato_素材图片下载 import SCEnvatoPICDown
 from module_素材采集.core.class_htmldown import HTMLDown
-from module_素材采集.core.model import database
 from module_素材采集.core.model import fun_获取MODEL
+
 
 router = APIRouter(prefix='/get_material')
 
@@ -24,6 +24,7 @@ class ItemIn(BaseModel):
 
 @router.get('/img')
 def get_img(img: str):
+    # 获取图片
     try:
         res = Response(HTMLDown(img, use_proxy=False).content)
     except:
@@ -34,6 +35,12 @@ def get_img(img: str):
 
 @router.post('/get_list')
 def get_material_list(item_in: ItemIn):
+    """
+    获取素材列表
+    :param item_in:
+    :return:
+    """
+
     single_pate_material_num = 160
 
     model = fun_获取MODEL(tb_name=item_in.tb_name, site_name=item_in.site_name)
@@ -101,3 +108,25 @@ def clear_db(tb_name: str, site_name: str):
     query.execute()
 
     return 'ok'
+
+
+@router.post('/get_already_downloaded')
+def get_already_downloaded(item_in: ItemIn):
+    """
+    获取已经下载了的素材
+    :param item_in:
+    :return:
+    """
+    model = fun_获取MODEL(tb_name=item_in.tb_name, site_name=item_in.site_name)
+    query: ModelSelect = model.select().where(model.state == 1).order_by(model.id.desc()).paginate(item_in.page_num, 120)
+    query = list(query.dicts())
+
+    if item_in.site_name == '包图':
+        for obj in query:
+            obj['img'] = 'http://127.0.0.1:22702/get_material/img?img=' + obj['img']
+
+    resp_dict = {
+        'material_list': query,
+    }
+
+    return resp_dict

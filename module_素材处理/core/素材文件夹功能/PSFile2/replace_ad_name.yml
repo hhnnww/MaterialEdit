@@ -1,3 +1,5 @@
+# 在直接导出图片中
+# 查找删除广告图层
 export_name_list:
   - DELETE THIS LAYER
   - HELP — Show me
@@ -62,6 +64,7 @@ is_name_list:
   - 千库网二维码
   - 摄图网二维码
   - 删除此图层，即可开始编辑
+  - 微信图片_20230223110606 副本
 
 # 本文图层替换关键词
 ad_replace_keywords:
@@ -143,3 +146,13 @@ ad_replace_keywords:
     - xiaoxi
   - - qianku
     - xiaoxi
+  - - 摄图网 有版权敢商用
+    - 小夕网 有品质更精品
+  - - 有版权敢商用
+    - 有品质更精品
+  - - 摄/图/正/版
+    - 小/夕/素/材
+  - - 58pic
+    - xiaoxi
+  - - qianku
+    - xiaoxisc
