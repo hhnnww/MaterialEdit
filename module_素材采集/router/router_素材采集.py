@@ -18,7 +18,7 @@ from module_素材采集.core.class_摄图 import SCSheTu
 from module_素材采集.core.model import fun_获取MODEL
 from module_素材采集.core.class_草图联盟 import SCCaoTuLianMeng
 
-router = APIRouter(prefix='/scrapy')
+router = APIRouter(prefix='/scrapy', tags=['素材采集'])
 
 
 class ItemIn(BaseModel):

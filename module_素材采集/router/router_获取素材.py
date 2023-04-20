@@ -12,8 +12,7 @@ from module_素材采集.core.class_envato_素材图片下载 import SCEnvatoPIC
 from module_素材采集.core.class_htmldown import HTMLDown
 from module_素材采集.core.model import fun_获取MODEL
 
-
-router = APIRouter(prefix='/get_material')
+router = APIRouter(prefix='/get_material', tags=['获取素材'])
 
 
 class ItemIn(BaseModel):
@@ -118,7 +117,8 @@ def get_already_downloaded(item_in: ItemIn):
     :return:
     """
     model = fun_获取MODEL(tb_name=item_in.tb_name, site_name=item_in.site_name)
-    query: ModelSelect = model.select().where(model.state == 1).order_by(model.id.desc()).paginate(item_in.page_num, 120)
+    query: ModelSelect = model.select().where(model.state == 1).order_by(model.id.desc()).paginate(item_in.page_num,
+                                                                                                   120)
     query = list(query.dicts())
 
     if item_in.site_name == '包图':

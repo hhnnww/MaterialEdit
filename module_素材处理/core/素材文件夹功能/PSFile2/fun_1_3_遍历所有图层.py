@@ -53,6 +53,7 @@ class RecursiveLayers:
     @staticmethod
     def fun_删除图层(in_layer):
         print('\n删除广告图层：', in_layer.Name, '\n')
+        in_layer.Visible = False
         in_layer.Delete()
 
     def fun_删除包含名称广告图层(self, in_layer: CDispatch):

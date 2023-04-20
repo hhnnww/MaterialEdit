@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 from module_素材处理.router.class_文件夹功能 import MaterialPathAction
 
-router = APIRouter(prefix='/MaterialFolder')
+router = APIRouter(prefix='/MaterialFolder', tags=['文件夹操作'])
 
 
 class ItemIn(BaseModel):
@@ -117,5 +117,8 @@ def material_folder_function(item_in: ItemIn):
         # ------------------ 一键全自动操作 ------------------
         case "全自动一键操作":
             ma.fun_全自动一键操作()
+
+        case "享设计文件夹改名":
+            ma.fun_享设计文件夹改名()
 
     return dict(mess='OK')

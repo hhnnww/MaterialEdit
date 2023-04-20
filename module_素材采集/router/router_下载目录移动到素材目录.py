@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 from module_素材采集.core.class_下载目录移动到素材目录 import SCDownPathMoveMaterialPath
 
-router = APIRouter(prefix='/down_path_move_material_path')
+router = APIRouter(prefix='/down_path_move_material_path', tags=['下载目录移动到素材目录'])
 
 
 class MoveType(BaseModel):

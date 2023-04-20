@@ -229,3 +229,6 @@ class MaterialPathAction:
 
     def fun_压缩为RAR(self):
         self.ma_func.fun_压缩为RAR(in_path=self.ma_path.material_path, suffix=['.otf', '.ttf'])
+
+    def fun_享设计文件夹改名(self):
+        self.ma_func.fun_享设计文件夹改名(in_path=self.ma_path.material_path, tb_name=self.item_in.tb_name).main()

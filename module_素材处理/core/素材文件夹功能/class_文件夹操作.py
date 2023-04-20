@@ -9,15 +9,16 @@ from module_素材处理.core.素材文件夹功能.fun_移动到根目录 impor
 from module_素材处理.core.素材文件夹功能.fun_移动图片 import fun_复制图片到指定目录
 from module_素材处理.core.素材文件夹功能.fun_解压ZIP import fun_解压ZIP
 from .FontToPng2.class_font_to_png import FontToPng
+from .fun_享设计文件夹重命名 import XiangDesignPathRename
 # from .FontToPIL.fun_字体生成图片 import FontToPIL
 from .fun_删除相同文件 import DelSameFile
+from .fun_制作文件夹预览 import MakePathPreviewImage
 from .fun_压缩为rar import fun_压缩为RAR
 from .fun_按数字分类 import CateByNum
 from .fun_按格式分类 import CateBySuffix
-from .fun_重命名字体文件 import FontPathReName
 from .fun_生成SKP批量导出 import fun_生成SKP批量导出脚本
 from .fun_素材图蜘蛛水印 import fun_素材图蜘蛛水印
-from .fun_制作文件夹预览 import MakePathPreviewImage
+from .fun_重命名字体文件 import FontPathReName
 
 
 class MaterialFolderFunction:
@@ -40,3 +41,4 @@ class MaterialFolderFunction:
     fun_生成SKP批量导出脚本 = fun_生成SKP批量导出脚本
     fun_素材图蜘蛛水印 = fun_素材图蜘蛛水印
     fun_制作文件夹预览 = MakePathPreviewImage
+    fun_享设计文件夹改名 = XiangDesignPathRename

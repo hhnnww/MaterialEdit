@@ -7,7 +7,7 @@ from fastapi.responses import Response
 from module_素材处理.core.setting import UP_FOLDER
 from module_素材处理.core.图片编辑 import PICEdit
 
-router = APIRouter()
+router = APIRouter(tags=['字体生成图片'])
 
 Direction = Literal['ltr', 'ttb']
 

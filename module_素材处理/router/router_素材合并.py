@@ -9,7 +9,7 @@ class StoreType(BaseModel):
     ori_path: str
 
 
-router = APIRouter(prefix='/material_merge')
+router = APIRouter(prefix='/material_merge', tags=['素材合并'])
 
 
 @router.post('')

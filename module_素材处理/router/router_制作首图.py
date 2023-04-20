@@ -14,7 +14,7 @@ from module_素材处理.core.制作首图.样式.class_巴扎嘿 import STBaZha
 # 错落首图
 # from module_素材处理.core.制作首图.布局.class_错落布局 import STLayoutScat
 
-router = APIRouter(prefix='/make_st')
+router = APIRouter(prefix='/make_st', tags=['制作首图'])
 
 
 class ItemIn(BaseModel):

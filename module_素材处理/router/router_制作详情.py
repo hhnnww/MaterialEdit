@@ -13,7 +13,7 @@ from module_素材处理.core.制作详情 import XQTitlePic
 from module_素材处理.core.素材文件夹功能 import MaterialFolderFunction
 from module_素材处理.core.素材文件夹功能 import MaterialFolderStructure
 
-router = APIRouter(prefix='/make_xq')
+router = APIRouter(prefix='/make_xq', tags=['制作详情'])
 
 
 class ItemIn(BaseModel):

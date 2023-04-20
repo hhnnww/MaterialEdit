@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from module_素材采集.core.class_单页直接采集 import SCSinglePage
 from module_素材采集.core.model import fun_获取MODEL
 
-router = APIRouter()
+router = APIRouter(tags=['单页素材采集'])
 
 
 class ItemIn(BaseModel):

@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 from module_素材处理.core.素材文件夹信息.fun_未使用的目录 import UnUsedPathDir
 
-router = APIRouter()
+router = APIRouter(tags=['未使用的目录'])
 
 
 class ItemIn(BaseModel):

@@ -9,7 +9,7 @@ from pydantic import BaseModel
 from module_素材处理.core.素材文件夹信息 import MaterialInfo
 from module_素材处理.core.素材文件夹功能 import MaterialFolderStructure
 
-router = APIRouter(prefix='/GetMaterialInfo')
+router = APIRouter(prefix='/GetMaterialInfo', tags=['获取文件夹信息'])
 
 
 class ItemIn(BaseModel):

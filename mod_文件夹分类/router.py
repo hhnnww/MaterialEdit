@@ -7,7 +7,7 @@ from mod_文件夹分类.class_FolderCategory import FolderCategory
 from mod_文件夹分类.class_FolderCategory import MaterialOBJ
 from pprint import pprint
 
-router = APIRouter(prefix='/folder_category')
+router = APIRouter(prefix='/folder_category', tags=['文件夹分类'])
 
 
 class ItemIn(BaseModel):
