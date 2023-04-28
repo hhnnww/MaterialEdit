@@ -143,7 +143,7 @@ class PSFile:
 
 
 if __name__ == '__main__':
-    psf = PSFile.open(ps_file=r'E:\小夕素材\9000-9999\9286\9286\小夕素材(3).psd', tb_name='小夕素材',
+    psf = PSFile.open(ps_file=r'F:\小夕素材\520促销\520促销\小夕素材(1).psd', tb_name='小夕素材',
                       ad_pic_list=fun_所有广告图片())
 
     psf.run_删广告_导出_加广告()

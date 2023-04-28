@@ -55,6 +55,15 @@ class RecursiveLayers:
         print('\n删除广告图层：', in_layer.Name, '\n')
         in_layer.Visible = False
         in_layer.Delete()
+        try:
+            in_layer.Delete()
+        except:
+            pass
+
+        try:
+            in_layer.Delete()
+        except:
+            pass
 
     def fun_删除包含名称广告图层(self, in_layer: CDispatch):
         for name in self.ad_name_list.include_name_list:
