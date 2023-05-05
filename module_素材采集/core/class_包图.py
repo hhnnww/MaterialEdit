@@ -65,8 +65,7 @@ class SCBaoTu:
 
 
 if __name__ == '__main__':
-    cookie = """__is_small_screen=0; wx_oal_type=0; Hm_lvt_2b0a2664b82723809b19b4de393dde93=1668761293; FIRSTVISITED=1681790466.457; last_auth=2; ISREQUEST=1; WEBPARAMS=is_pay=1; md_session_id=20230505001034788; user_refers=a%3A2%3A%7Bi%3A0%3Bs%3A6%3A%22ibaotu%22%3Bi%3A1%3Bs%3A6%3A%22ibaotu%22%3B%7D; new_edition_type_v4=1; _sh_hy=a%3A1%3A%7Bi%3A0%3Ba%3A2%3A%7Bs%3A4%3A%22name%22%3Bs%3A6%3A%22%E6%B5%B7%E6%8A%A5%22%3Bs%3A5%3A%22count%22%3Bi%3A8888%3B%7D%7D; Hm_lvt_4df399c02bb6b34a5681f739d57787ee=1681790466,1683268636; md_session_expire=1800; bt_guid=24f59754900da3d2b90d76c8dc418243; Hm_lpvt_4df399c02bb6b34a5681f739d57787ee=1683269212; referer=http%3A%2F%2Fibaotu.com%2F%3Fm%3DsearchAnaly%26a%3DsidGather%26sp%3D1%26sid%3D40%26callback%3DjQuery112409327387677503582_1683269225578%26_%3D1683269225579"""
     for ma_obj in SCBaoTu(
-            start_url='https://ibaotu.com/tupians/haibao/6-0-0-0-0-1-c0_1-2.html', max_page=3, cookie=cookie
+            start_url='https://ibaotu.com/tupians/haibao/6-0-0-0-0-1-c0_1-2.html', max_page=3
     ).main():
         print(ma_obj)
