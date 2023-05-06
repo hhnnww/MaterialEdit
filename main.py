@@ -15,6 +15,8 @@ from module_素材采集.router import router_下载目录移动到素材目录
 from module_素材采集.router import router_单页素材采集
 from module_素材采集.router import router_素材采集
 from module_素材采集.router import router_获取素材
+from module_附加功能 import router_上传到百度网盘
+from module_附加功能 import router_自动获取网盘分享链接
 
 # from fastapi.staticfiles import StaticFiles
 
@@ -54,5 +56,7 @@ app.include_router(router_未使用目录.router)
 app.include_router(router_字体文件生成图片.router)
 app.include_router(router_素材合并.router)
 app.include_router(router_素材全自动批处理.router)
+app.include_router(router_上传到百度网盘.router)
+app.include_router(router_自动获取网盘分享链接.router)
 
 # app.mount('/static', StaticFiles(directory='static', html=True), name='static')
