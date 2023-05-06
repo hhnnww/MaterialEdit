@@ -44,18 +44,21 @@ class HTMLDown:
 
     @cached_property
     def res(self):
-        if self.port is None or self.use_proxy is False:
-            print('直接连接')
-            self.session.trust_env = False
-            return self.session.get(self.url, headers=self.headers)
+        self.session.trust_env = False
+        return self.session.get(self.url, headers=self.headers)
 
-        else:
-            print(f'代理端口：{self.port}')
-            proxies = dict(
-                http=f'{self.proxies_header}://{self.ip}:{self.port}',
-                https=f'{self.proxies_header}://{self.ip}:{self.port}',
-            )
-            return self.session.get(self.url, proxies=proxies, headers=self.headers)
+        # if self.port is None or self.use_proxy is False:
+        #     print('直接连接')
+        #     self.session.trust_env = False
+        #     return self.session.get(self.url, headers=self.headers)
+        #
+        # else:
+        #     print(f'代理端口：{self.port}')
+        #     proxies = dict(
+        #         http=f'{self.proxies_header}://{self.ip}:{self.port}',
+        #         https=f'{self.proxies_header}://{self.ip}:{self.port}',
+        #     )
+        #     return self.session.get(self.url, proxies=proxies, headers=self.headers)
 
     @cached_property
     def html(self) -> HTML:
