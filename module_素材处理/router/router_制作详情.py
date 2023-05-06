@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import pyautogui
 from PIL import Image
 from fastapi import APIRouter
 from pydantic import BaseModel
@@ -160,3 +161,5 @@ def make_xq(item_in: ItemIn):
             break
 
     bg.close()
+
+    pyautogui.alert("详情制作完成", "素材全自动处理程序")

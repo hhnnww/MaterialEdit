@@ -1,3 +1,4 @@
+import pyautogui
 from PIL import Image
 from fastapi import APIRouter
 from pydantic import BaseModel
@@ -131,6 +132,8 @@ def make_st(item_in: ItemIn):
 
     new_bg.save(st_path, quality=80)
     new_bg.close()
+
+    pyautogui.alert("首图制作完成", "素材全自动处理程序")
 
     # 制作附图
     # if item_in.small_pic_mode in ['竖排自适应', '横排自适应']:
