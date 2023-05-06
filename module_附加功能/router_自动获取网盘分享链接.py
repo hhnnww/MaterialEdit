@@ -1,9 +1,10 @@
+from pathlib import Path
 from typing import Union
-from pydantic import BaseModel
+
 import pyautogui
 import pyperclip
 from fastapi import APIRouter
-from pathlib import Path
+from pydantic import BaseModel
 
 pyautogui.PAUSE = 1
 
@@ -54,9 +55,11 @@ class AutoGetBaiDuYunShareLink:
         """
         bd_share_content = bd_share_content.split('\n')[:-1]
         bd_share_content = '\n'.join(bd_share_content)
+        bd_share_content = bd_share_content.rstrip()
+
         return bd_share_content
 
-    def fun_获取百度网盘地址(self, ma_id: str):
+    def fun_获取百度网盘地址(self, ma_id: str) -> str:
         """
         自动从百度网盘获取分享链接
         :param ma_id:
@@ -104,13 +107,30 @@ class AutoGetBaiDuYunShareLink:
         bd_share = self.fun_处理网盘分享内容(pyperclip.paste())
 
         print(
-            f'{ma_id}\t"{bd_share}"'
+            f'{ma_id}\t"{bd_share}"\n'
         )
 
+        return f'{ma_id}\t"{bd_share}"\n\n'
+
     def run(self):
+        output = Path().home() / 'Desktop' / 'output.txt'
+
+        f = open(output.as_posix(), 'w+')
+        f.close()
+
         # 打开百度网盘在任务栏的位置
         c_l, c_t = self.fun_根据图片获取需要点击的位置('IMG/bd-icon.png')
         pyautogui.click(c_l, c_t)
 
-        for x in range(self.start_num, self.end_num):
-            self.fun_获取百度网盘地址(str(x))
+        with open(output.as_posix(), 'a+') as f:
+            for x in range(self.start_num, self.end_num + 1):
+                f.write(self.fun_获取百度网盘地址(str(x)))
+
+        pyautogui.alert('自动获取百度网盘链接已经处理完成！')
+
+
+if __name__ == '__main__':
+    AutoGetBaiDuYunShareLink(
+        start_num=2291,
+        end_num=2291
+    ).run()
