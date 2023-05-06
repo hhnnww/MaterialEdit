@@ -83,3 +83,5 @@ class AutoUpToBaiDuYun:
         for dp in self.get_all_path(in_path=self.start_path):
             print(dp)
             self.up_path_to_bd(dp)
+
+        pyautogui.alert('自动上传到百度网盘完成。', "素材全自动处理程序")

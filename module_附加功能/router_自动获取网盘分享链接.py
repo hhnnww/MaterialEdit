@@ -126,7 +126,7 @@ class AutoGetBaiDuYunShareLink:
             for x in range(self.start_num, self.end_num + 1):
                 f.write(self.fun_获取百度网盘地址(str(x)))
 
-        pyautogui.alert('自动获取百度网盘链接已经处理完成！')
+        pyautogui.alert('自动获取百度网盘链接已经处理完成！', "素材全自动处理程序")
 
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 from pathlib import Path
-
+import pyautogui
 from fastapi import APIRouter
 from pydantic import BaseModel
 
@@ -120,5 +120,7 @@ def material_folder_function(item_in: ItemIn):
 
         case "享设计文件夹改名":
             ma.fun_享设计文件夹改名()
+
+    pyautogui.alert(item_in.action_name + " 已完成！", "素材全自动处理程序")
 
     return dict(mess='OK')
