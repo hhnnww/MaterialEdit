@@ -59,7 +59,7 @@ class AutoGetBaiDuYunShareLink:
 
         return bd_share_content
 
-    def fun_获取百度网盘地址(self, ma_id: str) -> str:
+    def fun_获取百度网盘地址(self, ma_id: str) -> Union[str, None]:
         """
         自动从百度网盘获取分享链接
         :param ma_id:
@@ -80,7 +80,7 @@ class AutoGetBaiDuYunShareLink:
         # 找到文件夹
         res = self.fun_根据图片获取需要点击的位置('IMG/bd-folder.png')
         if res is None:
-            return
+            return None
 
         cl, ct = res
         pyautogui.rightClick(cl, ct)
@@ -124,7 +124,10 @@ class AutoGetBaiDuYunShareLink:
 
         with open(output.as_posix(), 'a+') as f:
             for x in range(self.start_num, self.end_num + 1):
-                f.write(self.fun_获取百度网盘地址(str(x)))
+                res = self.fun_获取百度网盘地址(str(x))
+                
+                if res is not None:
+                    f.write(res)
 
         pyautogui.alert('自动获取百度网盘链接已经处理完成！', "素材全自动处理程序")
 
