@@ -1,3 +1,4 @@
+import os
 import re
 from pathlib import Path
 
@@ -5,9 +6,10 @@ import pyautogui
 import pyperclip
 from fastapi import APIRouter
 from pydantic import BaseModel
+
 from module_附加功能.router_自动获取网盘分享链接 import AutoGetBaiDuYunShareLink
 
-pyautogui.PAUSE = 1
+pyautogui.PAUSE = .5
 
 router = APIRouter(prefix='/自动上传到百度网盘', tags=['自动上传到百度网盘'])
 
@@ -55,33 +57,41 @@ class AutoUpToBaiDuYun:
         """
         pyperclip.copy(in_path.as_posix())
 
-        # 点任务栏
-        # pyautogui.click(2023, 2130)
-
         # 地址栏
-        pyautogui.click(1000, 162)
+        while AutoGetBaiDuYunShareLink.fun_根据图片获取需要点击的位置("IMG/file-address.png") is None:
+            pyautogui.sleep(.5)
+
+        cl, ct = AutoGetBaiDuYunShareLink.fun_根据图片获取需要点击的位置("IMG/file-address.png")
+        pyautogui.click(cl, ct)
+
         pyautogui.hotkey('ctrl', 'v')
         pyautogui.hotkey('enter')
 
         # 点文件夹
-        pyautogui.click(587, 278)
+        cl, ct = AutoGetBaiDuYunShareLink.fun_根据图片获取需要点击的位置("IMG/file-name.png")
+        pyautogui.click(cl, ct + 50)
 
         # shift + f10
         pyautogui.hotkey('shift', 'f10')
-        pyautogui.sleep(1)
 
         # 点击百度网盘上传
-        pyautogui.click(582, 985)
-        pyautogui.sleep(1)
+        while AutoGetBaiDuYunShareLink.fun_根据图片获取需要点击的位置("IMG/file-upbd.png") is None:
+            pyautogui.sleep(.5)
+
+        cl, ct = AutoGetBaiDuYunShareLink.fun_根据图片获取需要点击的位置("IMG/file-upbd.png")
+        pyautogui.click(cl, ct)
 
     def run(self):
         # 开始运行
         # 必须提前打开文件管理器，并且最大化
-        cl, ct = AutoGetBaiDuYunShareLink.fun_根据图片获取需要点击的位置('IMG/file-manter.png')
-        pyautogui.click(cl, ct)
+        os.startfile(r'C:\Users\wuweihua')
 
         for dp in self.get_all_path(in_path=self.start_path):
             print(dp)
             self.up_path_to_bd(dp)
 
         pyautogui.alert('自动上传到百度网盘完成。', "素材全自动处理程序")
+
+
+if __name__ == '__main__':
+    AutoUpToBaiDuYun(r'F:\小夕素材\10000-10999\10044').run()

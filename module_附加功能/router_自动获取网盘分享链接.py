@@ -6,7 +6,7 @@ import pyperclip
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-pyautogui.PAUSE = 1
+pyautogui.PAUSE = .5
 
 router = APIRouter(prefix='/自动分享网盘链接', tags=['自动分享网盘链接'])
 
@@ -37,11 +37,14 @@ class AutoGetBaiDuYunShareLink:
         :return:
         """
         img = Path(__file__).parent.parent / img
-        position = pyautogui.locateOnScreen(img.as_posix())
 
-        if position is None:
+        if pyautogui.locateOnScreen(img.as_posix()) is None:
+            pyautogui.sleep(1)
+
+        if pyautogui.locateOnScreen(img.as_posix()) is None:
             return None
 
+        position = pyautogui.locateOnScreen(img.as_posix())
         cl = position.left + int(position.width / 2)
         ct = position.top + int(position.height / 2)
         return cl, ct
@@ -65,12 +68,19 @@ class AutoGetBaiDuYunShareLink:
         :param ma_id:
         :return:
         """
+
         # 点击搜搜框
-        pyautogui.click(3629, 122)
+        res = self.fun_根据图片获取需要点击的位置("IMG/bd-search.png")
+        if res is None:
+            cl, ct = self.fun_根据图片获取需要点击的位置("IMG/bd-search-close.png")
+            pyautogui.click(cl, ct)
+
+        cl, ct = self.fun_根据图片获取需要点击的位置("IMG/bd-search.png")
+        pyautogui.click(cl, ct)
 
         # 全选并删除
-        pyautogui.hotkey('ctrl', 'a')
-        pyautogui.hotkey('del')
+        # pyautogui.hotkey('ctrl', 'a')
+        # pyautogui.hotkey('del')
 
         # 输入文字
         pyautogui.write(ma_id)
@@ -99,7 +109,7 @@ class AutoGetBaiDuYunShareLink:
 
         # 关闭
         while self.fun_根据图片获取需要点击的位置('IMG/bd-close.png') is None:
-            pyautogui.sleep(1)
+            pyautogui.sleep(.5)
 
         cl, ct = self.fun_根据图片获取需要点击的位置('IMG/bd-close.png')
         pyautogui.click(cl, ct)
@@ -125,7 +135,7 @@ class AutoGetBaiDuYunShareLink:
         with open(output.as_posix(), 'a+') as f:
             for x in range(self.start_num, self.end_num + 1):
                 res = self.fun_获取百度网盘地址(str(x))
-                
+
                 if res is not None:
                     f.write(res)
 
@@ -134,6 +144,6 @@ class AutoGetBaiDuYunShareLink:
 
 if __name__ == '__main__':
     AutoGetBaiDuYunShareLink(
-        start_num=2291,
-        end_num=2291
+        start_num=10044,
+        end_num=10045
     ).run()
