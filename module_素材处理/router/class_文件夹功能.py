@@ -100,18 +100,13 @@ class MaterialPathAction:
         return False
 
     def fun_PSD删广告生成图片(self):
-        self.ma_func.fun_清空OUT_PATH()
-
         pythoncom.CoInitialize()
         for in_file in tqdm(self.ma_func.fun_指定遍历(self.ma_path.material_path, ['.psd', '.psb']), ncols=100,
                             desc='PSD删除广告生成图片'):
 
             if self.fun_has_img(in_file) is False:
-                ps_obj = self.ma_func.fun_PS操作.open(in_file.as_posix(), tb_name=self.item_in.tb_name,
-                                                      ad_pic_list=self.ma_func.fun_PS广告图片())
-
-                if ps_obj is not False:
-                    ps_obj.run_删广告_导出_加广告()
+                self.ma_func.fun_PS3操作(ps_path=in_file.as_posix(),
+                                         tb_name=self.item_in.tb_name).run_删除广告导出PNG()
 
         pythoncom.CoUninitialize()
 

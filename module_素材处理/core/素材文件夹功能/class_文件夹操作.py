@@ -19,6 +19,7 @@ from .fun_按格式分类 import CateBySuffix
 from .fun_生成SKP批量导出 import fun_生成SKP批量导出脚本
 from .fun_素材图蜘蛛水印 import fun_素材图蜘蛛水印
 from .fun_重命名字体文件 import FontPathReName
+from module_素材处理.core.素材文件夹功能.PSFile3.class_PSFile import PSFile as PS3File
 
 
 class MaterialFolderFunction:
@@ -42,3 +43,4 @@ class MaterialFolderFunction:
     fun_素材图蜘蛛水印 = fun_素材图蜘蛛水印
     fun_制作文件夹预览 = MakePathPreviewImage
     fun_享设计文件夹改名 = XiangDesignPathRename
+    fun_PS3操作 = PS3File

@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi import Request
 from fastapi.middleware.cors import CORSMiddleware
 
+from module_素材处理.core.素材文件夹功能.PSFile3.router import router as router_ps文件广告名管理
 from module_素材处理.router import router_制作详情
 from module_素材处理.router import router_制作首图
 from module_素材处理.router import router_字体文件生成图片
@@ -58,5 +59,6 @@ app.include_router(router_素材合并.router)
 app.include_router(router_素材全自动批处理.router)
 app.include_router(router_上传到百度网盘.router)
 app.include_router(router_自动获取网盘分享链接.router)
+app.include_router(router_ps文件广告名管理)
 
 # app.mount('/static', StaticFiles(directory='static', html=True), name='static')
