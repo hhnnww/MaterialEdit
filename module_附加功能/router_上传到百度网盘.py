@@ -7,7 +7,7 @@ import pyperclip
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from module_附加功能.router_自动获取网盘分享链接 import AutoGetBaiDuYunShareLink
+from module_附加功能.fun_根据图片查找点击位置 import fun_根据图片获取需要点击的位置
 
 pyautogui.PAUSE = .5
 
@@ -58,27 +58,27 @@ class AutoUpToBaiDuYun:
         pyperclip.copy(in_path.as_posix())
 
         # 地址栏
-        while AutoGetBaiDuYunShareLink.fun_根据图片获取需要点击的位置("IMG/file-address.png") is None:
+        while fun_根据图片获取需要点击的位置("IMG/file-address.png") is None:
             pyautogui.sleep(.5)
 
-        cl, ct = AutoGetBaiDuYunShareLink.fun_根据图片获取需要点击的位置("IMG/file-address.png")
+        cl, ct = fun_根据图片获取需要点击的位置("IMG/file-address.png")
         pyautogui.click(cl, ct)
 
         pyautogui.hotkey('ctrl', 'v')
         pyautogui.hotkey('enter')
 
         # 点文件夹
-        cl, ct = AutoGetBaiDuYunShareLink.fun_根据图片获取需要点击的位置("IMG/file-name.png")
+        cl, ct = fun_根据图片获取需要点击的位置("IMG/file-name.png")
         pyautogui.click(cl, ct + 50)
 
         # shift + f10
         pyautogui.hotkey('shift', 'f10')
 
         # 点击百度网盘上传
-        while AutoGetBaiDuYunShareLink.fun_根据图片获取需要点击的位置("IMG/file-upbd.png") is None:
+        while fun_根据图片获取需要点击的位置("IMG/file-upbd.png") is None:
             pyautogui.sleep(.5)
 
-        cl, ct = AutoGetBaiDuYunShareLink.fun_根据图片获取需要点击的位置("IMG/file-upbd.png")
+        cl, ct = fun_根据图片获取需要点击的位置("IMG/file-upbd.png")
         pyautogui.click(cl, ct)
 
     def run(self):

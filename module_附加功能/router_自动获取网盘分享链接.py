@@ -6,6 +6,8 @@ import pyperclip
 from fastapi import APIRouter
 from pydantic import BaseModel
 
+from module_附加功能.fun_根据图片查找点击位置 import fun_根据图片获取需要点击的位置
+
 pyautogui.PAUSE = .5
 
 router = APIRouter(prefix='/自动分享网盘链接', tags=['自动分享网盘链接'])
@@ -30,26 +32,6 @@ class AutoGetBaiDuYunShareLink:
         self.end_num = end_num
 
     @staticmethod
-    def fun_根据图片获取需要点击的位置(img: str) -> Union[tuple, None]:
-        """
-        传入图片，获取图片中心位置
-        :param img:
-        :return:
-        """
-        img = Path(__file__).parent.parent / img
-
-        if pyautogui.locateOnScreen(img.as_posix()) is None:
-            pyautogui.sleep(1)
-
-        if pyautogui.locateOnScreen(img.as_posix()) is None:
-            return None
-
-        position = pyautogui.locateOnScreen(img.as_posix())
-        cl = position.left + int(position.width / 2)
-        ct = position.top + int(position.height / 2)
-        return cl, ct
-
-    @staticmethod
     def fun_处理网盘分享内容(bd_share_content: str) -> str:
         """
         删除网盘分享链接的广告语
@@ -70,12 +52,12 @@ class AutoGetBaiDuYunShareLink:
         """
 
         # 点击搜搜框
-        res = self.fun_根据图片获取需要点击的位置("IMG/bd-search.png")
+        res = fun_根据图片获取需要点击的位置("IMG/bd-search.png")
         if res is None:
-            cl, ct = self.fun_根据图片获取需要点击的位置("IMG/bd-search-close.png")
+            cl, ct = fun_根据图片获取需要点击的位置("IMG/bd-search-close.png")
             pyautogui.click(cl, ct)
 
-        cl, ct = self.fun_根据图片获取需要点击的位置("IMG/bd-search.png")
+        cl, ct = fun_根据图片获取需要点击的位置("IMG/bd-search.png")
         pyautogui.click(cl, ct)
 
         # 全选并删除
@@ -88,7 +70,7 @@ class AutoGetBaiDuYunShareLink:
         pyautogui.sleep(1)
 
         # 找到文件夹
-        res = self.fun_根据图片获取需要点击的位置('IMG/bd-folder.png')
+        res = fun_根据图片获取需要点击的位置('IMG/bd-folder.png')
         if res is None:
             return None
 
@@ -96,22 +78,22 @@ class AutoGetBaiDuYunShareLink:
         pyautogui.rightClick(cl, ct)
 
         # 分享按钮
-        cl, ct = self.fun_根据图片获取需要点击的位置('IMG/bd-share.png')
+        cl, ct = fun_根据图片获取需要点击的位置('IMG/bd-share.png')
         pyautogui.click(cl, ct)
 
         # 永久有效
-        cl, ct = self.fun_根据图片获取需要点击的位置('IMG/bd-time.png')
+        cl, ct = fun_根据图片获取需要点击的位置('IMG/bd-time.png')
         pyautogui.click(cl, ct)
 
         # 创建连接
-        cl, ct = self.fun_根据图片获取需要点击的位置('IMG/bd-getlink.png')
+        cl, ct = fun_根据图片获取需要点击的位置('IMG/bd-getlink.png')
         pyautogui.click(cl, ct)
 
         # 关闭
-        while self.fun_根据图片获取需要点击的位置('IMG/bd-close.png') is None:
+        while fun_根据图片获取需要点击的位置('IMG/bd-close.png') is None:
             pyautogui.sleep(.5)
 
-        cl, ct = self.fun_根据图片获取需要点击的位置('IMG/bd-close.png')
+        cl, ct = fun_根据图片获取需要点击的位置('IMG/bd-close.png')
         pyautogui.click(cl, ct)
 
         bd_share = self.fun_处理网盘分享内容(pyperclip.paste())
@@ -129,7 +111,7 @@ class AutoGetBaiDuYunShareLink:
         f.close()
 
         # 打开百度网盘在任务栏的位置
-        c_l, c_t = self.fun_根据图片获取需要点击的位置('IMG/bd-icon.png')
+        c_l, c_t = fun_根据图片获取需要点击的位置('IMG/bd-icon.png')
         pyautogui.click(c_l, c_t)
 
         with open(output.as_posix(), 'a+') as f:
