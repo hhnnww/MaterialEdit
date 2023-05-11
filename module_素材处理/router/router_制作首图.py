@@ -31,6 +31,7 @@ class ItemIn(BaseModel):
     首图名称: int
     素材格式标题: str
     源文件数量: int
+    首图裁剪模式: str
 
 
 @router.post('/make_st')
@@ -106,7 +107,7 @@ def make_st(item_in: ItemIn):
 
         bg = STMake(st_list=layout, st_width=st_width, st_height=st_height, gutter=item_in.gutter,
                     bg_color=(255, 255, 255),
-                    small_pic_size_mode=small_pic_mode).main()
+                    small_pic_size_mode=small_pic_mode, crop_model=item_in.首图裁剪模式).main()
 
     # 制作首图样式图
     if item_in.st_style == '黑鲸':

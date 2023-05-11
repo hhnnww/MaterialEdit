@@ -22,7 +22,7 @@ class SmallSizeModel:
 
 class STMake:
     def __init__(self, st_list: List[ComList], st_width: int, st_height: int, gutter: int, bg_color: Tuple[int],
-                 small_pic_size_mode: int):
+                 small_pic_size_mode: int, crop_model: str):
         self.st_list = st_list
 
         self.st_list.sort(key=lambda k: len(k.img_list))
@@ -33,14 +33,14 @@ class STMake:
         self.bg_color = bg_color
         self.st_row = len(self.st_list)
         self.small_pic_size_mode = small_pic_size_mode
-
+        self.crop_model = crop_model
         self.circle_radius = 20
 
     def fun_制作小图片(self, img: Image.Image, small_width: int, small_height: int, num: int) -> Image.Image:
         if num % 2 == 0:
-            img = PICEdit.fun_图片裁剪(img, small_width + 1, small_height)
+            img = PICEdit.fun_图片裁剪(img, small_width + 1, small_height, direction=self.crop_model)
         else:
-            img = PICEdit.fun_图片裁剪(img, small_width, small_height)
+            img = PICEdit.fun_图片裁剪(img, small_width, small_height, direction=self.crop_model)
         if self.gutter > 0:
             img = PICEdit.fun_图片圆角(img, self.circle_radius, (240, 240, 240)).main()
         return img
