@@ -20,7 +20,8 @@ router = APIRouter(prefix='/make_xq', tags=['制作详情'])
 class ItemIn(BaseModel):
     root_path: str
     tb_name: str
-    单排图片数量: int
+    效果图单排图片数量: int
+    预览图单排图片数量: int
     素材ID: str
     素材格式: str
     源文件列表: str
@@ -84,7 +85,7 @@ def make_xq(item_in: ItemIn):
         effect_pil = XQMakePIC(
             img_list=effect_pic_list,
             material_path=mfs.material_path,
-            single_pic_num=item_in.单排图片数量,
+            single_pic_num=item_in.效果图单排图片数量,
             has_material_info=False,
             tb_name=item_in.tb_name,
             pic_water_market=item_in.详情水印
@@ -112,7 +113,7 @@ def make_xq(item_in: ItemIn):
             img_list=preview_pic_list,
             material_path=mfs.material_path,
             has_material_info=item_in.详情素材信息,
-            single_pic_num=item_in.单排图片数量,
+            single_pic_num=item_in.预览图单排图片数量,
             tb_name=item_in.tb_name,
             pic_water_market=item_in.详情水印
         ).main()

@@ -107,14 +107,14 @@ class AutoGetBaiDuYunShareLink:
     def run(self):
         output = Path().home() / 'Desktop' / 'output.txt'
 
-        f = open(output.as_posix(), 'w+')
+        f = open(file=output.as_posix(), mode='w+', encoding="UTF-8")
         f.close()
 
         # 打开百度网盘在任务栏的位置
         c_l, c_t = fun_根据图片获取需要点击的位置('IMG/bd-icon.png')
         pyautogui.click(c_l, c_t)
 
-        with open(output.as_posix(), 'a+') as f:
+        with open(file=output.as_posix(), mode='a+', encoding='UTF-8') as f:
             for x in range(self.start_num, self.end_num + 1):
                 res = self.fun_获取百度网盘地址(str(x))
 
