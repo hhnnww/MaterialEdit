@@ -1,5 +1,7 @@
 from typing import List
 
+from colorama import Back, Fore
+from colorama import Style
 from win32com.client import CDispatch
 
 from module_素材处理.core.素材文件夹功能.PSFile3.model import TextReplaceName
@@ -7,11 +9,6 @@ from module_素材处理.core.素材文件夹功能.PSFile3.model import TextRep
 
 def com_文字图层广告(text_layer: CDispatch, re_contents: List[TextReplaceName]):
     visible = text_layer.Visible
-    try:
-        print(f'文字图层查找广告：\t{text_layer.Name}')
-    except:
-        pass
-
     text_item = text_layer.TextItem
     content: str = text_item.Contents
     content = content.lower()
@@ -25,7 +22,7 @@ def com_文字图层广告(text_layer: CDispatch, re_contents: List[TextReplaceN
 
         if ori_name in content:
             try:
-                print(f'\n文字图层发现广告：\t{text_layer.Name}\n')
+                print('\n' + Back.RED + Fore.BLACK + f'文字图层发现广告：\t{text_layer.Name}' + Style.RESET_ALL)
             except:
                 pass
 

@@ -12,6 +12,8 @@ from module_素材处理.core.setting import IMG_PATH
 from module_素材处理.core.图片编辑 import PICEdit
 from module_素材处理.core.素材文件夹功能 import MaterialFolderFunction
 from module_素材处理.core.素材文件夹功能 import MaterialFolderStructure
+from module_素材处理.core.素材文件夹功能.PSFile3.fun_对比所有导出的图片 import fun_所有广告图片
+from module_素材处理.core.素材文件夹功能.PSFile3.fun_导出图层PNG import fun_清空OUT_PATH
 
 
 class ItemIn(BaseModel):
@@ -100,13 +102,16 @@ class MaterialPathAction:
         return False
 
     def fun_PSD删广告生成图片(self):
+        fun_清空OUT_PATH()
+        ad_pic_list = fun_所有广告图片()
+
         pythoncom.CoInitialize()
         for in_file in tqdm(self.ma_func.fun_指定遍历(self.ma_path.material_path, ['.psd', '.psb']), ncols=100,
                             desc='PSD删除广告生成图片'):
 
             if self.fun_has_img(in_file) is False:
                 self.ma_func.fun_PS3操作(ps_path=in_file.as_posix(),
-                                         tb_name=self.item_in.tb_name).run_删除广告导出PNG()
+                                         tb_name=self.item_in.tb_name, ad_pic_list=ad_pic_list).run_删除广告导出PNG()
 
         pythoncom.CoUninitialize()
 
