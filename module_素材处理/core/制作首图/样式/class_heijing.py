@@ -180,6 +180,6 @@ if __name__ == '__main__':
     STHeiJingStyle(
         Image.new('RGBA', (1500, 1300), (255, 255, 255)),
         '2023春节兔年海报',
-        ['PSD'],
+        ['ai'],
         '泡泡猫素材', '3345'
     ).main().show()
