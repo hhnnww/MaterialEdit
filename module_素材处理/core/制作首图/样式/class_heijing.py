@@ -22,9 +22,9 @@ class STHeiJingStyle:
 
     circle_color_list = dict(
         psd=dict(
-            text_color=(49, 168, 255),
-            border_color=(49, 168, 255),
-            bg_color=(0, 30, 54)
+            text_color=(38, 200, 254),
+            border_color=(38, 200, 254),
+            bg_color=(6, 31, 37)
         ),
         png=dict(
             text_color=(49, 168, 255),
@@ -93,7 +93,7 @@ class STHeiJingStyle:
     def fun_单个格式圆圈(self, material_format):
         material_format = material_format.lower()
 
-        title_pil = PICEdit.fun_单行文字(material_format.upper(), 'h', 200,
+        title_pil = PICEdit.fun_单行文字(material_format.upper(), 'r', 200,
                                          self.circle_color_list.get(material_format).get('text_color'),
                                          self.circle_color_list.get(material_format).get('bg_color')).main()
 
@@ -113,8 +113,9 @@ class STHeiJingStyle:
         )
         bg_circle = PICEdit.fun_颜色覆盖(bg_circle, self.circle_color_list.get(material_format).get('border_color'))
 
+        small_ratio = 0.92
         prospect_circle = prospect_circle.resize((
-            int(bg_circle.width * 0.89), int(bg_circle.width * 0.89)
+            int(bg_circle.width * small_ratio), int(bg_circle.width * small_ratio)
         ), resample=1)
         prospect_circle = PICEdit.fun_颜色覆盖(prospect_circle,
                                                self.circle_color_list.get(material_format).get('bg_color'))
@@ -179,6 +180,6 @@ if __name__ == '__main__':
     STHeiJingStyle(
         Image.new('RGBA', (1500, 1300), (255, 255, 255)),
         '2023春节兔年海报',
-        ['PSD', 'ai', 'pptx'],
+        ['PSD'],
         '泡泡猫素材', '3345'
     ).main().show()
