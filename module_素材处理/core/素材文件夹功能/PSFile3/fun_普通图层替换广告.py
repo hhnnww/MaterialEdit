@@ -36,16 +36,17 @@ def com_普通图层广告(app: CDispatch, art_layer: CDispatch, include_names: 
                 layer_state = 0
                 break
 
-    if layer_state == 1:
-        for in_name in photo_names:
-            if in_name.name in art_layer.Name:
-                print('\n' + Back.RED + Fore.BLACK + f"普通图层发现广告：\t{art_layer.Name}" + Style.RESET_ALL)
-                # 高斯模糊
-                desc234 = Dispatch("Photoshop.ActionDescriptor")
-                desc234.PutUnitDouble(app.StringIDToTypeID("radius"), app.StringIDToTypeID("pixelsUnit"), 50.000000)
-                app.ExecuteAction(app.StringIDToTypeID("gaussianBlur"), desc234, 3)
+    # 高斯模糊
+    # if layer_state == 1:
+    #     for in_name in photo_names:
+    #         if in_name.name in art_layer.Name:
+    #             print('\n' + Back.RED + Fore.BLACK + f"普通图层发现广告：\t{art_layer.Name}" + Style.RESET_ALL)
+    #             # 高斯模糊
+    #             desc234 = Dispatch("Photoshop.ActionDescriptor")
+    #             desc234.PutUnitDouble(app.StringIDToTypeID("radius"), app.StringIDToTypeID("pixelsUnit"), 50.000000)
+    #             app.ExecuteAction(app.StringIDToTypeID("gaussianBlur"), desc234, 3)
 
     # 修改名字
-    # if layer_state == 1:
-    #     art_layer.Name = f'图层 {art_layer.ID}'
-    #     art_layer.Visible = visible
+    if layer_state == 1:
+        art_layer.Name = f'图层 {art_layer.ID}'
+        art_layer.Visible = visible
