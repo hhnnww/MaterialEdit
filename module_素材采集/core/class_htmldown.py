@@ -30,15 +30,20 @@ class HTMLDown:
 
     @cached_property
     def res(self):
+        requre_proxy = ''
         proxies = dict(
             http=f'{self.proxies_header}://{self.ip}:{self.port}',
             https=f'{self.proxies_header}://{self.ip}:{self.port}',
         )
         try:
             res = self.session.get(self.url, proxies=proxies, headers=self.headers)
+            requre_proxy = '代理连接'
         except:
             self.session.trust_env = False
             res = self.session.get(self.url, headers=self.headers)
+            requre_proxy = '直接连接'
+
+        print(requre_proxy)
         return res
 
     @cached_property
