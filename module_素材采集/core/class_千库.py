@@ -31,11 +31,12 @@ class SCQianKu:
         html = HTMLDown(url, cookie=self.cookie).html
         ma_list = html.find('.fl > .center-box > a.img-box')
         for ma in ma_list:
-            url = 'https:' + ma.attrs.get('href')
+            if ma.attrs.get('href') is not None:
+                url = 'https:' + ma.attrs.get('href')
 
-            ori_src: str = ma.find('img.lazy', first=True).attrs.get('data-original')
-            img = 'https:' + ori_src.strip()
-            yield MaterialType(url=url, img=img, hash=sha256(url.encode('utf-8')).hexdigest())
+                ori_src: str = ma.find('img.lazy', first=True).attrs.get('data-original')
+                img = 'https:' + ori_src.strip()
+                yield MaterialType(url=url, img=img, hash=sha256(url.encode('utf-8')).hexdigest())
 
     def main(self) -> List[MaterialType]:
         for url in self.fun_列表页构建():
