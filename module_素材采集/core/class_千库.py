@@ -1,9 +1,10 @@
+import re
 from hashlib import sha256
-from typing import Generator, List
+from typing import Generator
+from typing import List
 
 from module_素材采集.core.class_htmldown import HTMLDown
 from module_素材采集.core.model import MaterialType
-import re
 
 
 class SCQianKu:

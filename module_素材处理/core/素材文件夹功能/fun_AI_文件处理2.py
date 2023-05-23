@@ -32,6 +32,24 @@ class AIFile:
                         item.Locked = False
                         item.Delete()
 
+    def fun_根据图层名字删除广告(self):
+        ad_layer_name_list = ['小夕素材', '火山素材=9.9全店免费']
+
+        for layer in self.doc.Layers:
+            layer_status = True
+
+            if layer.Name in ad_layer_name_list:
+                if layer.Locked is True:
+                    layer.Locked = False
+
+                print(f'删除图层：\t{layer.Name}')
+                layer.Delete()
+                layer_status = False
+
+            if layer_status is True:
+                if layer.Name == '火山素材=淘宝店9.9会员免费下载':
+                    layer.Name = '小夕素材-淘宝店9.9会员全店免费'
+
     def fun_添加自己的文字(self):
         # 添加文字图层
         new_layer = self.doc.Layers.Add()
@@ -84,6 +102,7 @@ class AIFile:
     def main(self):
         # self.fun_删除afd广告()
 
+        self.fun_根据图层名字删除广告()
         self.fun_导出PNG()
 
         if list(self.doc.Layers)[0].Name != self.tb_name:
@@ -99,6 +118,6 @@ class AIFile:
 
 if __name__ == '__main__':
     AIFile(
-        file=Path(r'D:\素材\5000-5999\5101\5101\小夕素材(1).ai'),
+        file=Path(r'F:\小夕素材\10000-10999\10054\10054\小夕素材(26).ai'),
         tb_name='小夕素材'
     ).main()
