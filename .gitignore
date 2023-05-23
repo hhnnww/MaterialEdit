@@ -1,2 +1,6 @@
 env/
 .idea/
+
+**/chinese-poetry/
+**/chinese-xinhua
+**/__pycache__
