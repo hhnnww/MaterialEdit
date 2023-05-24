@@ -93,6 +93,7 @@ class AIFile:
         eo = Dispatch("Illustrator.ExportOptionsPNG24")
         eo.HorizontalScale = radio
         eo.VerticalScale = radio
+        eo.ArtBoardClipping = True
 
         self.doc.Export(png_path.as_posix(), 5, eo)
 
@@ -100,6 +101,9 @@ class AIFile:
             list(self.doc.Layers)[0].Visible = True
 
     def main(self):
+        board_one = self.doc.Artboards[0]
+        board_one.Name = self.file.stem
+
         # self.fun_删除afd广告()
 
         self.fun_根据图层名字删除广告()
