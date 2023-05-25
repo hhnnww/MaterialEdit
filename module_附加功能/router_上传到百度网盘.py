@@ -9,7 +9,7 @@ from pydantic import BaseModel
 
 from module_附加功能.fun_根据图片查找点击位置 import fun_根据图片获取需要点击的位置
 
-pyautogui.PAUSE = .5
+pyautogui.PAUSE = .1
 
 router = APIRouter(prefix='/自动上传到百度网盘', tags=['自动上传到百度网盘'])
 
@@ -59,7 +59,7 @@ class AutoUpToBaiDuYun:
 
         # 地址栏
         while fun_根据图片获取需要点击的位置("IMG/file-address.png") is None:
-            pyautogui.sleep(.5)
+            pyautogui.sleep(.1)
 
         cl, ct = fun_根据图片获取需要点击的位置("IMG/file-address.png")
         pyautogui.click(cl, ct)
@@ -78,7 +78,7 @@ class AutoUpToBaiDuYun:
 
         # 点击百度网盘上传
         while fun_根据图片获取需要点击的位置("IMG/file-upbd.png") is None:
-            pyautogui.sleep(.5)
+            pyautogui.sleep(.1)
 
         cl, ct = fun_根据图片获取需要点击的位置("IMG/file-upbd.png")
         pyautogui.click(cl, ct)
@@ -86,7 +86,8 @@ class AutoUpToBaiDuYun:
     def run(self):
         # 开始运行
         # 必须提前打开文件管理器，并且最大化
-        os.startfile(r'C:\Users\wuweihua')
+        # os.startfile(r'C:\Users\wuweihua')
+        pyautogui.sleep(3)
 
         for dp in self.get_all_path(in_path=self.start_path):
             print(dp)

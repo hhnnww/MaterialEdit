@@ -71,7 +71,7 @@ class AutoGetBaiDuYunShareLink:
 
         # 找到文件夹
         while fun_根据图片获取需要点击的位置('IMG/bd-folder.png') is None:
-            pyautogui.sleep(.5)
+            pyautogui.sleep(.1)
 
         cl, ct = fun_根据图片获取需要点击的位置('IMG/bd-folder.png')
         pyautogui.click(cl, ct)
@@ -90,7 +90,7 @@ class AutoGetBaiDuYunShareLink:
 
         # 关闭
         while fun_根据图片获取需要点击的位置('IMG/bd-close.png') is None:
-            pyautogui.sleep(.5)
+            pyautogui.sleep(.1)
 
         cl, ct = fun_根据图片获取需要点击的位置('IMG/bd-close.png')
         pyautogui.click(cl, ct)
