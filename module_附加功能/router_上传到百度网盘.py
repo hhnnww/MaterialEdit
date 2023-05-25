@@ -72,7 +72,9 @@ class AutoUpToBaiDuYun:
         pyautogui.click(cl, ct + 50)
 
         # shift + f10
-        pyautogui.hotkey('shift', 'f10')
+        pyautogui.keyDown('shift')
+        pyautogui.rightClick()
+        pyautogui.keyUp('shift')
 
         # 点击百度网盘上传
         while fun_根据图片获取需要点击的位置("IMG/file-upbd.png") is None:
