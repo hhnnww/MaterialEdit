@@ -8,7 +8,7 @@ from pydantic import BaseModel
 
 from module_附加功能.fun_根据图片查找点击位置 import fun_根据图片获取需要点击的位置
 
-pyautogui.PAUSE = .1
+pyautogui.PAUSE = .01
 
 router = APIRouter(prefix='/自动分享网盘链接', tags=['自动分享网盘链接'])
 
@@ -71,7 +71,7 @@ class AutoGetBaiDuYunShareLink:
 
         # 找到文件夹
         while fun_根据图片获取需要点击的位置('IMG/bd-folder.png') is None:
-            pyautogui.sleep(.1)
+            pyautogui.sleep(.01)
 
         cl, ct = fun_根据图片获取需要点击的位置('IMG/bd-folder.png')
         pyautogui.click(cl, ct)
@@ -90,7 +90,7 @@ class AutoGetBaiDuYunShareLink:
 
         # 关闭
         while fun_根据图片获取需要点击的位置('IMG/bd-close.png') is None:
-            pyautogui.sleep(.1)
+            pyautogui.sleep(.01)
 
         cl, ct = fun_根据图片获取需要点击的位置('IMG/bd-close.png')
         pyautogui.click(cl, ct)
