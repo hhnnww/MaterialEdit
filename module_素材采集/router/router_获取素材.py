@@ -51,6 +51,10 @@ def get_material_list(item_in: ItemIn):
         for obj in ma_list:
             obj['img'] = 'http://127.0.0.1:22702/get_material/img?img=' + obj['img']
 
+    # elif item_in.site_name == 'envato':
+    #     for obj in ma_list:
+    #         obj['img'] = 'https://proxy.yumiwudesign.com?path=' + obj['img']
+
     resp_dict = {
         'material_list': ma_list,
         'count':         query.count(),
