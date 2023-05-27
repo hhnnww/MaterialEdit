@@ -3,6 +3,8 @@ import socket
 from functools import cached_property
 from pathlib import Path
 
+from requests_html import HTMLSession
+
 from module_素材采集.core.class_htmldown import HTMLDown
 
 
@@ -53,7 +55,8 @@ class SCEnvatoPICDown:
             for in_size in img_size:
                 url = img_obj.get(in_size)
                 if url is not None:
-                    img_url_list.append(url)
+                    pic_url = 'https://proxy.yumiwudesign.com?path=' + url
+                    img_url_list.append(pic_url)
                     break
 
         return img_url_list
@@ -73,17 +76,20 @@ class SCEnvatoPICDown:
         return ma_down_path
 
     def main(self):
+        session = HTMLSession()
         num = 1
         for img in self.img_url_list:
             png_path = self.material_down_path / f'{num}.png'
-            print(f'下载图片到：{png_path.as_posix()}')
+            print(f'下载图片:\t-->\t{png_path.as_posix()}')
 
             if png_path.exists() is True:
                 num += 1
                 png_path = self.material_down_path / f'{num}.png'
 
-            png_path.write_bytes(HTMLDown(img).content)
+            png_path.write_bytes(session.get(img).content)
             num += 1
+
+        session.close()
 
     def fun_目录合并(self):
         for in_dir in self.down_path.iterdir():
