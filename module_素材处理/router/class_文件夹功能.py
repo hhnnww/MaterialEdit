@@ -157,7 +157,7 @@ class MaterialPathAction:
                             desc='PPT导出PNG'):
 
             if self.fun_has_img(in_file) is False:
-                self.ma_func.fun_PPT操作(ppt_path=in_file).main()
+                self.ma_func.fun_PPT操作(ppt_path=in_file, xgt_path=self.ma_path.effect_path).main()
 
         pythoncom.CoUninitialize()
 

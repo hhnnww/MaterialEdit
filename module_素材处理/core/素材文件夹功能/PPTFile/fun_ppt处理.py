@@ -1,39 +1,14 @@
 from pathlib import Path
 
 import pythoncom
-import yaml
-from pptx import Presentation
 from pywintypes import com_error
 from win32com.client import DispatchEx
 
-from module_素材处理.core.setting import IMG_PATH
-
 
 class PPTFile:
-    def __init__(self, ppt_file: Path):
+    def __init__(self, ppt_file: Path, xgt_path: Path):
         self.ppt_file = ppt_file
-        self.ppt_dir = ppt_file.parent / ppt_file.stem
-        yaml_path = IMG_PATH / 'ppt-keyword.yaml'
-        with open(yaml_path.as_posix(), 'r', encoding='utf-8') as p_f:
-            p_f_dict = yaml.load(p_f, Loader=yaml.FullLoader)
-            self.key_list = p_f_dict['replace_key']
-
-    def replace_ppt_keyword(self):
-        try:
-            prs = Presentation(self.ppt_file.as_posix())
-        except:
-            pass
-        else:
-            for slide in prs.slides:
-                for shape in slide.shapes:
-                    if not shape.has_text_frame:
-                        continue
-                    for paragraph in shape.text_frame.paragraphs:
-                        for run in paragraph.runs:
-                            for key in self.key_list:
-                                if key[0] in run.text:
-                                    run.text = run.text.replace(key[0], key[1])
-            prs.save(self.ppt_file.as_posix())
+        self.ppt_dir = xgt_path / ppt_file.stem
 
     def fun_导出PNG(self):
         pythoncom.CoInitialize()
