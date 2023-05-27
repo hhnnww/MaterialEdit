@@ -1,5 +1,4 @@
 from pathlib import Path
-from module_素材处理.core.setting import MATERIAL_FILE_SUFFIX
 
 
 class CateBySuffix:
@@ -33,7 +32,6 @@ class CateBySuffix:
                 new_name = in_file_path / in_file.name
 
                 if new_name.exists() is False:
-
                     # in_file_png_path = in_file.with_suffix('.png')
                     # if in_file_png_path.exists() is True:
                     #     in_file_png_path_new = in_file_path / in_file_png_path.name
