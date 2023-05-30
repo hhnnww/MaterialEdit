@@ -9,7 +9,6 @@ from tqdm import tqdm
 
 from module_素材处理.core.setting import IMAGE_FILE_SUFFIX
 from module_素材处理.core.素材文件夹功能.fun_指定遍历 import fun_指定遍历
-from module_素材处理.core.素材文件夹功能.fun_获取数字 import fun_获取数字
 
 
 class PathType(BaseModel):
@@ -62,6 +61,10 @@ class MaterialFolderStructure:
     def preview_path(self):
         return self.root_path / '预览图'
 
+    @cached_property
+    def ppt_export_path(self):
+        return self.root_path / "ppt_export"
+
     def move_file(self):
 
         # 创建素材文件夹
@@ -80,7 +83,8 @@ class MaterialFolderStructure:
                 shutil.move(in_file, file_new_name)
 
             # 文件夹移动到素材文件夹
-            if in_file.is_dir() and in_file not in [self.material_path, self.effect_path, self.preview_path]:
+            if in_file.is_dir() and in_file not in [self.material_path, self.effect_path, self.preview_path,
+                                                    self.ppt_export_path]:
                 dir_new_name = self.material_path / in_file.name
                 num = 1
                 while dir_new_name.exists() is True:
@@ -169,7 +173,7 @@ class MaterialFolderStructure:
 
         img_list.sort(key=lambda k: k.get('ratio'))
         # img_list.sort(key=lambda k: fun_获取数字(Path(k.get('path'))), reverse=True)
-        
+
         return img_list
 
 

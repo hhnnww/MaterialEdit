@@ -5,15 +5,12 @@ from module_素材处理.core.素材文件夹功能.PPTFile.fun_图片组合 imp
 
 
 class PPTEdit:
-    def __init__(self, ppt_path: Path, xgt_path: Path):
+    def __init__(self, ppt_path: Path, ppt_export_path: Path):
         self.ppt_path = ppt_path
-        self.xgt_path = xgt_path
+        self.ppt_export_path = ppt_export_path
 
     def main(self):
-        # TODO: 需要把导出的文件夹改为效果图
-        # 这样可以把导出的图片保存下来，用来制作单独的首图和详情。
-
-        ppt_export = PPTFile(self.ppt_path, self.xgt_path)
+        ppt_export = PPTFile(self.ppt_path, self.ppt_export_path)
         if ppt_export.fun_导出PNG() == 'ok':
             ppt_dir = ppt_export.ppt_dir
             bg = PPTPICMerge(ppt_dir)
@@ -23,11 +20,13 @@ class PPTEdit:
             bg.save(
                 ppt_png.as_posix()
             )
+
+            for in_file in ppt_dir.iterdir():
+                if in_file.is_file():
+                    new_stem = "99" + in_file.stem
+                    if in_file.with_stem(new_stem).exists() is False:
+                        in_file.rename(
+                            in_file.with_stem(new_stem)
+                        )
+
             # shutil.rmtree(ppt_dir)
-
-
-if __name__ == '__main__':
-    PPTEdit(
-        Path(r'X:\H000-H999\H0257\H0257\小夕素材(13).pptx'),
-        xgt_path=Path('')
-    ).main()

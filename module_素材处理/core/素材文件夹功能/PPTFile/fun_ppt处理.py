@@ -6,9 +6,12 @@ from win32com.client import DispatchEx
 
 
 class PPTFile:
-    def __init__(self, ppt_file: Path, xgt_path: Path):
+    def __init__(self, ppt_file: Path, ppt_export_path: Path):
         self.ppt_file = ppt_file
-        self.ppt_dir = xgt_path / ppt_file.stem
+        self.ppt_dir = ppt_export_path / ppt_file.stem
+
+        if self.ppt_dir.exists() is False:
+            self.ppt_dir.mkdir(parents=True)
 
     def fun_导出PNG(self):
         pythoncom.CoInitialize()

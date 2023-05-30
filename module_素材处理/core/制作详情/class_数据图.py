@@ -6,7 +6,7 @@ from module_素材处理.core.图片编辑 import PICEdit
 
 
 class XQInfoPic:
-    def __init__(self, text_list: List[Tuple[str]]):
+    def __init__(self, text_list: List[Tuple[str, str]]):
         self.text_list = text_list
 
     @staticmethod
