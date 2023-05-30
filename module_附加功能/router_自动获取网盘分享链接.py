@@ -32,6 +32,14 @@ class AutoGetBaiDuYunShareLink:
         self.end_num = end_num
 
     @staticmethod
+    def fun_num_to_stem(num: int) -> str:
+        stem = str(num)
+        while len(stem) < 4:
+            stem = "0" + stem
+
+        return stem
+
+    @staticmethod
     def fun_处理网盘分享内容(bd_share_content: str) -> str:
         """
         删除网盘分享链接的广告语
@@ -51,15 +59,17 @@ class AutoGetBaiDuYunShareLink:
         :return:
         """
 
-        # 点击搜搜框
-        res = fun_根据图片获取需要点击的位置("IMG/bd-search.png")
-
-        if res is None:
+        # 如果不能找到搜索框
+        # 就点击叉叉按钮
+        if fun_根据图片获取需要点击的位置("IMG/bd-search.png") is None:
             cl, ct = fun_根据图片获取需要点击的位置("IMG/bd-search-close.png")
             pyautogui.click(cl, ct)
 
-        cl, ct = fun_根据图片获取需要点击的位置("IMG/bd-search.png")
-        pyautogui.click(cl, ct)
+        # 如果能找到搜索框
+        res = fun_根据图片获取需要点击的位置("IMG/bd-search.png")
+        if res is not None:
+            cl, ct = res
+            pyautogui.click(cl, ct)
 
         # 全选并删除
         # pyautogui.hotkey('ctrl', 'a')
@@ -70,8 +80,13 @@ class AutoGetBaiDuYunShareLink:
         pyautogui.hotkey('enter')
 
         # 找到文件夹
+        wait_time = 0
         while fun_根据图片获取需要点击的位置('IMG/bd-folder.png') is None:
             pyautogui.sleep(.01)
+            wait_time += 1
+
+            if wait_time > 2:
+                return None
 
         cl, ct = fun_根据图片获取需要点击的位置('IMG/bd-folder.png')
         pyautogui.click(cl, ct)
@@ -115,7 +130,8 @@ class AutoGetBaiDuYunShareLink:
 
         with open(file=output.as_posix(), mode='a+', encoding='UTF-8') as f:
             for x in range(self.start_num, self.end_num + 1):
-                res = self.fun_获取百度网盘地址(str(x))
+                stem = self.fun_num_to_stem(x)
+                res = self.fun_获取百度网盘地址(stem)
 
                 if res is not None:
                     f.write(res)
@@ -125,6 +141,6 @@ class AutoGetBaiDuYunShareLink:
 
 if __name__ == '__main__':
     AutoGetBaiDuYunShareLink(
-        start_num=2406,
-        end_num=2416
+        start_num=24,
+        end_num=28
     ).run()
