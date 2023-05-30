@@ -18,6 +18,8 @@ class ItemIn(BaseModel):
     end_num: str
 
 
+# --------------- 路由 ---------------
+
 @router.post('/')
 def fun_自动分享网盘链接(item_in: ItemIn):
     AutoGetBaiDuYunShareLink(
@@ -25,6 +27,8 @@ def fun_自动分享网盘链接(item_in: ItemIn):
         end_num=int(item_in.end_num)
     ).run()
 
+
+# --------------- 自动分享百度网盘链接 ---------------
 
 class AutoGetBaiDuYunShareLink:
     def __init__(self, start_num: int, end_num: int):
@@ -70,10 +74,6 @@ class AutoGetBaiDuYunShareLink:
         if res is not None:
             cl, ct = res
             pyautogui.click(cl, ct)
-
-        # 全选并删除
-        # pyautogui.hotkey('ctrl', 'a')
-        # pyautogui.hotkey('del')
 
         # 输入文字
         pyautogui.write(ma_id)
