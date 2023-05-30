@@ -15,9 +15,17 @@ class SCDownPathMoveMaterialPath:
         all_dir.sort(key=lambda k: k.stem, reverse=True)
         return int(all_dir[0].stem)
 
+    @staticmethod
+    def fun_stem构建为四位(num: int) -> str:
+        stem = str(num)
+        while len(stem) < 4:
+            stem = "0" + stem
+
+        return stem
+
     def main(self):
         num = self.fun_获取素材目录最大数字 + 1
-        material_new_path = self.material_path / str(num)
+        material_new_path = self.material_path / self.fun_stem构建为四位(num)
 
         if material_new_path.exists() is True:
             raise IndexError('路径存在，无法创建')
@@ -30,7 +38,7 @@ class SCDownPathMoveMaterialPath:
                 shutil.move(in_dir, material_new_path)
 
                 num += 1
-                material_new_path = self.material_path / str(num)
+                material_new_path = self.material_path / self.fun_stem构建为四位(num)
 
 
 if __name__ == '__main__':
