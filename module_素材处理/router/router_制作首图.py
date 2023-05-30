@@ -44,10 +44,10 @@ def make_st(item_in: ItemIn):
     #     ft_path.unlink()
 
     # 删除UP文件夹里面的JPG图片
-    for in_file in UP_FOLDER.iterdir():
-        if in_file.is_file() and in_file.suffix.lower() in ['.jpg']:
-            if in_file.stem in [str(i) for i in range(0, 9)]:
-                in_file.unlink()
+    # for in_file in UP_FOLDER.iterdir():
+    #     if in_file.is_file() and in_file.suffix.lower() in ['.jpg']:
+    #         if in_file.stem in [str(i) for i in range(0, 9)]:
+    #             in_file.unlink()
 
     small_pic_mode = 1
 
