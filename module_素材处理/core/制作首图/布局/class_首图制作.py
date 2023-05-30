@@ -1,10 +1,11 @@
 import random
-from typing import List, Tuple
 from functools import cached_property
+from typing import List, Tuple
+
 from PIL import Image
 
-from module_素材处理.core.图片编辑.class_picedit import PICEdit
 from module_素材处理.core.制作首图.布局.class_type import ComList
+from module_素材处理.core.图片编辑.class_picedit import PICEdit
 
 Image.MAX_IMAGE_PIXELS = None
 
@@ -21,7 +22,8 @@ class SmallSizeModel:
 
 
 class STMake:
-    def __init__(self, st_list: List[ComList], st_width: int, st_height: int, gutter: int, bg_color: Tuple[int],
+    def __init__(self, st_list: List[ComList], st_width: int, st_height: int, gutter: int,
+                 bg_color: Tuple[int, int, int],
                  small_pic_size_mode: int, crop_model: str):
         self.st_list = st_list
 

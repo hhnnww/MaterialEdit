@@ -111,9 +111,13 @@ def make_st(item_in: ItemIn):
 
     # 制作首图样式图
     if item_in.st_style == '黑鲸':
-        bg = STHeiJingStyle(layout_bg=bg, material_format_list=item_in.material_format_list.split(' '),
-                            tb_name=item_in.tb_name, title=item_in.title.upper(),
-                            material_id=item_in.material_id).main()
+        st_hj = STHeiJingStyle(layout_bg=bg, material_format_list=item_in.material_format_list.split(' '),
+                               tb_name=item_in.tb_name, title=item_in.title.upper(),
+                               material_id=item_in.material_id)
+        st_hj.pic_height = 1300
+        st_hj.bg_height = 200
+        bg = st_hj.main()
+
     elif item_in.st_style == 'T500':
         bg = STT500(st=bg, title=item_in.title, sc_id=item_in.material_id, tb_name=item_in.tb_name,
                     type_title=item_in.素材格式标题).main()

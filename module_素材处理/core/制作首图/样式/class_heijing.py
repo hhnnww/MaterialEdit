@@ -8,6 +8,9 @@ from module_素材处理.core.图片编辑.class_picedit import PICEdit
 
 
 class STHeiJingStyle:
+    bg_height = 200
+    pic_height = 1300
+
     def __init__(self, layout_bg: Image.Image, title: str, material_format_list: List[str], tb_name: str,
                  material_id: str):
         self.layout_bg = layout_bg
@@ -79,7 +82,7 @@ class STHeiJingStyle:
     )
 
     def fun_制作横条背景(self):
-        bg = Image.new('RGBA', (1500, 200), (0, 0, 0))
+        bg = Image.new('RGBA', (1500, self.bg_height), (0, 0, 0))
         bg = PICEdit.fun_图片圆角(bg, 180, None, angle=['lb', 'rb']).main()
 
         title_pil = PICEdit.fun_单行文字(self.title, 'm', 95, (255, 255, 255), (0, 0, 0)).main()
@@ -154,7 +157,7 @@ class STHeiJingStyle:
         self.layout_bg.close()
 
         title_bg = self.fun_制作横条背景()
-        bg.paste(title_bg, (0, 1300))
+        bg.paste(title_bg, (0, self.pic_height))
         title_bg.close()
 
         right = 100
