@@ -5,8 +5,6 @@ from typing import Optional, List
 from PIL import Image
 from fastapi import APIRouter
 
-from module_素材处理.core.setting import IMAGE_FILE_SUFFIX
-
 router = APIRouter(prefix='/图片自动拼图')
 
 
@@ -38,20 +36,20 @@ class AutoMergeImage:
 
         return 0
 
-    def image_list(self) -> List[Path]:
-        """
-        获取文件夹内的所有图片文件
-        并且以文件stem的数字排序
-        :return:
-        """
-        file_list = []
-        for in_file in [Path(pic) for pic in self.pic_list]:
-            if in_file.is_file() and in_file.suffix.lower() in IMAGE_FILE_SUFFIX:
-                file_list.append(in_file)
-
-        file_list.sort(key=lambda k: self.get_stem(k))
-
-        return file_list
+    # def image_list(self) -> List[Path]:
+    #     """
+    #     获取文件夹内的所有图片文件
+    #     并且以文件stem的数字排序
+    #     :return:
+    #     """
+    #     file_list = []
+    #     for in_file in [Path(pic) for pic in self.pic_list]:
+    #         if in_file.is_file() and in_file.suffix.lower() in IMAGE_FILE_SUFFIX:
+    #             file_list.append(in_file)
+    #
+    #     file_list.sort(key=lambda k: self.get_stem(k))
+    #
+    #     return file_list
 
     def pil_list(self) -> List[Image.Image]:
         """
@@ -60,9 +58,9 @@ class AutoMergeImage:
         :return:
         """
         pil_list = []
-        for in_file in self.image_list():
+        for in_file in self.pic_list:
             pil_list.append(
-                Image.open(in_file.as_posix())
+                Image.open(in_file)
             )
 
         return pil_list
@@ -120,22 +118,40 @@ class AutoMergeImage:
             )
             pil = pil.resize((average_width, bg_height), resample=Image.Resampling.LANCZOS)
             bg.paste(
-                pil, (top, 0)
+                pil, (0, top)
             )
             top += pil.height + self.gutter
             pil.close()
 
         return bg
 
-    def main(self) -> Image.Image:
+    def one_two_merge(self):
+        first_pil = self.pil_list()[0]
+
+
+    def main(self):
+        bg: Optional[Image.Image] = None
+
         if self.direction == 'x':
-            return self.x_merge()
+            bg = self.x_merge()
 
         elif self.direction == 'y':
-            return self.y_merge()
+            bg = self.y_merge()
+
+        elif self.direction == '1-2':
+            pass
+
+        bg.save(
+            self.folder.parent / (self.folder.stem + ".png")
+        )
 
 
 if __name__ == '__main__':
-    ami = AutoMergeImage.open_path(r"V:\H000-H999\H0632\H0632")
+    ami = AutoMergeImage.open_path(r"V:\H000-H999\H0633\H0633", pic_list=[
+        r"V:\H000-H999\H0633\H0633\画板 2.png", r"V:\H000-H999\H0633\H0633\1 (14).png"
+    ])
     ami.direction = 'y'
-    ami.main().show()
+    pic = ami.main()
+    pic.save(
+        r"V:\H000-H999\H0633\H0633\1-14.png"
+    )
