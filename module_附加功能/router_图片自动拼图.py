@@ -128,7 +128,6 @@ class AutoMergeImage:
     def one_two_merge(self):
         first_pil = self.pil_list()[0]
 
-
     def main(self):
         bg: Optional[Image.Image] = None
 
@@ -151,7 +150,4 @@ if __name__ == '__main__':
         r"V:\H000-H999\H0633\H0633\画板 2.png", r"V:\H000-H999\H0633\H0633\1 (14).png"
     ])
     ami.direction = 'y'
-    pic = ami.main()
-    pic.save(
-        r"V:\H000-H999\H0633\H0633\1-14.png"
-    )
+    ami.main()
