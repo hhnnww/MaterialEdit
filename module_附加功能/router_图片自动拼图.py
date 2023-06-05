@@ -194,6 +194,23 @@ class AutoMergeImage:
 
         return self.y_merge(new_pil_list)
 
+    def two_merge(self, pil_list: List[Image.Image]):
+        """
+        一行2个
+        :param pil_list:
+        :return:
+        """
+        new_list = []
+        in_list = []
+        for num, pil in enumerate(pil_list):
+            in_list.append(pil)
+
+            if len(in_list) == 2:
+                new_list.append(self.x_merge(in_list))
+                in_list = []
+
+        return self.y_merge(new_list)
+
     def main(self):
         bg: Optional[Image.Image] = None
 
@@ -205,6 +222,9 @@ class AutoMergeImage:
 
         elif self.direction == '1-2':
             bg = self.one_two_merge(self.pil_list())
+
+        elif self.direction == '2-2':
+            bg = self.two_merge(self.pil_list())
 
         bg.save(
             self.folder / (uuid1().hex.upper() + ".png")
@@ -221,5 +241,5 @@ if __name__ == '__main__':
             r"H:\泡泡素材\0000-0999\0001\效果图\avira-powerpoint-template\4.png",
         ]
     )
-    ami.direction = '1-2'
-    ami.main()
+    ami.direction = '2-2'
+    ami.two_merge(ami.pil_list()).show()
