@@ -33,9 +33,12 @@ class AIFile:
                         item.Delete()
 
     def fun_根据图层名字删除广告(self):
-        ad_layer_name_list = ['小夕素材', '火山素材=9.9全店免费']
-
+        ad_layer_name_list = ['小夕素材', '火山素材=9.9全店免费', '火山素材https://shop185838729.taobao.com/']
+        layer_list = []
         for layer in self.doc.Layers:
+            layer_list.append(layer)
+
+        for layer in layer_list:
             layer_status = True
 
             if layer.Name in ad_layer_name_list:
@@ -122,6 +125,6 @@ class AIFile:
 
 if __name__ == '__main__':
     AIFile(
-        file=Path(r'F:\小夕素材\10000-10999\10054\10054\小夕素材(26).ai'),
+        file=Path(r'F:\小夕素材\10000-10999\10069\10069\小夕素材(3).ai'),
         tb_name='小夕素材'
     ).main()
