@@ -50,8 +50,8 @@ class AIFile:
                 layer_status = False
 
             if layer_status is True:
-                if layer.Name == '火山素材=淘宝店9.9会员免费下载':
-                    layer.Name = '小夕素材-淘宝店9.9会员全店免费'
+                if '火山素材' in layer.Name:
+                    layer.Name = layer.Name.replace('火山', '小夕')
 
     def fun_添加自己的文字(self):
         # 添加文字图层
